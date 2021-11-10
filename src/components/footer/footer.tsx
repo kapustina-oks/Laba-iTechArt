@@ -7,7 +7,7 @@ const Footer = () => (
       <div className="icons">
         <ul className="icons-list">
           <li className="icons-elem">
-            <a href="https://www.playstation.com/">Sony</a>
+            <a href="https://www.playstation.com/en-us/">Sony</a>
           </li>
           <li className="icons-elem">
             <a href="https://www.tencent.com/en-us">Tencent</a>

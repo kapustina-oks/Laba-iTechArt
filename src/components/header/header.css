@@ -36,7 +36,8 @@ header {
 }
 
 .nav .nav-list .nav-elem {
-  margin-right: 20px;
+  padding-right: 15px;
+  padding-left: 15px;
   text-decoration: none;
   display: flex;
   flex-direction: column;
@@ -47,8 +48,9 @@ header {
 }
 
 .nav .nav-list .nav-elem:hover {
-  border-bottom: 5px solid #c62cd4;
-  background-color: gray;
+  border-bottom: 7px solid #c62cd4;
+  background-color: #383838;
+
 }
 
 .nav .nav-list .nav-elem .nav-link {
@@ -60,9 +62,9 @@ header {
   height: 100%;
 }
 
-.arrow {
-  padding-top: 23px;
-  padding-right: 25px;
+.nav .nav-list .arrow {
+  padding-top: 25px;
+  padding-right: 30px;
   position: relative;
   text-align: center;
 }
@@ -70,8 +72,8 @@ header {
 .arrow::before {
   content: "";
   position: absolute;
-  top: 37px;
-  right: 10px;
+  top: 39px;
+  right: 13px;
   transform: translateY(-50%);
   display: block;
   border-style: solid;

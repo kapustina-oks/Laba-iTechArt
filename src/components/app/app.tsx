@@ -1,4 +1,3 @@
-import { Component } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { links } from "@/links";
 import Header from "../header/header";
@@ -12,27 +11,23 @@ import Footer from "../footer/footer";
 
 const { home, product, about, signin, signup, other } = links;
 
-class App extends Component {
-  render() {
-    return (
-      <Router>
-        <div className="app">
-          <Header />
-          <main>
-            <Routes>
-              <Route path={home} element={<Home />} />
-              <Route path={product} element={<Products />} />
-              <Route path={about} element={<About />} />
-              <Route path={signin} element={<SignIn />} />
-              <Route path={signup} element={<SignUp />} />
-              <Route path={other} element={<Page404 />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </Router>
-    );
-  }
-}
+const App = () => (
+  <Router>
+    <div className="app">
+      <Header />
+      <main>
+        <Routes>
+          <Route path={home} element={<Home />} />
+          <Route path={product} element={<Products />} />
+          <Route path={about} element={<About />} />
+          <Route path={signin} element={<SignIn />} />
+          <Route path={signup} element={<SignUp />} />
+          <Route path={other} element={<Page404 />} />
+        </Routes>
+      </main>
+      <Footer />
+    </div>
+  </Router>
+);
 
 export default App;

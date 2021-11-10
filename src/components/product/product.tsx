@@ -1,8 +1,2 @@
-import { Component } from "react";
-
-class Products extends Component {
-  render() {
-    return <div>Products</div>;
-  }
-}
+const Products = () => <div>Products</div>;
 export default Products;

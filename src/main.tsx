@@ -7,6 +7,7 @@ import { Component, StrictMode } from "react";
 import ReactDom from "react-dom";
 import style from "./styles/main.module.css";
 import someTypeScript from "./someTypeScript";
+import App from "./components/app/app"
 
 interface AppProps {
   nothing: boolean;
@@ -33,7 +34,7 @@ class AppContainer extends Component<AppProps, AppState> {
   render() {
     return (
       <StrictMode>
-        <div className="hello">Hello</div>
+        <App/>
         {/* <div className="test-block">
           <h2 className={style.mainTitle}>{this.state.title}</h2>
         </div>
@@ -43,7 +44,7 @@ class AppContainer extends Component<AppProps, AppState> {
         </div>
          or it can be
           <img src='/src/images/testSmall.png' alt="smallImage"></img>
-        
+
         <div className={["test-block", style.svgBackground].join(" ")}>
           <h2>Test-block for svg-url-loader</h2>
           <img src={imgCamera} alt="small_SVG_Image" />

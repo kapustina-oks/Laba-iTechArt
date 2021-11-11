@@ -33,3 +33,8 @@ node_modules
 .stylelintcache
 
 tsconfig.tsbuildinfo
+
+# macOS file system
+.DS_Store
+
+.idea

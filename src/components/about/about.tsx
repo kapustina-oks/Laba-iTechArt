@@ -1,9 +1,16 @@
-import { Component } from "react";
+import { useState, useEffect } from "react";
+import Home from "../home/home";
 
-class About extends Component {
-  render() {
-    return <div>About</div>;
+const About = () => {
+  const [error, setError] = useState(false);
+  useEffect(() => {
+    setError(true);
+  });
+
+  if (error) {
+    return <Home />;
   }
-}
+  return <div>About</div>;
+};
 
 export default About;

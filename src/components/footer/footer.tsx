@@ -1,6 +1,7 @@
 import "./footer.css";
+import { FC } from "react";
 
-const Footer = () => (
+const Footer: FC = () => (
   <footer>
     <div className="wrapper">
       <div className="slogan">Incredible convenient</div>

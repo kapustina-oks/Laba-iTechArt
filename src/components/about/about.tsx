@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Home from "../home/home";
 
 const About = () => {
-  const [error, setError] = useState(false);
+  const [error, setError] = useState<boolean>(false);
   useEffect(() => {
     setError(true);
   });

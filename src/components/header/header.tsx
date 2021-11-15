@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import "./header.css";
 import { links } from "@/links";
+import { FC } from "react";
 
 const { home, product, about, signin, signup } = links;
 
-const Header = () => {
+const Header: FC = () => {
   return (
     <header>
       <div className="container">

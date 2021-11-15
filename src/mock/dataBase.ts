@@ -1,0 +1,58 @@
+const dataGames = [
+  {
+    name: "Game of Thrones",
+    id: 1,
+    img: "https://s2.gaming-cdn.com/images/products/5848/orig/game-steam-a-game-of-thrones-genesis-cover.jpg",
+    rating: 4,
+    price: "50$",
+    category: "Playstation",
+    // date: new Date(),
+  },
+  {
+    name: "Cyberpunk",
+    id: 2,
+    img: "https://cdn.electroworld.cz/images/img-large/3/1302373.jpg",
+    rating: 5,
+    price: "60$",
+    category: "Xbox",
+    // date: new Date(),
+  },
+  {
+    name: "World of Tanks",
+    id: 3,
+    img: "https://static-cdn.jtvnw.net/ttv-boxart/World%20of%20Tanks:%20Blitz.jpg",
+    rating: 4,
+    price: "45$",
+    category: "PC",
+    // date: new Date(),
+  },
+  {
+    name: "FarCry 6",
+    id: 4,
+    img: "https://media.gamestop.com/i/gamestop/11104002/Far-Cry-6-Gold-Edition?$pdp$",
+    rating: 5,
+    price: "55$",
+    category: "Xbox",
+    // date: new Date(),
+  },
+  {
+    name: "Warcraft III: Reign of Chaos",
+    id: 5,
+    img: "http://s01.riotpixels.net/data/a6/6f/a66fd8bf-9d76-445d-805d-fb941f4dcc61.jpg/cover.warcraft-3-reign-of-chaos.500x703.2002-10-21.386.jpg",
+    rating: 4,
+    price: "65$",
+    category: "PC",
+    // date: new Date(),
+  },
+  {
+    name: "Minecraft",
+    id: 6,
+    img: "https://upload.wikimedia.org/wikipedia/ru/d/da/Minecraft_Dungeons.jpeg",
+    rating: 3,
+    price: "70$",
+    category: "Playstation",
+    // date: new Date(),
+  },
+];
+
+export default dataGames;

@@ -1,0 +1,24 @@
+.grid_games {
+  display: grid;
+  grid-template-columns: repeat(3, 300px);
+  justify-content: center;
+  column-gap: 50px;
+  row-gap: 30px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.size_img {
+  height: 400px;
+  width: 300px;
+}
+
+.d_flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-padding{
+  padding-top: 10px;
+}
+

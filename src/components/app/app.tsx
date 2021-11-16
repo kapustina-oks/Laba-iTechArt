@@ -9,8 +9,11 @@ import SignIn from "../signIn/signIn";
 import Home from "../home/home";
 import Page404 from "../pages/404Page";
 import Footer from "../footer/footer";
+import Xbox from "../xbox/xbox";
+import PC from "../pc/pc";
+import Playstation from "../playstation/playstation";
 
-const { home, product, about, signin, signup, other } = links;
+const { home, product, about, signin, signup, other, xbox, pc, playstation } = links;
 
 class App extends Component {
   constructor(props) {
@@ -37,6 +40,9 @@ class App extends Component {
               <Route path={about} element={<About />} />
               <Route path={signin} element={<SignIn />} />
               <Route path={signup} element={<SignUp />} />
+              <Route path={xbox} element={<Xbox />} />
+              <Route path={pc} element={<PC />} />
+              <Route path={playstation} element={<Playstation />} />
               <Route path={other} element={<Page404 />} />
             </Routes>
           </main>

@@ -50,7 +50,6 @@ header {
 .nav .nav-list .nav-elem:hover {
   border-bottom: 7px solid #c62cd4;
   background-color: #383838;
-
 }
 
 .nav .nav-list .nav-elem .nav-link {
@@ -79,5 +78,25 @@ header {
   border-style: solid;
   border-width: 6.4px 6px 0 6px;
   border-color: white transparent transparent transparent;
+  cursor: pointer;
+}
+
+.nav .nav-list .arrow-top {
+  padding-top: 25px;
+  padding-right: 30px;
+  position: relative;
+  text-align: center;
+}
+
+.arrow-top::before {
+  content: "";
+  position: absolute;
+  top: 39px;
+  right: 13px;
+  transform: translateY(-50%);
+  display: block;
+  border-style: solid;
+  border-width: 0 6.4px 6px 6px;
+  border-color: transparent transparent white transparent;
   cursor: pointer;
 }

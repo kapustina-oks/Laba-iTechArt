@@ -4,5 +4,8 @@ export const links = {
   about: "/about",
   signin: "/signin",
   signup: "/signup",
+  xbox: "/xbox",
+  pc: "/pc",
+  playstation: "/playstation",
   other: "*",
 };

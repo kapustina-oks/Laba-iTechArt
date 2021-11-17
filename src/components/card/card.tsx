@@ -1,4 +1,4 @@
-import { useEffect, FC, useState } from "react";
+import { FC } from "react";
 import { dataItems } from "../../services/dataService";
 import "./card.css";
 
@@ -6,14 +6,7 @@ interface CardProps {
   games: dataItems[];
 }
 
-const Card: FC = ({ games }: CardProps) => {
-  // const [arrGames, setArrGames] = useState<dataItems[]>([]);
-  // const arrGamesLoaded = (gamesArr): void => {
-  //   setArrGames(gamesArr);
-  // };
-  // useEffect(() => {
-  //   arrGamesLoaded(games);
-  // }, [arrGames]);
+const Card: FC<CardProps> = ({ games }): JSX.Element => {
   function renderItem(arr: dataItems[]) {
     const items = arr.map((item: dataItems) => {
       let star = "";
@@ -32,7 +25,9 @@ const Card: FC = ({ games }: CardProps) => {
               <span className="card-title grey-text text-darken-4">{item.name}</span>
               <span>{item.price}</span>
             </div>
-            <div><i className="material-icons">{star}</i></div>
+            <div>
+              <i className="material-icons">{star}</i>
+            </div>
           </div>
         </div>
       );

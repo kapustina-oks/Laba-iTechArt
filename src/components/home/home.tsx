@@ -1,27 +1,31 @@
 import { useEffect, FC, useState } from "react";
 import { dataItems, getResource } from "../../services/dataService";
-//import Categories from "../categories/categories";
+import CardCategory from "../cardCategory/cardCategory";
 import Card from "@/components/card/card";
 import "./home.css";
+import SearchPanel from "../searchPanel/searchPanel";
 
-const Home: FC = () => {
+const Home: FC = (): JSX.Element => {
   const [gameList, setGameList] = useState<dataItems[]>([]);
-  const onRequest = () => {
-    getResource("/api/games?sortBy=date").then((data) => setGameList(data));
+  const onRequestSort = () => {
+    getResource("/api/games?sortBy=date&limit=3").then((data) => setGameList(data));
   };
   useEffect(() => {
-    onRequest();
-  }, [gameList]);
+    onRequestSort();
+  }, []);
 
-  const content = <Card games = {gameList} />;
+  const content = <Card games={gameList} />;
   return (
     <>
       <div className="home_container">
+        <SearchPanel />
+        <div className="new-games">Categories</div>
+        <CardCategory />
+        <div className="new-games">New games</div>
         {content}
-      </div>;
+      </div>
     </>
-    )
-
+  );
 };
 
 export default Home;

@@ -44,11 +44,12 @@ header {
   justify-content: center;
   align-items: center;
   height: 100%;
-  /* padding-bottom: 20px; */
+  transition: 0.3s;
+
 }
 
 .nav .nav-list .nav-elem:hover {
-  border-bottom: 7px solid #c62cd4;
+  border-bottom: 7px solid #9833cc;
   background-color: #383838;
 }
 
@@ -86,6 +87,7 @@ header {
   padding-right: 30px;
   position: relative;
   text-align: center;
+
 }
 
 .arrow-top::before {
@@ -99,4 +101,5 @@ header {
   border-width: 0 6.4px 6px 6px;
   border-color: transparent transparent white transparent;
   cursor: pointer;
+  transition: 0.4s;
 }

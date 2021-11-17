@@ -13,7 +13,7 @@ const Dropdown: FC = () => {
       <ul onClick={handleClick} className={click ? "dropdown-menu clicked" : "dropdown-menu"}>
         {MenuItems.map((item: Menu, i: number) => (
           <li key={i}>
-            <Link className={item.cName} to={item.path} onClick={() => setClick(false)}>
+            <Link className={item.cName} to={`/products/${item.path}`} onClick={() => setClick(false)}>
               {item.title}
             </Link>
           </li>

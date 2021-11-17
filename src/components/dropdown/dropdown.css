@@ -4,19 +4,21 @@
   top: 72px;
   list-style: none;
   text-align: center;
+  z-index: 1;
 }
 
 .dropdown-menu li {
-  background: #c62cd4;
+  background: #9833cc;
   cursor: pointer;
 }
 
 .dropdown-menu li:hover {
-  background: #bd79c4;
+  background: #ba68c8;
 }
 
 .dropdown-menu.clicked {
   display: none;
+
 }
 
 .dropdown-link {

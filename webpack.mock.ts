@@ -14,12 +14,19 @@ export default webpackMockServer.add((app, helper) => {
     }
     if (_req.query.category) {
       const category = _req.query.category as string;
-      gamesList = gamesList.filter((elem) => elem.categories.includes(category));
+      gamesList = gamesList.filter((item) => item.categories.includes(category));
+      console.log(gamesList);
     }
     if (_req.query.sortBy) {
       const { sortBy } = _req.query;
       if (sortBy === "date") {
         gamesList.sort((a: dataItems, b: dataItems) => b.date.valueOf() - a.date.valueOf());
+      }
+    }
+    if (_req.query.limit) {
+      const limit = +_req.query.limit;
+      if (gamesList.length > limit) {
+        gamesList = gamesList.slice(0, limit);
       }
     }
     const response = gamesList;

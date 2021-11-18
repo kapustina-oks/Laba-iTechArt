@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { links } from "@/links";
 import { Component } from "react";
 import Header from "../header/header";
@@ -9,7 +9,6 @@ import SignIn from "../signIn/signIn";
 import Home from "../home/home";
 import Page404 from "../pages/404Page";
 import Footer from "../footer/footer";
-import Categories from "../categories/categories";
 
 
 const { home, product, about, signin, signup, other } = links;
@@ -33,15 +32,30 @@ class App extends Component {
         <div className="app">
           <Header />
           <main>
-            <Routes>
-              <Route path={home} element={<Home />} />
-              <Route path={product} element={<Products />} />
-              <Route path={about} element={<About />} />
-              <Route path={signin} element={<SignIn />} />
-              <Route path={signup} element={<SignUp />} />
-              <Route path="/products/:categories" element={<Categories />} />
-              <Route path={other} element={<Page404 />} />
-            </Routes>
+            <Switch>
+
+              {/*<Route path={product}>*/}
+              {/*  <Products />*/}
+              {/*</Route>*/}
+              <Route path={`/products/:categories?`}>
+                <Products />
+              </Route>
+              <Route path={about}>
+                <About />
+              </Route>
+              <Route path={signin}>
+                <SignIn />
+              </Route>
+              <Route path={signup}>
+                <SignUp />
+              </Route>
+              <Route exact path={"/"}>
+                <Home />
+              </Route>
+              <Route path={other}>
+                <Page404 />
+              </Route>
+            </Switch>
           </main>
           <Footer />
         </div>

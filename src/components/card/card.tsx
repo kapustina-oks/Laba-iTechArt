@@ -16,17 +16,25 @@ const Card: FC<CardProps> = ({ games }): JSX.Element => {
         }
       }
       return (
-        <div className="card" key={item.id}>
-          <div className="card-image waves-effect waves-block waves-light">
-            <img className="activator size_img" src={item.img} />
-          </div>
-          <div className="card-content card-padding">
-            <div className="card-reveal d_flex">
-              <span className="card-title grey-text text-darken-4">{item.name}</span>
-              <span>{item.price}</span>
+        <div className="scene" key={item.id}>
+          <div className="card">
+            <div className="card-front">
+              <div>
+                <img className="size_img" src={item.img} />
+              </div>
+              <div className="card-padding">
+                <div className="d_flex">
+                  <span>{item.name}</span>
+                  <span>{item.price}</span>
+                </div>
+                <div>
+                  <i className="material-icons">{star}</i>
+                </div>
+              </div>
             </div>
-            <div>
-              <i className="material-icons">{star}</i>
+            <div className="card-back text">
+              {item.description}
+              <button className="btn">Add to cart</button>
             </div>
           </div>
         </div>

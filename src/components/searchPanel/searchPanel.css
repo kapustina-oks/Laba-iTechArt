@@ -19,20 +19,7 @@ input {
   transition: 0.3s linear;
 }
 
-button {
-  width: 75px;
-  height: 28px;
-  border-radius: 20px;
-  background: #9833cc;
-  border: 1px solid black;
-  position: absolute;
-  top: 6px;
-  right: 15px;
-  transition: 0.3s;
-}
-button:hover {
-  background: #ceb0de;
-}
+
 /*button:before {*/
 /*  content: "";*/
 /*  font-family: FontAwesome;*/

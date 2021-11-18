@@ -1,30 +1,40 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import "./searchPanel.css";
 import { dataItems, getResource } from "@/services/dataService";
-import Card from "@/components/card/card";
 
-const SearchPanel: FC = (): JSX.Element => {
-  const [filter, setFilter] = useState<string>("");
-  const [gameList, setGameList] = useState<dataItems[]>([]);
-  const onRequest = (s) => {
-    getResource(`/api/games?filter=${s}`).then((data) => setGameList(() => data));
+interface SearchPanelProps {
+  onRequestFilter(res: dataItems[]): void;
+  onLoading(load: boolean): void;
+}
+
+
+const SearchPanel: FC<SearchPanelProps> = ({ onRequestFilter, onLoading }): JSX.Element => {
+  const handleSubmit = (e) => {
+    console.log(e.target.value);
+    getResource(`/api/games?filter=${e.target.value}`)
+      .then((res) => onRequestFilter(res))
+      .then(() => onLoading(false));
   };
-  useEffect(() => {
-    onRequest(filter);
-  }, [filter]);
-  const content = <Card games={gameList} />;
+
+  const debounce = (fn, ms: number) => {
+    let timeout;
+    return function() {
+      onLoading(true);
+      const fnCall = () => {fn.apply(this, arguments)}
+      clearTimeout(timeout);
+      timeout = setTimeout(fnCall, ms);
+    };
+  };
+  const debounceSubmit = debounce(handleSubmit, 5000);
   return (
     <div className="row">
       <form action="" method="get">
         <input
-          value={filter}
-          onChange={(e) => setFilter((filter: string) => e.target.value)}
+          onChange={debounceSubmit}
           placeholder="Search game..."
           type="search"
         />
-        <button type="submit" onClick={() => onRequest(filter)}>
-          <i className="fas fa-search" />
-        </button>
+
       </form>
     </div>
   );

@@ -7,6 +7,8 @@ const dataGames = [
     price: "50$",
     categories: ["playstation", "pc", "xbox"],
     date: new Date("2021-11-13T19:17:17.064Z"),
+    description:
+      '"A Game of Thrones - Genesis" immerses you into the heart of the battles and intrigues between the Houses that shaped the Kingdom of Westeros. From Nymeria\'s arrival in the Kingdom of Dorne to the awakening of the "Others" beyond the Wall, you\'ll live the origins of A Game of Thrones saga through more than 1000 years of history, by taking part in Westeros\' founding events and largest battles. ',
   },
   {
     name: "Cyberpunk",
@@ -16,6 +18,8 @@ const dataGames = [
     price: "60$",
     categories: ["xbox", "playstation"],
     date: new Date("2021-11-16T19:17:17.064Z"),
+    description:
+      "Cyberpunk 2077 is an open-world, action-adventure story set in Night City, a megalopolis obsessed with power, glamour and body modification. You play as V, a mercenary outlaw going after a one-of-a-kind implant that is the key to immortality.\n",
   },
   {
     name: "World of Tanks",
@@ -25,6 +29,8 @@ const dataGames = [
     price: "45$",
     categories: ["pc"],
     date: new Date("2021-11-15T19:17:17.064Z"),
+    description:
+      "Jump into the free-to-play team-based shooter with an ever-expanding roster of historical vehicles, stunning graphics, spectacular locales, and orchestral scores. Battle it out in the company of other players in thrilling military conflicts. A unique mix of strategy and action awaits!",
   },
   {
     name: "FarCry 6",
@@ -34,6 +40,8 @@ const dataGames = [
     price: "55$",
     categories: ["xbox", "pc"],
     date: new Date("2021-11-12T19:17:17.064Z"),
+    description:
+      "Welcome to Yara, a tropical paradise frozen in time. As the dictator of Yara, Antón Castillo is intent on restoring his nation back to its former glory by any means, with his son, Diego, following in his bloody footsteps. Their oppressive rule has ignited a revolution.Dive into the gritty world of a modern-day guerrilla revolution to liberate a nation from its oppressive dictators.",
   },
   {
     name: "Warcraft III: Reign of Chaos",
@@ -43,6 +51,8 @@ const dataGames = [
     price: "65$",
     categories: ["pc", "xbox"],
     date: new Date("2021-11-11T19:17:17.064Z"),
+    description:
+      "Choose from four races - The Orcs, humans, undead, and the night elves all have separate, unique campaigns that tie into each other.Multiple Neutral buildings, units and monsters to offer new risks, treasures and challenges.",
   },
   {
     name: "Minecraft",
@@ -52,6 +62,8 @@ const dataGames = [
     price: "70$",
     categories: ["xbox"],
     date: new Date("2021-11-14T19:17:17.064Z"),
+    description:
+      "Brave the dungeons alone, or team up with friends! Up to four players can battle together through action-packed, treasure-stuffed, wildly varied levels—all in an epic quest to save the villagers and take down the evil Arch-Illager!",
   },
 ];
 

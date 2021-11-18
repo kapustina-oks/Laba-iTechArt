@@ -6,6 +6,7 @@ export interface dataItems {
   price: string;
   categories: string[];
   date: Date;
+  description: string;
 }
 
 export const getResource = async (url: string) => {

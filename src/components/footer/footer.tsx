@@ -1,7 +1,7 @@
 import "./footer.css";
 import { FC } from "react";
 
-const Footer: FC = () => (
+const Footer: FC = (): JSX.Element => (
   <footer>
     <div className="wrapper">
       <div className="slogan">Incredible convenient</div>

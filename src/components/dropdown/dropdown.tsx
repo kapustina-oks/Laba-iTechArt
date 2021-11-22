@@ -1,16 +1,15 @@
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, MenuItems } from "../menuItems/menuItems";
+import { MenuItems } from "../menuItems/menuItems";
+import { Menu } from "../../types/types";
 import "./dropdown.css";
 
-const Dropdown: FC = () => {
+const Dropdown: FC = (): JSX.Element => {
   const [click, setClick] = useState<boolean>(false);
-
-  const handleClick = (): void => setClick(!click);
 
   return (
     <>
-      <ul onClick={handleClick} className={click ? "dropdown-menu clicked" : "dropdown-menu"}>
+      <ul onClick={() => setClick(!click)} className={click ? "dropdown-menu clicked" : "dropdown-menu"}>
         {MenuItems.map((item: Menu, i: number) => (
           <li key={i}>
             <Link className={item.cName} to={`/products/${item.path}`} onClick={() => setClick(false)}>

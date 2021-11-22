@@ -1,30 +1,19 @@
 import { FC } from "react";
 import "./cardCategory.css";
+import { ICategories } from "@/types/types";
 
 interface PropsCardCategory {
+  category: ICategories;
   handleCategory(category: string): void;
 }
-const CardCategory: FC<PropsCardCategory> = ({ handleCategory }): JSX.Element => (
+
+const CardCategory: FC<PropsCardCategory> = ({ category, handleCategory }): JSX.Element => (
   <>
-    <div className="grid_category">
-      <div className="card-category" onClick={() => handleCategory("pc")}>
-        <div className="fab-icons">
-          <i className="fab fa-windows" />
-        </div>
-        <div className="card-title">PC</div>
+    <div className="card-category" onClick={() => handleCategory(category.name)}>
+      <div className="fab-icons">
+        <i className={category.icons} />
       </div>
-      <div className="card-category" onClick={() => handleCategory("playstation")}>
-        <div className="fab-icons">
-          <i className="fab fa-playstation" />
-        </div>
-        <div className="card-title">Playstation 5</div>
-      </div>
-      <div className="card-category" onClick={() => handleCategory("xbox")}>
-        <div className="fab-icons">
-          <i className="fab fa-xbox" />
-        </div>
-        <div className="card-title">Xbox One</div>
-      </div>
+      <div className="card-title">{category.title}</div>
     </div>
   </>
 );

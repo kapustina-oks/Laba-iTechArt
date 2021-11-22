@@ -1,14 +1,16 @@
 import { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { dataItems, getResource } from "@/services/dataService";
+import { getResource } from "@/services/dataService";
 import Card from "@/components/card/card";
+import { dataItems } from "../../types/types";
+import "./product.css";
 
 interface IParams {
   categories?: string;
 }
+
 const Products: FC = (): JSX.Element => {
   const { categories } = useParams<IParams>();
-
   const [productList, setProductList] = useState<dataItems[]>([]);
   const [gameCategoryList, setGameCategoryList] = useState<dataItems[]>([]);
   const onRequest = (category: string) => {
@@ -23,11 +25,14 @@ const Products: FC = (): JSX.Element => {
     }
   }, [categories]);
 
-  const contentCategory = <Card games={gameCategoryList} />;
-  const contentProduct = <Card games={productList} />;
+  const contentCategory = gameCategoryList.map((game) => <Card game={game} />);
+  const contentProduct = productList.map((game) => <Card game={game} />);
+
   return (
     <>
-      <div className="home_container">{categories ? contentCategory : contentProduct}</div>
+      <div className="home_container">
+        <div className="grid_games">{categories ? contentCategory : contentProduct}</div>
+      </div>
     </>
   );
 };

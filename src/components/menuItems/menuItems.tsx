@@ -1,9 +1,3 @@
-export interface Menu {
-  title: string;
-  path: string;
-  cName: string;
-}
-
 export const MenuItems = [
   {
     title: "PC",

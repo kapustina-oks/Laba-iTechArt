@@ -3,47 +3,40 @@ import { dataItems } from "../../services/dataService";
 import "./card.css";
 
 interface CardProps {
-  games: dataItems[];
+  game: dataItems;
 }
 
-const Card: FC<CardProps> = ({ games }): JSX.Element => {
-  function renderItem(arr: dataItems[]) {
-    const items = arr.map((item: dataItems) => {
-      let star = "";
-      if (item.rating) {
-        for (let i = 0; i < item.rating; i++) {
-          star += " star_border";
-        }
-      }
-      return (
-        <div className="scene" key={item.id}>
-          <div className="card">
-            <div className="card-front">
-              <div>
-                <img className="size_img" src={item.img} />
-              </div>
-              <div className="card-padding">
-                <div className="d_flex">
-                  <span>{item.name}</span>
-                  <span>{item.price}</span>
-                </div>
-                <div>
-                  <i className="material-icons">{star}</i>
-                </div>
-              </div>
+const Card: FC<CardProps> = ({ game }): JSX.Element => {
+  let star = "";
+  if (game.rating) {
+    for (let i = 0; i < game.rating; i++) {
+      star += " star_border";
+    }
+  }
+  return (
+    <div className="scene" key={game.id}>
+      <div className="card">
+        <div className="card-front">
+          <div>
+            <img className="size_img" src={game.img} alt="game_img" />
+          </div>
+          <div className="card-padding">
+            <div className="d_flex">
+              <span>{game.name}</span>
+              <span>{game.price}</span>
             </div>
-            <div className="card-back text">
-              {item.description}
-              <button className="btn">Add to cart</button>
+            <div>
+              <i className="material-icons">{star}</i>
             </div>
           </div>
         </div>
-      );
-    });
-    return items;
-  }
-  const items = renderItem(games);
-  return <div className="grid_games">{items}</div>;
+        <div className="card-back text">
+          {game.description}
+          <button className="btn">Add to cart</button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Card;

@@ -1,14 +1,3 @@
-export interface dataItems {
-  name: string;
-  id: number;
-  img: string;
-  rating: number;
-  price: string;
-  categories: string[];
-  date: Date;
-  description: string;
-}
-
 export const getResource = async (url: string) => {
   const res = await fetch(url, {
     headers: {

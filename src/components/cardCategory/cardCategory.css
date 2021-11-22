@@ -1,13 +1,4 @@
-.grid_category {
-  display: grid;
-  grid-template-columns: repeat(3, 300px);
-  justify-content: center;
-  column-gap: 50px;
-  padding-top: 60px;
-
-}
-
-.card-category{
+.card-category {
   color: white;
   background-color: black;
   min-height: 180px;
@@ -22,11 +13,12 @@
   justify-content: center;
   align-items: center;
 }
-.card-category:hover{
+
+.card-category:hover {
   border-color: #cfa4d9;
 }
 
-.card-title{
+.card-title {
   padding-bottom: 20px;
 }
 

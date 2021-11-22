@@ -1,7 +1,7 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
 import webpackMockServer from "webpack-mock-server";
+import { categories } from "@/mock/categories";
 import dataGames from "./src/mock/dataBase";
-import {dataItems} from "./src/services/dataService";
+import { dataItems } from "./src/types/types";
 
 export default webpackMockServer.add((app, helper) => {
   app.get("/api/games", (_req, res) => {
@@ -31,6 +31,10 @@ export default webpackMockServer.add((app, helper) => {
     }
     const response = gamesList;
     res.json(response);
+  });
+  app.get("/api/categories", (_req, res) => {
+    const categoriesList = categories;
+    res.json(Object.values(categoriesList));
   });
   app.post("/testPostMock", (req, res) => {
     res.json({ body: req.body || null, success: true });

@@ -1,15 +1,15 @@
 import { FC } from "react";
 import "./searchPanel.css";
-import { dataItems, getResource } from "@/services/dataService";
+import { getResource } from "@/services/dataService";
+import { dataItems } from "../../types/types";
 
 interface SearchPanelProps {
   onRequestFilter(res: dataItems[]): void;
   onLoading(load: boolean): void;
 }
 
-
 const SearchPanel: FC<SearchPanelProps> = ({ onRequestFilter, onLoading }): JSX.Element => {
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: { target: { value: string } }) => {
     console.log(e.target.value);
     getResource(`/api/games?filter=${e.target.value}`)
       .then((res) => onRequestFilter(res))
@@ -17,10 +17,12 @@ const SearchPanel: FC<SearchPanelProps> = ({ onRequestFilter, onLoading }): JSX.
   };
 
   const debounce = (fn, ms: number) => {
-    let timeout;
-    return function() {
+    let timeout: NodeJS.Timeout;
+    return function () {
       onLoading(true);
-      const fnCall = () => {fn.apply(this, arguments)}
+      const fnCall = () => {
+        fn.apply(this, arguments);
+      };
       clearTimeout(timeout);
       timeout = setTimeout(fnCall, ms);
     };
@@ -29,12 +31,7 @@ const SearchPanel: FC<SearchPanelProps> = ({ onRequestFilter, onLoading }): JSX.
   return (
     <div className="row">
       <form action="" method="get">
-        <input
-          onChange={debounceSubmit}
-          placeholder="Search game..."
-          type="search"
-        />
-
+        <input onChange={debounceSubmit} placeholder="Search game..." type="search" />
       </form>
     </div>
   );

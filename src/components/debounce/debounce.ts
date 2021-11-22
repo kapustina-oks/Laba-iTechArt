@@ -1,5 +1,5 @@
 
-export const debounce = (fn: (...args: T[]), ms: number) => {
+export const debounce = <T>(fn: (...args: T[]) => void, ms: number) => {
   let timeoutId: ReturnType<typeof setTimeout>;
   return function (this: T, ...args: T[]) {
     //onLoading(true);

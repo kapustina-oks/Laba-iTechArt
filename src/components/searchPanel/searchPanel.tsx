@@ -9,7 +9,6 @@ interface SearchPanelProps {
   onLoading(load: boolean): void;
 }
 
-
 const SearchPanel: FC<SearchPanelProps> = ({ onRequestFilter, onLoading }): JSX.Element => {
   const handleSubmit = (e: { target: { value: string } }) => {
     console.log(e.target.value);
@@ -39,7 +38,7 @@ const SearchPanel: FC<SearchPanelProps> = ({ onRequestFilter, onLoading }): JSX.
   //   };
   // };
 
-  const debounceSubmit = debounce(handleSubmit, 5000);
+  const debounceSubmit = debounce(handleSubmit, 5000, onLoading);
 
   return (
     <div className="row">

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { links } from "@/links";
-import { Component } from "react";
+// eslint-disable-next-line no-use-before-define
+import React, { ReactNode } from "react";
 import Header from "../header/header";
 import Products from "../../pages/product/product";
 import SignUp from "../../pages/signUp/signUp";
@@ -10,23 +11,34 @@ import Home from "../../pages/home/home";
 import Page404 from "../../pages/404Page";
 import Footer from "../footer/footer";
 
-
 const { home, product, about, signin, signup, other } = links;
 
-class App extends Component {
-  constructor(props) {
+interface PropsApp {
+  [key: string]: unknown;
+  children?: ReactNode | ReactNode[] | null;
+}
+
+interface IState {
+  hasError: boolean;
+}
+
+class App extends React.Component<PropsApp, IState> {
+  ["constructor"]: typeof App;
+
+  constructor(props: PropsApp) {
     super(props);
+
     this.state = {
-      error: false,
+      hasError: false,
     };
   }
 
-  componentDidCatch(err, info) {
-    console.log(err, info);
-    this.setState({ error: true });
+  componentDidCatch(err: Error, info: React.ErrorInfo): void {
+    console.log(err, info, this.state.hasError);
+    this.setState({ hasError: true });
   }
 
-  render() {
+  render(): JSX.Element {
     return (
       <Router>
         <div className="app">
@@ -40,7 +52,7 @@ class App extends Component {
                 <About />
               </Route>
               <Route path={signin}>
-                <SignIn/>
+                <SignIn />
               </Route>
               <Route path={signup}>
                 <SignUp />

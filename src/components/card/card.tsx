@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { dataItems } from "../../services/dataService";
+import { dataItems } from "@/types/types";
 import "./card.css";
 
 interface CardProps {

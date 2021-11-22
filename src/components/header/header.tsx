@@ -5,7 +5,7 @@ import { FC, useState } from "react";
 import Dropdown from "../dropdown/dropdown";
 import Modal from "../modal/modal";
 
-const { home, product, about, signup } = links;
+const { home, product, about } = links;
 
 const Header: FC = (): JSX.Element => {
   const [dropdown, setDropdown] = useState<boolean>(false);

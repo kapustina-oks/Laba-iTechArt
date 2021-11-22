@@ -1,7 +1,14 @@
 import Portal from "@/components/portal/portal";
 import "./modal.css";
+import { ReactNode } from "react";
 
-const Modal = ({ title, onSubmit, children }) => (
+interface PropsModal {
+  title: string;
+  onSubmit(): void;
+  children: ReactNode;
+}
+
+const Modal = ({ title, onSubmit, children }: PropsModal) => (
   // const handleSubmit = (): void => {
   //   console.log("Submit function!");
   // };
@@ -17,7 +24,9 @@ const Modal = ({ title, onSubmit, children }) => (
           <div className="modal-title">{title}</div>
           <div className="modal-body">{children}</div>
           <div className="padding-btn">
-            <button className="modal-btn" onClick={onSubmit}>Submit</button>
+            <button className="modal-btn" onClick={onSubmit}>
+              Submit
+            </button>
           </div>
         </div>
       </div>

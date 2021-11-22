@@ -1,7 +1,11 @@
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import ReactDom from "react-dom";
 
-const Portal = ({ children }) => {
+interface PropsPortal {
+  children: ReactNode;
+}
+
+const Portal = ({ children }: PropsPortal) => {
   const el = document.createElement("div");
 
   useEffect(() => {

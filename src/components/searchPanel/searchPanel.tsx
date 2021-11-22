@@ -1,7 +1,7 @@
 import { FC } from "react";
 import "./searchPanel.css";
 import { getResource } from "@/services/dataService";
-import { dataItems } from "../../types/types";
+import { dataItems } from "@/types/types";
 
 interface SearchPanelProps {
   onRequestFilter(res: dataItems[]): void;

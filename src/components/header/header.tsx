@@ -12,7 +12,7 @@ const Header: FC = (): JSX.Element => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const toggleModal = () => {
-    setIsOpen(() => !isOpen);
+    setIsOpen(true);
   };
 
   let className = "nav-elem arrow";
@@ -43,7 +43,7 @@ const Header: FC = (): JSX.Element => {
             </li>
             <li className="nav-elem" onClick={toggleModal}>
               {isOpen && (
-                <Modal title="Authorization" onSubmit={toggleModal}>
+                <Modal title="Authorization" onSubmit={() => setIsOpen(false)}>
                   <div className="form">
                     <div className="form-group">
                       <label htmlFor="login">Login</label>

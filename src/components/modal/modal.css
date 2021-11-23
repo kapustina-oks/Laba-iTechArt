@@ -34,8 +34,9 @@
 }
 
 .padding-btn {
-  padding-left: calc((100% - 120px) / 2);
+  margin-left: calc((100% - 120px) / 2);
 }
+
 .modal-btn {
   position: absolute;
   width: 120px;
@@ -46,7 +47,6 @@
   transition: 0.3s;
   color: white;
   font-size: 18px;
-
 }
 
 .input-form {

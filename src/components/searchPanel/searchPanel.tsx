@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import "./searchPanel.css";
 import { getResource } from "@/services/dataService";
 import { dataItems } from "@/types/types";
@@ -12,38 +12,26 @@ interface SearchPanelProps {
 const SearchPanel: FC<SearchPanelProps> = ({ onRequestFilter, onLoading }): JSX.Element => {
   const handleSubmit = (e: { target: { value: string } }) => {
     console.log(e.target.value);
+    if (e.target.value === "") {
+      onLoading(false);
+      return;
+    }
     getResource(`/api/games?filter=${e.target.value}`)
       .then((res) => onRequestFilter(res))
       .then(() => onLoading(false));
   };
 
-  // const debounce = (fn, ms: number) => {
-  //   let timeout: NodeJS.Timeout;
-  //   return function () {
-  //     onLoading(true);
-  //     const fnCall = () => {
-  //       fn.apply(this, arguments);
-  //     };
-  //     clearTimeout(timeout);
-  //     timeout = setTimeout(fnCall, ms);
-  //   };
-  // };
+  const debounceSubmit: (event: React.ChangeEvent<HTMLInputElement>) => void = debounce(handleSubmit, 1000);
 
-  // const debounce = (fn: (...args: T[]), ms: number) => {
-  //   let timeoutId: ReturnType<typeof setTimeout>;
-  //   return function (this: T, ...args: T[]) {
-  //     onLoading(true);
-  //     clearTimeout(timeoutId);
-  //     timeoutId = setTimeout(() => fn.apply(this, args), ms);
-  //   };
-  // };
-
-  const debounceSubmit = debounce(handleSubmit, 5000, onLoading);
+  const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    onLoading(true);
+    debounceSubmit(event);
+  };
 
   return (
     <div className="row">
       <form action="" method="get">
-        <input onChange={debounceSubmit} placeholder="Search game..." type="search" />
+        <input onChange={onChangeHandler} placeholder="Search game..." type="search" />
       </form>
     </div>
   );

@@ -9,10 +9,21 @@ const { home, product, about } = links;
 
 const Header: FC = (): JSX.Element => {
   const [dropdown, setDropdown] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isOpenModalSignIn, setIsOpenModalSignIn] = useState<boolean>(false);
+  const [isOpenModalSignUp, setIsOpenModalSignUp] = useState<boolean>(false);
 
-  const toggleModal = () => {
-    setIsOpen(true);
+  const openModal = (event: { currentTarget: { dataset: { sign: string } } }) => {
+    if (event.currentTarget.dataset.sign === "signIn") {
+      setIsOpenModalSignIn(true);
+    }
+    if (event.currentTarget.dataset.sign === "signUp") {
+      setIsOpenModalSignUp(true);
+    }
+  };
+
+  const closeModal = () => {
+    setIsOpenModalSignIn(false);
+    setIsOpenModalSignUp(false);
   };
 
   let className = "nav-elem arrow";
@@ -41,48 +52,18 @@ const Header: FC = (): JSX.Element => {
                 About
               </Link>
             </li>
-            <li className="nav-elem" onClick={toggleModal}>
-              {isOpen && (
-                <Modal title="Authorization" onSubmit={() => setIsOpen(false)}>
-                  <div className="form">
-                    <div className="form-group">
-                      <label htmlFor="login">Login</label>
-                      <input className="input-form" type="text" name="login" placeholder="login" />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="password">Password</label>
-                      <input className="input-form" type="text" name="password" placeholder="password" />
-                    </div>
-                  </div>
-                </Modal>
-              )}
+            <li className="nav-elem" data-sign="signIn" onClick={openModal}>
               <Link className="nav-link" to="/">
                 Sign in
               </Link>
             </li>
-            <li className="nav-elem" onClick={toggleModal}>
-              {isOpen && (
-                <Modal title="Registration" onSubmit={toggleModal}>
-                  <div className="form">
-                    <div className="form-group">
-                      <label htmlFor="login">Login</label>
-                      <input className="input-form" type="text" name="login" placeholder="login" />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="password">Password</label>
-                      <input className="input-form" type="text" name="password" placeholder="password" />
-                    </div>
-                    <div className="form-group">
-                      <label htmlFor="password">Password</label>
-                      <input className="input-form" type="text" name="password" placeholder="password" />
-                    </div>
-                  </div>
-                </Modal>
-              )}
+            {isOpenModalSignIn && <Modal title="Authorization" onSubmit={closeModal} />}
+            <li className="nav-elem" data-sign="signUp" onClick={openModal}>
               <Link className="nav-link" to="/">
                 Sign up
               </Link>
             </li>
+            {isOpenModalSignUp && <Modal title="Registration" onSubmit={closeModal} />}
           </ul>
         </nav>
       </div>

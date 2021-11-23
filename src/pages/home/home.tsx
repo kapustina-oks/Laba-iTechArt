@@ -27,9 +27,11 @@ const Home: FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    onRequestSort();
+    if (!loading) {
+      onRequestSort();
+    }
     onRequestCategories();
-  }, []);
+  }, [loading]);
 
   const handleCategory = (category: string): void => {
     router.push(`/products/${category}`);

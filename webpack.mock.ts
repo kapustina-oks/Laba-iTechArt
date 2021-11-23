@@ -36,7 +36,8 @@ export default webpackMockServer.add((app, helper) => {
     const categoriesList = categories;
     res.json(Object.values(categoriesList));
   });
-  app.post("/testPostMock", (req, res) => {
+  app.post("/api/auth/signIn", (req, res) => {
+    console.log('submit');
     res.json({ body: req.body || null, success: true });
   });
 });

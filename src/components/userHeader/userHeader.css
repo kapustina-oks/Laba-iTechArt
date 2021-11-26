@@ -1,0 +1,12 @@
+.icons-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.icons-size {
+  font-size: 28px;
+}
+
+.icons-text {
+  padding-left: 5px;
+}

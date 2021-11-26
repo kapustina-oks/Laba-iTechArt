@@ -23,5 +23,19 @@ export const postResource = async (url: string, body) => {
   if (!res.ok) {
     throw new Error(`Could not fetch url: ${url}, status: ${res.status}`);
   }
-  return await res.json();
+  return res;
+};
+
+export const putResource = async (url: string, body) => {
+  const res = await fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    throw new Error(`Could not fetch url: ${url}, status: ${res.status}`);
+  }
+  return res;
 };

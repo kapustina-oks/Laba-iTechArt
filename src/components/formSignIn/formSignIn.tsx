@@ -1,5 +1,6 @@
-import { ChangeEvent, FocusEvent, useEffect, useState } from "react";
-import {postResource} from "../../services/dataService";
+import { ChangeEvent, FocusEvent, useContext, useEffect, useState } from "react";
+import { postResource } from "@/services/dataService";
+import { AuthContext } from "../context/context";
 
 const FormSignIn = ({ onSubmit }) => {
   const [login, setLogin] = useState<string>("");
@@ -14,19 +15,27 @@ const FormSignIn = ({ onSubmit }) => {
     password: "",
   });
 
+  const { authLogIn, authLogOut } = useContext(AuthContext);
+
   useEffect(() => {
     localStorage.setItem("login", JSON.stringify(login));
-    localStorage.setItem("password", JSON.stringify(password));
+    // localStorage.setItem("password", JSON.stringify(password));
     setData({ login, password });
-    postResource("/api/auth/signIn", data).then((res) => console.log(res));
     console.log(data);
   }, [login, password]);
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
-
-    console.log("data1");
-    postResource("/api/auth/signIn", data).then((res) => console.log(res));
+    postResource("/api/auth/signIn", data)
+      .then((res) => {
+        if (res.ok) {
+          authLogIn(data);
+          console.log(res);
+        } else {
+          authLogOut();
+        }
+      })
+      .then(onSubmit);
   };
 
   useEffect(() => {
@@ -38,15 +47,15 @@ const FormSignIn = ({ onSubmit }) => {
   }, [loginDirtyErr, passwordDirtyErr]);
 
   const handleChangeLogin = (e: ChangeEvent<HTMLInputElement>) => {
-    const login = e.target.value;
-    setLogin(login);
-    if (!/^[a-zA-Z1-9]+$/.test(login)) {
+    const loginValue = e.target.value;
+    setLogin(loginValue);
+    if (!/^[a-zA-Z1-9]+$/.test(loginValue)) {
       setLoginDirtyErr("В логине должны быть латинские буквы/цифры");
-    } else if (login.length < 4 || login.length > 20) {
+    } else if (loginValue.length < 4 || loginValue.length > 20) {
       setLoginDirtyErr("В логине должен быть от 4 до 20 символов");
-    } else if (parseInt(login.substr(0, 1), 10)) {
+    } else if (parseInt(loginValue.substr(0, 1), 10)) {
       setLoginDirtyErr("Логине должен начинаться с буквы");
-    } else if (!login) {
+    } else if (!loginValue) {
       setLoginDirtyErr("логин не м б пустым");
     } else {
       setLoginDirtyErr("");
@@ -73,11 +82,13 @@ const FormSignIn = ({ onSubmit }) => {
       case "password":
         setPasswordDirty(true);
         break;
+      default:
+        break;
     }
   };
 
   return (
-    <form className="form" onSubmit={handleSubmitForm}>
+    <div className="form">
       <div className="form-group">
         <label htmlFor="login">Login</label>
         {loginDirty ? <div style={{ color: "red" }}>{loginDirtyErr}</div> : null}
@@ -90,8 +101,6 @@ const FormSignIn = ({ onSubmit }) => {
           name="login"
           placeholder="login..."
         />
-      </div>
-      <div className="form-group">
         <label htmlFor="password">Password</label>
         {passwordDirty ? <div style={{ color: "red" }}>{passwordDirtyErr}</div> : null}
         <input
@@ -103,18 +112,13 @@ const FormSignIn = ({ onSubmit }) => {
           name="password"
           placeholder="password..."
         />
+        <div className="padding-btn">
+          <button type="button" disabled={!formValid} className="modal-btn" onClick={handleSubmitForm}>
+            Submit
+          </button>
+        </div>
       </div>
-      <div className="padding-btn">
-        <button
-          type="button"
-          disabled={!formValid}
-          className="modal-btn"
-          //onClick={onSubmit}
-        >
-          Submit
-        </button>
-      </div>
-    </form>
+    </div>
   );
 };
 

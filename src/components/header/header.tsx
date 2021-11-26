@@ -2,17 +2,15 @@ import { Link } from "react-router-dom";
 import "./header.css";
 import { links } from "@/links";
 import { FC, useState } from "react";
-import Dropdown from "../dropdown/dropdown";
 import Modal from "../modal/modal";
 
-const { home, product, about } = links;
+const { home } = links;
 
 const Header: FC = (): JSX.Element => {
-  const [dropdown, setDropdown] = useState<boolean>(false);
   const [isOpenModalSignIn, setIsOpenModalSignIn] = useState<boolean>(false);
   const [isOpenModalSignUp, setIsOpenModalSignUp] = useState<boolean>(false);
 
-  const openModal = (event: { currentTarget: { dataset: { sign: string } } }) => {
+  const openModal = (event: { currentTarget: { dataset: { sign: string } } }): void => {
     if (event.currentTarget.dataset.sign === "signIn") {
       setIsOpenModalSignIn(true);
     }
@@ -21,15 +19,11 @@ const Header: FC = (): JSX.Element => {
     }
   };
 
-  const closeModal = () => {
+  const closeModal = (): void => {
     setIsOpenModalSignIn(false);
     setIsOpenModalSignUp(false);
   };
 
-  let className = "nav-elem arrow";
-  if (dropdown) {
-    className = "nav-elem arrow-top";
-  }
   return (
     <header>
       <div className="container">
@@ -41,27 +35,28 @@ const Header: FC = (): JSX.Element => {
                 Home
               </Link>
             </li>
-            <li className={className} onMouseEnter={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
-              <Link className="nav-link" to={product}>
+            <li className="nav-elem arrow" data-sign="signUp" onClick={openModal}>
+              <div className="nav-link">
                 Products
-              </Link>
-              {dropdown && <Dropdown />}
+              </div>
             </li>
-            <li className="nav-elem">
-              <Link className="nav-link" to={about}>
+            {isOpenModalSignUp && <Modal title="Registration" onSubmit={closeModal} />}
+            <li className="nav-elem" data-sign="signUp" onClick={openModal}>
+              <div className="nav-link">
                 About
-              </Link>
+              </div>
             </li>
+            {isOpenModalSignUp && <Modal title="Registration" onSubmit={closeModal} />}
             <li className="nav-elem" data-sign="signIn" onClick={openModal}>
-              <Link className="nav-link" to="/">
+              <div className="nav-link">
                 Sign in
-              </Link>
+              </div>
             </li>
             {isOpenModalSignIn && <Modal title="Authorization" onSubmit={closeModal} />}
-            <li className="nav-elem" data-sign="signUp" onClick={openModal}>
-              <Link className="nav-link" to="/">
+            <li className="nav-elem " data-sign="signUp" onClick={openModal}>
+              <div className="nav-link">
                 Sign up
-              </Link>
+              </div>
             </li>
             {isOpenModalSignUp && <Modal title="Registration" onSubmit={closeModal} />}
           </ul>

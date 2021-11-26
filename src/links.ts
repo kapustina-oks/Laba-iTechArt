@@ -4,5 +4,6 @@ export const links = {
   about: "/about",
   signin: "/signin",
   signup: "/signup",
+  profile: "/profile",
   other: "*",
 };

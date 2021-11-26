@@ -36,8 +36,22 @@ export default webpackMockServer.add((app, helper) => {
     const categoriesList = categories;
     res.json(Object.values(categoriesList));
   });
+  const users = [];
   app.post("/api/auth/signIn", (req, res) => {
-    console.log('submit');
-    res.json({ body: req.body || null, success: true });
+    const login = req.body.login;
+    const password = req.body.password;
+    console.log(req.body);
+    users.forEach((user) => {
+      if (user.login === login && user.password === password) {
+        res.status(201);
+      } else {
+        res.status(401);
+      }
+    });
+    res.json({ body: req.body || null, success: true, users});
+  });
+  app.put("/api/auth/signUp", (req, res) => {
+    users.push(req.body);
+    res.json({ body: req.body || null, success: true, users});
   });
 });

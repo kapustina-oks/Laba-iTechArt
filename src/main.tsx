@@ -2,8 +2,10 @@ import "./styles/main.css";
 import "./styles/main.scss";
 import { Component, StrictMode } from "react";
 import ReactDom from "react-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import someTypeScript from "./someTypeScript";
 import App from "./components/app/app";
+import { Auth, AuthContext } from "./components/context/context";
 
 interface AppProps {
   nothing: boolean;
@@ -27,10 +29,17 @@ class AppContainer extends Component<AppProps, AppState> {
     }
   }
 
+  static contextType = AuthContext;
+
   render() {
     return (
       <StrictMode>
-        <App/>
+        <Router>
+          <Auth value={this.context}>
+            <App />
+          </Auth>
+        </Router>
+
         {/* <div className="test-block">
           <h2 className={style.mainTitle}>{this.state.title}</h2>
         </div>

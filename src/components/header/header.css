@@ -104,7 +104,6 @@ header {
 }
 
 .form {
-
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -112,14 +111,15 @@ header {
 }
 
 .form-group {
-
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   width: fit-content;
 }
 
 label {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
   font-size: 20px;
 }
 
@@ -146,5 +146,18 @@ input {
 /*  outline: none;*/
 /*  box-shadow: 0px 0px 12px 0.8px #3474dbb2;*/
 /*}*/
+
+.icons-flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.icons-size {
+  font-size: 28px;
+}
+
+.icons-text {
+  padding-left: 5px;
+}
 
 

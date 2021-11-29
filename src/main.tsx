@@ -1,11 +1,12 @@
 import "./styles/main.css";
 import "./styles/main.scss";
-import { Component, StrictMode } from "react";
+import React, { Component, StrictMode } from "react";
 import ReactDom from "react-dom";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import someTypeScript from "./someTypeScript";
 import App from "./components/app/app";
 import { Auth, AuthContext } from "./components/context/context";
+import FormSignUp from "@/components/formSignUp/formSignUp";
 
 interface AppProps {
   nothing: boolean;

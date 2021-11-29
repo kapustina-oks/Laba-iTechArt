@@ -2,7 +2,7 @@ import { useEffect, FC, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Card from "@/components/card/card";
 import { ICategories, dataItems } from "@/types/types";
-import { getResource } from "../../services/dataService";
+import { getResource } from "@/services/dataService";
 import CardCategory from "../../components/cardCategory/cardCategory";
 import "./home.css";
 import SearchPanel from "../../components/searchPanel/searchPanel";

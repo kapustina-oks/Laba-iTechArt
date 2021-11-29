@@ -1,12 +1,13 @@
-import { createContext, useState } from "react";
+import { createContext, FC, useState } from "react";
+import { IContext } from "@/types/types";
 
-export const AuthContext = createContext();
+export const AuthContext = createContext<IContext>({} as IContext);
 
-export const Auth = (props) => {
+export const Auth: FC = (props) => {
   const [auth, setAuth] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>("User name");
 
-  const authLogIn = (user) => {
+  const authLogIn = (user: { login: string }) => {
     setAuth(true);
     setUserName(user.login);
   };
@@ -15,15 +16,6 @@ export const Auth = (props) => {
     setAuth(false);
     localStorage.clear();
   };
-
-  // const authLocalStorage = () => {
-  //   const login = localStorage.getItem("login");
-  //   if (login) {
-  //     localStorage.setItem("userName", userName);
-  //     setAuth(true);
-  //     //setUserName(login);
-  //   }
-  // };
 
   const value = {
     auth,

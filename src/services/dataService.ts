@@ -1,4 +1,6 @@
-export const getResource = async (url: string) => {
+import { IPostData, IPutData } from "@/types/types";
+
+export const getResource = async (url: string): Promise<[]> => {
   const res = await fetch(url, {
     headers: {
       "Content-Type": "application/json",
@@ -8,11 +10,10 @@ export const getResource = async (url: string) => {
     throw new Error(`Could not fetch /api/games, status: ${res.status}`);
   }
 
-  const res2 = await res.json();
-  return res2;
+  return await res.json();
 };
 
-export const postResource = async (url: string, body) => {
+export const postResource: (url: string, body: IPutData) => Promise<Response> = async (url, body) => {
   const res = await fetch(url, {
     method: "POST",
     headers: {
@@ -26,7 +27,7 @@ export const postResource = async (url: string, body) => {
   return res;
 };
 
-export const putResource = async (url: string, body) => {
+export const putResource: (url: string, body: IPostData) => Promise<Response> = async (url, body) => {
   const res = await fetch(url, {
     method: "PUT",
     headers: {

@@ -1,9 +1,9 @@
 import webpackMockServer from "webpack-mock-server";
 import { categories } from "@/mock/categories";
+import { dataItems, IUsersRegistration, IUsersAuthorisation } from "@/types/types";
 import dataGames from "./src/mock/dataBase";
-import { dataItems } from "./src/types/types";
 
-export default webpackMockServer.add((app, helper) => {
+export default webpackMockServer.add((app) => {
   app.get("/api/games", (_req, res) => {
     let gamesList = [...dataGames];
     if (_req.query.filter) {
@@ -36,10 +36,10 @@ export default webpackMockServer.add((app, helper) => {
     const categoriesList = categories;
     res.json(Object.values(categoriesList));
   });
-  const users = [];
+  const users: IUsersRegistration[] | IUsersAuthorisation[] = [];
   app.post("/api/auth/signIn", (req, res) => {
-    const login = req.body.login;
-    const password = req.body.password;
+    const { login } = req.body;
+    const { password } = req.body;
     console.log(req.body);
     users.forEach((user) => {
       if (user.login === login && user.password === password) {
@@ -48,10 +48,10 @@ export default webpackMockServer.add((app, helper) => {
         res.status(401);
       }
     });
-    res.json({ body: req.body || null, success: true, users});
+    res.json({ body: req.body || null, success: true, users });
   });
   app.put("/api/auth/signUp", (req, res) => {
     users.push(req.body);
-    res.json({ body: req.body || null, success: true, users});
+    res.json({ body: req.body || null, success: true, users });
   });
 });

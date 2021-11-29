@@ -1,8 +1,8 @@
 import { ChangeEvent, FocusEvent, useContext, useEffect, useState } from "react";
-import { putResource } from "@/services/dataService";
 import { AuthContext } from "@/components/context/context";
 import { useHistory } from "react-router-dom";
 import { IContext, PropsForm } from "@/types/types";
+import { usersRegistration } from "@/services/dataService";
 
 const FormSignUp = ({ onSubmit }: PropsForm): JSX.Element => {
   const [login, setLogin] = useState<string>("");
@@ -29,10 +29,11 @@ const FormSignUp = ({ onSubmit }: PropsForm): JSX.Element => {
 
   const handleSubmitForm = () => {
     console.log(data);
-    putResource("/api/auth/signUp", data)
+    usersRegistration("/api/auth/signUp", data)
       .then((res) => {
         if (res.ok) {
           authLogIn(data);
+          localStorage.setItem("user", login);
           console.log(res);
           router.push("/profile");
         } else {

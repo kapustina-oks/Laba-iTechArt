@@ -1,16 +1,16 @@
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { links } from "@/links";
 // eslint-disable-next-line no-use-before-define
 import React, { ReactNode } from "react";
+import Profile from "@/pages/profile/profile";
 import Header from "../header/header";
 import Products from "../../pages/product/product";
 import About from "../../pages/about/about";
 import Home from "../../pages/home/home";
-import Page404 from "../../pages/404Page";
 import Footer from "../footer/footer";
 import ProtectedRouter from "../../pages/protectedRouter/protectedRouter";
 
-const { product, about, other } = links;
+const { home, product, about, profile, other } = links;
 
 interface PropsApp {
   [key: string]: unknown;
@@ -49,12 +49,13 @@ class App extends React.Component<PropsApp, IState> {
             <ProtectedRouter path={about}>
               <About />
             </ProtectedRouter>
+            <ProtectedRouter path={profile}>
+              <Profile />
+            </ProtectedRouter>
             <Route exact path="/:login?">
               <Home />
             </Route>
-            <Route path={other}>
-              <Page404 />
-            </Route>
+            <Redirect from={other} to={home} />
           </Switch>
         </main>
         <Footer />

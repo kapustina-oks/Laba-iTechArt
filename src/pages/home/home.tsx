@@ -1,5 +1,5 @@
-import { useEffect, FC, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useEffect, FC, useState, useContext } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import Card from "@/components/card/card";
 import { ICategories, dataItems } from "@/types/types";
 import { getResource } from "@/services/dataService";
@@ -7,12 +7,23 @@ import CardCategory from "../../components/cardCategory/cardCategory";
 import "./home.css";
 import SearchPanel from "../../components/searchPanel/searchPanel";
 import Spinner from "../../components/spinner/spinner";
+import { AuthContext } from "@/components/context/context";
 
 const Home: FC = (): JSX.Element => {
   const [gameList, setGameList] = useState<dataItems[]>([]);
   const [categoriesList, setCategoriesList] = useState<ICategories[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const router = useHistory();
+  const location = useLocation();
+
+  const { auth, onOpenModal } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (location.pathname === "/:login" && !auth) {
+      onOpenModal();
+    }
+  }, []);
+
 
   const onRequestSort = () => {
     getResource("/api/games?sortBy=date&limit=3").then((data) => setGameList(data));

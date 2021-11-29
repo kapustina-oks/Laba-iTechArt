@@ -1,12 +1,12 @@
 import { FC, useContext } from "react";
 import { AuthContext } from "@/components/context/context";
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, RouteProps } from "react-router-dom";
 
-interface IPropsProtectedRoute {
-  redirectPath: string;
+interface IPropsProtectedRoute extends RouteProps {
+  redirectPath?: string;
 }
 
-const ProtectedRouter: FC<IPropsProtectedRoute> = ({ redirectPath, ...rest }) => {
+const ProtectedRouter: FC<IPropsProtectedRoute> = ({ redirectPath, ...rest }: IPropsProtectedRoute) => {
   const { auth } = useContext(AuthContext);
 
   return auth ? (

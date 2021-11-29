@@ -1,4 +1,4 @@
-import { IPostData, IPutData } from "@/types/types";
+import { IUsersRegistration, IUsersAuthorisation } from "@/types/types";
 
 export const getResource = async (url: string): Promise<[]> => {
   const res = await fetch(url, {
@@ -13,7 +13,7 @@ export const getResource = async (url: string): Promise<[]> => {
   return await res.json();
 };
 
-export const postResource: (url: string, body: IPutData) => Promise<Response> = async (url, body) => {
+export const usersAuthorisation: (url: string, body: IUsersAuthorisation) => Promise<Response> = async (url, body) => {
   const res = await fetch(url, {
     method: "POST",
     headers: {
@@ -27,7 +27,7 @@ export const postResource: (url: string, body: IPutData) => Promise<Response> = 
   return res;
 };
 
-export const putResource: (url: string, body: IPostData) => Promise<Response> = async (url, body) => {
+export const usersRegistration: (url: string, body: IUsersRegistration) => Promise<Response> = async (url, body) => {
   const res = await fetch(url, {
     method: "PUT",
     headers: {

@@ -25,17 +25,20 @@ export interface dataItems {
 export interface IContext {
   auth: boolean;
   userName: string;
+  modal: boolean;
   authLogIn: (user: { login: string }) => void;
   authLogOut: () => void;
+  onOpenModal: () => void;
+  onCloseModal: () => void;
 }
 
-export interface IPostData {
+export interface IUsersRegistration {
   login: string;
   password: string;
   passwordRepeat: string;
 }
 
-export interface IPutData {
+export interface IUsersAuthorisation {
   login: string;
   password: string;
 }
@@ -43,3 +46,4 @@ export interface IPutData {
 export interface PropsForm {
   onSubmit: () => void;
 }
+

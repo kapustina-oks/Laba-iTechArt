@@ -1,5 +1,5 @@
 import { ChangeEvent, FocusEvent, useContext, useEffect, useState } from "react";
-import { postResource } from "@/services/dataService";
+import { usersAuthorisation } from "@/services/dataService";
 import { IContext, PropsForm } from "@/types/types";
 import { AuthContext } from "../context/context";
 
@@ -22,14 +22,14 @@ const FormSignIn = ({ onSubmit }: PropsForm) => {
   const { authLogIn, authLogOut } = useContext<IContext>(AuthContext);
 
   useEffect(() => {
-    localStorage.setItem("login", JSON.stringify(login));
+    //localStorage.setItem("login", JSON.stringify(login));
     // localStorage.setItem("password", JSON.stringify(password));
     setData({ login, password });
     console.log(data);
   }, [login, password]);
 
   const handleSubmitForm = () => {
-    postResource("/api/auth/signIn", data)
+    usersAuthorisation("/api/auth/signIn", data)
       .then((res) => {
         if (res.ok) {
           authLogIn(data);

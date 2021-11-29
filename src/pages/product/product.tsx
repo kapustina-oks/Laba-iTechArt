@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getResource } from "@/services/dataService";
 import Card from "@/components/card/card";
-import { dataItems } from "../../types/types";
+import { dataItems } from "@/types/types";
 import "./product.css";
 
 interface IParams {

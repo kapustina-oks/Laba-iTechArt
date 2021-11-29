@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState } from "react";
+import React, { FC, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./header.css";
 import { links } from "@/links";
@@ -13,7 +13,14 @@ const Header: FC = (): JSX.Element => {
   const [isOpenModalSignIn, setIsOpenModalSignIn] = useState<boolean>(false);
   const [isOpenModalSignUp, setIsOpenModalSignUp] = useState<boolean>(false);
 
-  const { auth, userName, authLogOut } = useContext(AuthContext);
+  const { auth, modal, userName, authLogOut, onCloseModal } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (modal) {
+      setIsOpenModalSignUp(true);
+      onCloseModal();
+    }
+  }, [modal]);
 
   const openModal = (event: React.SyntheticEvent<HTMLElement>) => {
     if (event.currentTarget.dataset.sign === "signIn") {

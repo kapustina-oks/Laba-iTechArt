@@ -43,67 +43,86 @@ const Header: FC = (): JSX.Element => {
 
   return (
     <header>
-      <div className="container">
-        <div className="logo">Game Store</div>
-        <nav className="nav">
-          <ul className="nav-list">
-            <li className="nav-elem">
-              <Link className="nav-link" to={home}>
-                Home
-              </Link>
-            </li>
-            <li className={className} onMouseEnter={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
-              <Link className="nav-link" to={product}>
-                Products
-              </Link>
-              {dropdown && <Dropdown />}
-            </li>
-            {/* {isOpenModalSignUp && <Modal title="Registration" onSubmit={closeModal} />}*/}
-            <li className="nav-elem">
-              <Link className="nav-link" to={about}>
-                About
-              </Link>
-            </li>
-            {/* {isOpenModalSignUp && <Modal title="Registration" onSubmit={closeModal} />}*/}
-            {auth ? (
-              <>
-                <li className="nav-elem" data-sign="signUp">
-                  <Link className="nav-link" to="/profile">
-                    <div className="icons-flex">
-                      <i className="fas fa-user icons-size" />
-                      <div className="icons-text">{userName}</div>
-                    </div>
-                  </Link>
-                </li>
-                <li className="nav-elem" data-sign="signIn">
-                  <Link className="nav-link" to="/">
-                    <div className="icons-flex">
-                      <i className="fas fa-shopping-cart icons-size" />
-                      <div className="icons-text">0</div>
-                    </div>
-                  </Link>
-                </li>
-                <li className="nav-elem" data-sign="signUp" onClick={() => authLogOut()}>
-                  <Link className="nav-link" to="/">
-                    <i className="fas fa-sign-out-alt icons-size" />
-                  </Link>
-                </li>
-              </>
-            ) : (
-              <>
-                <li className="nav-elem" data-sign="signIn" onClick={openModal}>
-                  <div className="nav-link">Sign in</div>
-                </li>
-                {isOpenModalSignIn && <Modal title="Authorization" onSubmit={closeModal} />}
-                <li className="nav-elem " data-sign="signUp" onClick={openModal}>
-                  <div className="nav-link">Sign up</div>
-                </li>
-                {isOpenModalSignUp && <Modal title="Registration" onSubmit={closeModal} />}
-              </>
-            )}
-          </ul>
-        </nav>
-      </div>
+      {auth ? (
+        <div className="container">
+          <div className="logo">Game Store</div>
+          <nav className="nav">
+            <ul className="nav-list">
+              <li className="nav-elem">
+                <Link className="nav-link" to={home}>
+                  Home
+                </Link>
+              </li>
+              <li className={className} onMouseEnter={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
+                <Link className="nav-link" to={product}>
+                  Products
+                </Link>
+                {dropdown && <Dropdown />}
+              </li>
+              {/* {isOpenModalSignUp && <Modal title="Registration" onSubmit={closeModal} />}*/}
+              <li className="nav-elem">
+                <Link className="nav-link" to={about}>
+                  About
+                </Link>
+              </li>
+              <li className="nav-elem" data-sign="signUp">
+                <Link className="nav-link" to="/profile">
+                  <div className="icons-flex">
+                    <i className="fas fa-user icons-size" />
+                    <div className="icons-text">{userName}</div>
+                  </div>
+                </Link>
+              </li>
+              <li className="nav-elem" data-sign="signIn">
+                <Link className="nav-link" to="/">
+                  <div className="icons-flex">
+                    <i className="fas fa-shopping-cart icons-size" />
+                    <div className="icons-text">0</div>
+                  </div>
+                </Link>
+              </li>
+              <li className="nav-elem" data-sign="signUp" onClick={() => authLogOut()}>
+                <Link className="nav-link" to="/">
+                  <i className="fas fa-sign-out-alt icons-size" />
+                </Link>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      ) : (
+        <div className="container">
+          <div className="logo">Game Store</div>
+          <nav className="nav">
+            <ul className="nav-list">
+              <li className="nav-elem">
+                <Link className="nav-link" to={home}>
+                  Home
+                </Link>
+              </li>
+              <li className="nav-elem">
+                <Link className="nav-link" to={product}>
+                  Products
+                </Link>
+
+              </li>
+              {/* {isOpenModalSignUp && <Modal title="Registration" onSubmit={closeModal} />}*/}
+              <li className="nav-elem">
+                <Link className="nav-link" to={about}>
+                  About
+                </Link>
+              </li>
+              <li className="nav-elem" data-sign="signIn" onClick={openModal}>
+                <div className="nav-link">Sign in</div>
+              </li>
+              {isOpenModalSignIn && <Modal title="Authorization" onSubmit={closeModal} />}
+              <li className="nav-elem " data-sign="signUp" onClick={openModal}>
+                <div className="nav-link">Sign up</div>
+              </li>
+              {isOpenModalSignUp && <Modal title="Registration" onSubmit={closeModal} />}
+            </ul>
+          </nav>
+        </div>
+      )}
     </header>
   );
 };

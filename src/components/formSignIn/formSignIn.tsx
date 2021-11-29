@@ -10,8 +10,8 @@ const FormSignIn = ({ onSubmit }: PropsForm) => {
   const [loginDirty, setLoginDirty] = useState<boolean>(false);
   const [passwordDirty, setPasswordDirty] = useState<boolean>(false);
 
-  const [loginDirtyErr, setLoginDirtyErr] = useState<string>("логин не м б пустым");
-  const [passwordDirtyErr, setPasswordDirtyErr] = useState<string>("пароль не м б пустым");
+  const [loginDirtyErr, setLoginDirtyErr] = useState<string>("Логин не может быть пустым");
+  const [passwordDirtyErr, setPasswordDirtyErr] = useState<string>("Пароль не может быть пустым");
 
   const [formValid, setFormValid] = useState<boolean>(false);
   const [data, setData] = useState({
@@ -22,8 +22,6 @@ const FormSignIn = ({ onSubmit }: PropsForm) => {
   const { authLogIn, authLogOut } = useContext<IContext>(AuthContext);
 
   useEffect(() => {
-    //localStorage.setItem("login", JSON.stringify(login));
-    // localStorage.setItem("password", JSON.stringify(password));
     setData({ login, password });
     console.log(data);
   }, [login, password]);
@@ -33,6 +31,7 @@ const FormSignIn = ({ onSubmit }: PropsForm) => {
       .then((res) => {
         if (res.ok) {
           authLogIn(data);
+          localStorage.setItem("user", login);
           console.log(res);
         } else {
           authLogOut();

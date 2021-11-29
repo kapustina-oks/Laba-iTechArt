@@ -16,14 +16,20 @@ const Home: FC = (): JSX.Element => {
   const router = useHistory();
   const location = useLocation();
 
-  const { auth, onOpenModal } = useContext(AuthContext);
+  const { auth, onOpenModal, authLogIn } = useContext(AuthContext);
 
   useEffect(() => {
     if (location.pathname === "/:login" && !auth) {
       onOpenModal();
     }
-  }, []);
+  }, [auth]);
 
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      authLogIn({ login: user });
+    }
+  }, []);
 
   const onRequestSort = () => {
     getResource("/api/games?sortBy=date&limit=3").then((data) => setGameList(data));

@@ -99,7 +99,7 @@ const Header: FC = (): JSX.Element => {
                   Home
                 </Link>
               </li>
-              <li className="nav-elem">
+              <li className="nav-elem arrow">
                 <Link className="nav-link" to={product}>
                   Products
                 </Link>

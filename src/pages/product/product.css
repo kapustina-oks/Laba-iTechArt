@@ -1,0 +1,9 @@
+.grid_games {
+  display: grid;
+  grid-template-columns: repeat(3, 300px);
+  justify-content: center;
+  column-gap: 50px;
+  row-gap: 30px;
+  padding-top: 60px;
+  padding-bottom: 100px;
+}

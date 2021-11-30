@@ -1,0 +1,27 @@
+.card-category {
+  color: white;
+  background-color: black;
+  min-height: 180px;
+  min-width: 280px;
+  border-radius: 15px;
+  text-align: center;
+  border-color: #9833cc;
+  border-style: solid;
+  border-width: 4px 4px 10px 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-category:hover {
+  border-color: #cfa4d9;
+}
+
+.card-title {
+  padding-bottom: 20px;
+}
+
+.fab-icons {
+  font-size: 80px;
+}

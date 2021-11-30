@@ -1,7 +1,4 @@
-export const debounce = <T>(
-  fn: (...args: T[]) => void,
-  ms: number
-) => {
+export const debounce = <T>(fn: (...args: T[]) => void, ms: number): ((...args: T[]) => void) => {
   let timeoutId: ReturnType<typeof setTimeout>;
   return (...args: T[]) => {
     if (timeoutId) clearTimeout(timeoutId);

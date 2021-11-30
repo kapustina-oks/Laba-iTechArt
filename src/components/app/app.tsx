@@ -8,7 +8,7 @@ import Products from "../../pages/product/product";
 import About from "../../pages/about/about";
 import Home from "../../pages/home/home";
 import Footer from "../footer/footer";
-import ProtectedRouter from "../../pages/protectedRouter/protectedRouter";
+import ProtectedRouter from "../protectedRouter/protectedRouter";
 
 const { home, product, about, profile, other } = links;
 

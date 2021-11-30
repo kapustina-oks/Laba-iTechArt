@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import Home from "../home/home";
 
-const About = () => {
+const About: FC = (): JSX.Element => {
   const [error, setError] = useState<boolean>(false);
   useEffect(() => {
     setError(true);

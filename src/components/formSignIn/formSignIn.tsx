@@ -3,7 +3,7 @@ import { usersAuthorisation } from "@/services/dataService";
 import { IContext, PropsForm } from "@/types/types";
 import { AuthContext } from "../context/context";
 
-const FormSignIn = ({ onSubmit }: PropsForm) => {
+const FormSignIn = ({ onSubmit }: PropsForm): JSX.Element => {
   const [login, setLogin] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 

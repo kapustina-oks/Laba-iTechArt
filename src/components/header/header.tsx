@@ -59,7 +59,6 @@ const Header: FC = (): JSX.Element => {
                 </Link>
                 {dropdown && <Dropdown />}
               </li>
-              {/* {isOpenModalSignUp && <Modal title="Registration" onSubmit={closeModal} />}*/}
               <li className="nav-elem">
                 <Link className="nav-link" to={about}>
                   About
@@ -103,9 +102,7 @@ const Header: FC = (): JSX.Element => {
                 <Link className="nav-link" to={product}>
                   Products
                 </Link>
-
               </li>
-              {/* {isOpenModalSignUp && <Modal title="Registration" onSubmit={closeModal} />}*/}
               <li className="nav-elem">
                 <Link className="nav-link" to={about}>
                   About

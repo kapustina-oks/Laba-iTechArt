@@ -3,11 +3,9 @@ import "./modal.css";
 import FormSignIn from "../formSignIn/formSignIn";
 import FormSignUp from "../formSignUp/formSignUp";
 
-
 interface PropsModal {
   title: string;
   onSubmit: () => void;
-  // children: ReactNode | ReactPortal;
 }
 
 const Modal: ({ title, onSubmit }: PropsModal) => JSX.Element = ({ title, onSubmit }) => {
@@ -27,8 +25,7 @@ const Modal: ({ title, onSubmit }: PropsModal) => JSX.Element = ({ title, onSubm
         </div>
       </Portal>
     </>
-  )
-}
-
+  );
+};
 
 export default Modal;

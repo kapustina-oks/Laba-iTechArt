@@ -1,6 +1,6 @@
 import webpackMockServer from "webpack-mock-server";
 import { categories } from "@/mock/categories";
-import { dataItems, IUsersRegistration, IUsersAuthorisation } from "@/types/types";
+import { dataItems, IUsersAuthorisation, IUsersRegistration } from "@/types/types";
 import dataGames from "./src/mock/dataBase";
 
 export default webpackMockServer.add((app) => {
@@ -33,8 +33,7 @@ export default webpackMockServer.add((app) => {
     res.json(response);
   });
   app.get("/api/categories", (_req, res) => {
-    const categoriesList = categories;
-    res.json(Object.values(categoriesList));
+    res.json(Object.values(categories));
   });
   const users: IUsersRegistration[] | IUsersAuthorisation[] = [];
   app.post("/api/auth/signIn", (req, res) => {

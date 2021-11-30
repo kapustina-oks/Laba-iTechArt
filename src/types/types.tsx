@@ -9,6 +9,7 @@ export interface Menu {
   title: string;
   path: string;
   cName: string;
+  id: number;
 }
 
 export interface dataItems {

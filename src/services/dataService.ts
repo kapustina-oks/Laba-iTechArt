@@ -10,7 +10,7 @@ export const getResource = async (url: string): Promise<[]> => {
     throw new Error(`Could not fetch /api/games, status: ${res.status}`);
   }
 
-  return await res.json();
+  return res.json();
 };
 
 export const usersAuthorisation: (url: string, body: IUsersAuthorisation) => Promise<Response> = async (url, body) => {

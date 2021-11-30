@@ -1,13 +1,17 @@
-import { useEffect, FC, useState, useContext } from "react";
+import { useEffect, FC, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import Card from "@/components/card/card";
 import { ICategories, dataItems } from "@/types/types";
 import { getResource } from "@/services/dataService";
-import CardCategory from "../../components/cardCategory/cardCategory";
 import "./home.css";
-import SearchPanel from "../../components/searchPanel/searchPanel";
+import { useDispatch, useSelector } from "react-redux";
+import { authLogInAction } from "@/store/actionCreators/authActions";
+import { openModalAction } from "@/store/actionCreators/modalActions";
+import { userNameAction } from "@/store/actionCreators/userNameAction";
+import { RootState } from "@/store/reducers/rootReducer";
+import CardCategory from "../../components/cardCategory/cardCategory";
 import Spinner from "../../components/spinner/spinner";
-import { AuthContext } from "@/components/context/context";
+import SearchPanel from "../../components/searchPanel/searchPanel";
 
 const Home: FC = (): JSX.Element => {
   const [gameList, setGameList] = useState<dataItems[]>([]);
@@ -16,18 +20,20 @@ const Home: FC = (): JSX.Element => {
   const router = useHistory();
   const location = useLocation();
 
-  const { auth, onOpenModal, authLogIn } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const auth = useSelector((state: RootState) => state.auth.auth);
 
   useEffect(() => {
     if (location.pathname === "/:login" && !auth) {
-      onOpenModal();
+      dispatch(openModalAction());
     }
   }, [auth]);
 
   useEffect(() => {
     const user = localStorage.getItem("user");
     if (user) {
-      authLogIn({ login: user });
+      dispatch(authLogInAction());
+      dispatch(userNameAction(user));
     }
   }, []);
 

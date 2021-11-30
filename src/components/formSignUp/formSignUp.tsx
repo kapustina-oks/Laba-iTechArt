@@ -1,8 +1,10 @@
-import { ChangeEvent, FocusEvent, useContext, useEffect, useState } from "react";
-import { AuthContext } from "@/components/context/context";
+import { ChangeEvent, FocusEvent, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { IContext, PropsForm } from "@/types/types";
+import { PropsForm } from "@/types/types";
 import { usersRegistration } from "@/services/dataService";
+import { useDispatch } from "react-redux";
+import { authLogInAction, authLogOutAction } from "@/store/actionCreators/authActions";
+import { userNameAction } from "@/store/actionCreators/userNameAction";
 
 const FormSignUp = ({ onSubmit }: PropsForm): JSX.Element => {
   const [login, setLogin] = useState<string>("");
@@ -24,20 +26,22 @@ const FormSignUp = ({ onSubmit }: PropsForm): JSX.Element => {
     passwordRepeat,
   });
 
-  const { authLogIn, authLogOut } = useContext<IContext>(AuthContext);
   const router = useHistory();
+  const dispatch = useDispatch();
 
   const handleSubmitForm = () => {
     console.log(data);
     usersRegistration("/api/auth/signUp", data)
       .then((res) => {
         if (res.ok) {
-          authLogIn(data);
+          dispatch(authLogInAction());
+          dispatch(userNameAction(login));
           localStorage.setItem("user", login);
           console.log(res);
           router.push("/profile");
         } else {
-          authLogOut();
+          dispatch(authLogOutAction());
+          localStorage.clear();
         }
       })
       .then(onSubmit);

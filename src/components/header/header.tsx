@@ -1,8 +1,11 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./header.css";
 import { links } from "@/links";
-import { AuthContext } from "@/components/context/context";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModalAction } from "@/store/actionCreators/modalActions";
+import { authLogOutAction } from "@/store/actionCreators/authActions";
+import { RootState } from "@/store/reducers/rootReducer";
 import Modal from "../modal/modal";
 import Dropdown from "../dropdown/dropdown";
 
@@ -13,12 +16,15 @@ const Header: FC = (): JSX.Element => {
   const [isOpenModalSignIn, setIsOpenModalSignIn] = useState<boolean>(false);
   const [isOpenModalSignUp, setIsOpenModalSignUp] = useState<boolean>(false);
 
-  const { auth, modal, userName, authLogOut, onCloseModal } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const modal = useSelector((state: RootState) => state.modal.modal);
+  const auth = useSelector((state: RootState) => state.auth.auth);
+  const userName = useSelector((state: RootState) => state.userName.userName);
 
   useEffect(() => {
     if (modal) {
       setIsOpenModalSignUp(true);
-      onCloseModal();
+      dispatch(closeModalAction());
     }
   }, [modal]);
 
@@ -80,7 +86,14 @@ const Header: FC = (): JSX.Element => {
                   </div>
                 </Link>
               </li>
-              <li className="nav-elem" data-sign="signUp" onClick={() => authLogOut()}>
+              <li
+                className="nav-elem"
+                data-sign="signUp"
+                onClick={() => {
+                  dispatch(authLogOutAction());
+                  localStorage.clear();
+                }}
+              >
                 <Link className="nav-link" to="/">
                   <i className="fas fa-sign-out-alt icons-size" />
                 </Link>

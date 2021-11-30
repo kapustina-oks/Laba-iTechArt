@@ -25,8 +25,8 @@ const Products: FC = (): JSX.Element => {
     }
   }, [categories]);
 
-  const contentCategory = gameCategoryList.map((game) => <Card game={game} />);
-  const contentProduct = productList.map((game) => <Card game={game} />);
+  const contentCategory = gameCategoryList.map((game) => <Card game={game} key={game.id} />);
+  const contentProduct = productList.map((game) => <Card game={game} key={game.id} />);
 
   return (
     <>

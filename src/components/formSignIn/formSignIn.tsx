@@ -1,7 +1,9 @@
-import { ChangeEvent, FocusEvent, useContext, useEffect, useState } from "react";
+import { ChangeEvent, FocusEvent, useEffect, useState } from "react";
 import { usersAuthorisation } from "@/services/dataService";
-import { IContext, PropsForm } from "@/types/types";
-import { AuthContext } from "../context/context";
+import { PropsForm } from "@/types/types";
+import { useDispatch } from "react-redux";
+import { authLogInAction, authLogOutAction } from "@/store/actionCreators/authActions";
+import { userNameAction } from "@/store/actionCreators/userNameAction";
 
 const FormSignIn = ({ onSubmit }: PropsForm): JSX.Element => {
   const [login, setLogin] = useState<string>("");
@@ -19,7 +21,7 @@ const FormSignIn = ({ onSubmit }: PropsForm): JSX.Element => {
     password,
   });
 
-  const { authLogIn, authLogOut } = useContext<IContext>(AuthContext);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setData({ login, password });
@@ -30,11 +32,13 @@ const FormSignIn = ({ onSubmit }: PropsForm): JSX.Element => {
     usersAuthorisation("/api/auth/signIn", data)
       .then((res) => {
         if (res.ok) {
-          authLogIn(data);
+          dispatch(authLogInAction());
+          dispatch(userNameAction(login));
           localStorage.setItem("user", login);
           console.log(res);
         } else {
-          authLogOut();
+          dispatch(authLogOutAction());
+          localStorage.clear();
         }
       })
       .then(onSubmit);

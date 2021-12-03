@@ -32,10 +32,13 @@ export default webpackMockServer.add((app) => {
     const response = gamesList;
     res.json(response);
   });
+
   app.get("/api/categories", (_req, res) => {
     res.json(Object.values(categories));
   });
+
   const users: IUsersRegistration[] | IUsersAuthorisation[] = [];
+
   app.post("/api/auth/signIn", (req, res) => {
     const { login } = req.body;
     const { password } = req.body;
@@ -49,7 +52,18 @@ export default webpackMockServer.add((app) => {
     });
     res.json({ body: req.body || null, success: true, users });
   });
+
   app.put("/api/auth/signUp", (req, res) => {
+    users.push(req.body);
+    res.json({ body: req.body || null, success: true, users });
+  });
+
+  app.post("/api/saveProfile", (req, res) => {
+    users.push(req.body);
+    res.json({ body: req.body || null, success: true, users });
+  });
+
+  app.post("/api/changePassword", (req, res) => {
     users.push(req.body);
     res.json({ body: req.body || null, success: true, users });
   });

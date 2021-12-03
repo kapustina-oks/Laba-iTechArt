@@ -44,6 +44,16 @@ export interface IUsersAuthorisation {
   password: string;
 }
 
+export interface IUsersProfileInfo {
+  name: string;
+  description: string;
+}
+
+export interface IUsersChangePassword {
+  password: string;
+  passwordRepeat: string;
+}
+
 export interface PropsForm {
   onSubmit: () => void;
 }

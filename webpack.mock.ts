@@ -1,6 +1,6 @@
 import webpackMockServer from "webpack-mock-server";
 import { categories } from "@/mock/categories";
-import { dataItems, IUsersAuthorisation, IUsersRegistration } from "@/types/types";
+import { dataItems, IUsers } from "@/types/types";
 import dataGames from "./src/mock/dataBase";
 
 export default webpackMockServer.add((app) => {
@@ -37,20 +37,22 @@ export default webpackMockServer.add((app) => {
     res.json(Object.values(categories));
   });
 
-  const users: IUsersRegistration[] | IUsersAuthorisation[] = [];
+  const users: IUsers[] = [];
 
   app.post("/api/auth/signIn", (req, res) => {
     const { login } = req.body;
     const { password } = req.body;
+    let userId;
     console.log(req.body);
     users.forEach((user) => {
       if (user.login === login && user.password === password) {
+        userId = user.id;
         res.status(201);
       } else {
         res.status(401);
       }
     });
-    res.json({ body: req.body || null, success: true, users });
+    res.json({ body: req.body || null, currentUserId: userId, success: true, users });
   });
 
   app.put("/api/auth/signUp", (req, res) => {
@@ -59,12 +61,23 @@ export default webpackMockServer.add((app) => {
   });
 
   app.post("/api/saveProfile", (req, res) => {
-    users.push(req.body);
+    users.forEach((user) => {
+      if (user.id == req.body.id) {
+        user.login = req.body.name;
+        user.description = req.body.description;
+        user.photo = req.body.photo;
+      }
+    });
     res.json({ body: req.body || null, success: true, users });
   });
 
   app.post("/api/changePassword", (req, res) => {
-    users.push(req.body);
+    users.forEach((user) => {
+      if (user.id == req.body.id) {
+        user.password = req.body.password;
+        user.passwordRepeat = req.body.passwordRepeat;
+      }
+    });
     res.json({ body: req.body || null, success: true, users });
   });
 });

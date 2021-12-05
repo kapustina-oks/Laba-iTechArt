@@ -5,6 +5,8 @@ import { usersRegistration } from "@/services/dataService";
 import { useDispatch } from "react-redux";
 import { authLogInAction, authLogOutAction } from "@/store/actionCreators/authActions";
 import { userNameAction } from "@/store/actionCreators/userNameAction";
+import mockServerHelper from "webpack-mock-server/lib/mockServerHelper";
+import { validateLogin, validatePassword, validateRepeatPassword } from "@/utils/validation";
 
 const FormSignUp = ({ onSubmit }: PropsForm): JSX.Element => {
   const [login, setLogin] = useState<string>("");
@@ -24,19 +26,20 @@ const FormSignUp = ({ onSubmit }: PropsForm): JSX.Element => {
     login,
     password,
     passwordRepeat,
+    id: mockServerHelper.getUniqueIdInt(),
   });
 
   const router = useHistory();
   const dispatch = useDispatch();
 
   const handleSubmitForm = () => {
-    console.log(data);
     usersRegistration("/api/auth/signUp", data)
       .then((res) => {
         if (res.ok) {
           dispatch(authLogInAction());
           dispatch(userNameAction(login));
           localStorage.setItem("user", login);
+          localStorage.setItem("id", String(data.id));
           console.log(res);
           router.push("/profile");
         } else {
@@ -55,44 +58,27 @@ const FormSignUp = ({ onSubmit }: PropsForm): JSX.Element => {
     }
   }, [loginDirtyErr, passwordDirtyErr, passwordRepeatDirtyErr]);
 
+
+
   const handleChangeLogin = (e: ChangeEvent<HTMLInputElement>) => {
     const loginValue = e.target.value;
     setData({ ...data, login: e.target.value });
-    setLogin(loginValue);
-    if (!/^[a-zA-Z1-9]+$/.test(loginValue)) {
-      setLoginDirtyErr("В логине должны быть латинские буквы/цифры");
-    } else if (loginValue.length < 4 || loginValue.length > 20) {
-      setLoginDirtyErr("В логине должен быть от 4 до 20 символов");
-    } else if (parseInt(loginValue.substr(0, 1), 10)) {
-      setLoginDirtyErr("Логин должен начинаться с буквы");
-    } else if (!loginValue) {
-      setLoginDirtyErr("Логин не может быть пустым");
-    } else {
-      setLoginDirtyErr("");
-    }
+    setLogin(e.target.value);
+    setLoginDirtyErr(validateLogin(loginValue));
   };
 
   const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
+    const passwordValue = e.target.value;
     setPassword(e.target.value);
     setData({ ...data, password: e.target.value });
-    if (e.target.value.length < 3 || e.target.value.length > 20) {
-      setPasswordDirtyErr("В пароле должно быть от 4 до 20 символов");
-      if (!e.target.value) {
-        setPasswordDirtyErr("Пароль не может быть пустым");
-      }
-    } else {
-      setPasswordDirtyErr("");
-    }
+    setPasswordDirtyErr(validatePassword(passwordValue));
   };
 
   const handleChangeRepeatPassword = (e: ChangeEvent<HTMLInputElement>) => {
+    const passwordRepeatValue = e.target.value;
     setPasswordRepeat(e.target.value);
     setData({ ...data, passwordRepeat: e.target.value });
-    if (e.target.value !== password) {
-      setPasswordRepeatDirtyErr("Неверный пароль");
-    } else {
-      setPasswordRepeatDirtyErr("");
-    }
+    setPasswordRepeatDirtyErr(validateRepeatPassword(passwordRepeatValue, password));
   };
 
   const blurHandler = (e: FocusEvent<HTMLInputElement>) => {

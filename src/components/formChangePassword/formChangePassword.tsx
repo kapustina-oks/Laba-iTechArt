@@ -1,6 +1,7 @@
 import { ChangeEvent, FocusEvent, useEffect, useState } from "react";
 import { usersChangePassword } from "@/services/dataService";
-import { PropsForm } from "@/types/types";
+import { IUsersChangePassword, PropsForm } from "@/types/types";
+import { validatePassword, validateRepeatPassword } from "@/utils/validation";
 
 const FormChangePassword = ({ onSubmit }: PropsForm): JSX.Element => {
   const [password, setPassword] = useState<string>("");
@@ -13,9 +14,10 @@ const FormChangePassword = ({ onSubmit }: PropsForm): JSX.Element => {
   const [passwordRepeatDirtyErr, setPasswordRepeatDirtyErr] = useState<string>("Пароль не может быть пустым");
 
   const [formValid, setFormValid] = useState<boolean>(false);
-  const [data, setData] = useState({
+  const [data, setData] = useState<IUsersChangePassword>({
     password,
     passwordRepeat,
+    id: localStorage.getItem("id"),
   });
 
   const handleSubmitForm = () => {
@@ -38,26 +40,17 @@ const FormChangePassword = ({ onSubmit }: PropsForm): JSX.Element => {
   }, [passwordDirtyErr, passwordRepeatDirtyErr]);
 
   const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
+    const passwordValue = e.target.value;
     setPassword(e.target.value);
     setData({ ...data, password: e.target.value });
-    if (e.target.value.length < 3 || e.target.value.length > 20) {
-      setPasswordDirtyErr("В пароле должно быть от 4 до 20 символов");
-      if (!e.target.value) {
-        setPasswordDirtyErr("Пароль не может быть пустым");
-      }
-    } else {
-      setPasswordDirtyErr("");
-    }
+    setPasswordDirtyErr(validatePassword(passwordValue));
   };
 
   const handleChangeRepeatPassword = (e: ChangeEvent<HTMLInputElement>) => {
+    const passwordRepeatValue = e.target.value;
     setPasswordRepeat(e.target.value);
     setData({ ...data, passwordRepeat: e.target.value });
-    if (e.target.value !== password) {
-      setPasswordRepeatDirtyErr("Неверный пароль");
-    } else {
-      setPasswordRepeatDirtyErr("");
-    }
+    setPasswordRepeatDirtyErr(validateRepeatPassword(passwordRepeatValue, password));
   };
 
   const blurHandler = (e: FocusEvent<HTMLInputElement>) => {

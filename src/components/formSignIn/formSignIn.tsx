@@ -4,6 +4,7 @@ import { PropsForm } from "@/types/types";
 import { useDispatch } from "react-redux";
 import { authLogInAction, authLogOutAction } from "@/store/actionCreators/authActions";
 import { userNameAction } from "@/store/actionCreators/userNameAction";
+import { validateLogin, validatePassword } from "@/utils/validation";
 
 const FormSignIn = ({ onSubmit }: PropsForm): JSX.Element => {
   const [login, setLogin] = useState<string>("");
@@ -35,12 +36,13 @@ const FormSignIn = ({ onSubmit }: PropsForm): JSX.Element => {
           dispatch(authLogInAction());
           dispatch(userNameAction(login));
           localStorage.setItem("user", login);
-          console.log(res);
         } else {
           dispatch(authLogOutAction());
           localStorage.clear();
         }
+        return res.json();
       })
+      .then((userBody) => localStorage.setItem("id", userBody.currentUserId))
       .then(onSubmit);
   };
 
@@ -54,30 +56,16 @@ const FormSignIn = ({ onSubmit }: PropsForm): JSX.Element => {
 
   const handleChangeLogin = (e: ChangeEvent<HTMLInputElement>) => {
     const loginValue = e.target.value;
-    setLogin(loginValue);
-    if (!/^[a-zA-Z1-9]+$/.test(loginValue)) {
-      setLoginDirtyErr("В логине должны быть латинские буквы/цифры");
-    } else if (loginValue.length < 4 || loginValue.length > 20) {
-      setLoginDirtyErr("В логине должен быть от 4 до 20 символов");
-    } else if (parseInt(loginValue.substr(0, 1), 10)) {
-      setLoginDirtyErr("Логин должен начинаться с буквы");
-    } else if (!loginValue) {
-      setLoginDirtyErr("Логин не может быть пустым");
-    } else {
-      setLoginDirtyErr("");
-    }
+    setData({ ...data, login: e.target.value });
+    setLogin(e.target.value);
+    setLoginDirtyErr(validateLogin(loginValue));
   };
 
   const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
+    const passwordValue = e.target.value;
     setPassword(e.target.value);
-    if (e.target.value.length < 3 || e.target.value.length > 20) {
-      setPasswordDirtyErr("В пароле должно быть от 4 до 20 символов");
-      if (!e.target.value) {
-        setPasswordDirtyErr("Пароль не может быть пустым");
-      }
-    } else {
-      setPasswordDirtyErr("");
-    }
+    setData({ ...data, password: e.target.value });
+    setPasswordDirtyErr(validatePassword(passwordValue));
   };
 
   const blurHandler = (e: FocusEvent<HTMLInputElement>) => {

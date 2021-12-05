@@ -3,8 +3,10 @@ import "./styles/main.scss";
 import { Component, StrictMode } from "react";
 import ReactDom from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
+import { Provider } from "react-redux";
 import App from "./components/app/app";
-import { Auth, AuthContext } from "./components/context/context";
+import store from "./store/store";
+// import { Auth, AuthContext } from "./components/context/context";
 
 interface AppProps {
   nothing: boolean;
@@ -20,13 +22,13 @@ class AppContainer extends Component<AppProps, AppState> {
     return (
       <StrictMode>
         <Router>
-          <Auth value={this.context}>
+          <Provider store={store}>
             <App />
-          </Auth>
+          </Provider>
         </Router>
       </StrictMode>
     );
   }
 }
-AppContainer.contextType = AuthContext;
+// AppContainer.contextType = AuthContext;
 ReactDom.render(<AppContainer nothing={false} />, document.getElementById("app"));

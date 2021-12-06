@@ -1,0 +1,26 @@
+.with-gap {
+  display: block;
+  min-width: 1em;
+  width: 5%;
+  margin-bottom: 0;
+  left: 16px;
+  top: -3px;
+}
+
+.label {
+  display: block;
+  margin-left: 25px;
+}
+.filter_first {
+  font-size: 15px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.filter_second {
+  font-size: 15px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

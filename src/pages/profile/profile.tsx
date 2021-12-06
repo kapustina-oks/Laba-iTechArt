@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, FocusEvent, MutableRefObject, SyntheticEvent, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FC, FocusEvent, SyntheticEvent, useEffect, useRef, useState } from "react";
 import "./profile.css";
 import Modal from "@/components/modal/modal";
 import { useDispatch } from "react-redux";
@@ -15,7 +15,7 @@ const Profile: FC = (): JSX.Element => {
   const [descriptionDirtyErr, setDescriptionDirtyErr] = useState<string>("Описание не может быть пустым");
   const [descriptionDirty, setDescriptionDirty] = useState<boolean>(false);
 
-  const [photo, setPhoto] = useState<ArrayBuffer | string | null>(
+  const [photo, setPhoto] = useState<string>(
     "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
   );
 
@@ -66,13 +66,14 @@ const Profile: FC = (): JSX.Element => {
 
   const imageHandler = (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    if (!imgRef.current?.files) return;
     const selected = imgRef.current.files[0];
     if (selected) {
       const reader = new FileReader();
       reader.readAsDataURL(selected);
       reader.onloadend = () => {
-        setPhoto(reader.result);
-        setData({ ...data, photo: reader.result });
+        setPhoto(reader.result as string);
+        setData({ ...data, photo: reader.result as string });
         if (typeof reader.result === "string") {
           localStorage.setItem("photo", reader.result);
         }
@@ -157,7 +158,6 @@ const Profile: FC = (): JSX.Element => {
             {descriptionDirty ? <div style={{ color: "red", fontSize: "13px" }}>{descriptionDirtyErr}</div> : null}
             <textarea
               className="input-form"
-              type="text"
               id="description"
               name="description"
               value={description}

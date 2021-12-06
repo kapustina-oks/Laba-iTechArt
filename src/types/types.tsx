@@ -17,6 +17,8 @@ export interface dataItems {
   id: number;
   img: string;
   rating: number;
+  genres: string;
+  age: string;
   price: string;
   categories: string[];
   date: Date;

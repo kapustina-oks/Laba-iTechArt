@@ -29,6 +29,17 @@ export default webpackMockServer.add((app) => {
         gamesList = gamesList.slice(0, limit);
       }
     }
+    if (_req.query.genre) {
+      const filter = _req.query.genre;
+      gamesList = gamesList.filter((game) =>
+        game.genres.toLowerCase().includes((filter as string).trim().toLowerCase())
+      );
+    }
+
+    if (_req.query.age) {
+      const filter = _req.query.age;
+      gamesList = gamesList.filter((game) => game.age.toLowerCase().includes((filter as string).trim().toLowerCase()));
+    }
     const response = gamesList;
     res.json(response);
   });

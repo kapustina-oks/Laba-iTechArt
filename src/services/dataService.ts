@@ -13,6 +13,19 @@ export const getResource = async (url: string): Promise<[]> => {
   return res.json();
 };
 
+export const getFilter = async (url: string): Promise<[]> => {
+  const res = await fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!res.ok) {
+    throw new Error(`Could not fetch /api/games, status: ${res.status}`);
+  }
+
+  return res.json();
+};
+
 export const usersAuthorisation: (url: string, body: IUsersAuthorisation) => Promise<Response> = async (url, body) => {
   const res = await fetch(url, {
     method: "POST",

@@ -3,6 +3,10 @@ import { categories } from "@/mock/categories";
 import { dataItems, IUsers } from "@/types/types";
 import dataGames from "./src/mock/dataBase";
 
+interface UserDataObject {
+  [key: string]: IUsers;
+}
+
 export default webpackMockServer.add((app) => {
   app.get("/api/games", (_req, res) => {
     let gamesList = [...dataGames];
@@ -37,47 +41,56 @@ export default webpackMockServer.add((app) => {
     res.json(Object.values(categories));
   });
 
-  const users: IUsers[] = [];
+  const users: UserDataObject = {};
 
   app.post("/api/auth/signIn", (req, res) => {
     const { login } = req.body;
     const { password } = req.body;
     let userId;
     console.log(req.body);
-    users.forEach((user) => {
-      if (user.login === login && user.password === password) {
-        userId = user.id;
-        res.status(201);
-      } else {
-        res.status(401);
-      }
-    });
+    const user = Object.values(users).find((data) => data.login === login);
+    if (user && user.password === password) {
+      res.status(201);
+    } else {
+      res.status(401);
+    }
     res.json({ body: req.body || null, currentUserId: userId, success: true, users });
   });
 
   app.put("/api/auth/signUp", (req, res) => {
-    users.push(req.body);
+    const userId: string = req.body.id;
+    users[userId] = req.body;
     res.json({ body: req.body || null, success: true, users });
   });
 
   app.post("/api/saveProfile", (req, res) => {
-    users.forEach((user) => {
-      if (user.id == req.body.id) {
-        user.login = req.body.name;
-        user.description = req.body.description;
-        user.photo = req.body.photo;
-      }
-    });
+    const { id } = req.body;
+    const user = users[id];
+    const newUser = {
+      login: req.body.name,
+      description: req.body.description,
+      photo: req.body.photo,
+    };
+    if (user) {
+      users[id] = { ...user, ...newUser };
+    } else {
+      res.status(404);
+    }
     res.json({ body: req.body || null, success: true, users });
   });
 
   app.post("/api/changePassword", (req, res) => {
-    users.forEach((user) => {
-      if (user.id == req.body.id) {
-        user.password = req.body.password;
-        user.passwordRepeat = req.body.passwordRepeat;
-      }
-    });
+    const { id } = req.body;
+    const user = users[id];
+    const newUser = {
+      password: req.body.password,
+      passwordRepeat: req.body.passwordRepeat,
+    };
+    if (user) {
+      users[id] = { ...user, ...newUser };
+    } else {
+      res.status(404);
+    }
     res.json({ body: req.body || null, success: true, users });
   });
 });

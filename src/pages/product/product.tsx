@@ -21,6 +21,7 @@ const transformParam = (param: { [key: string]: string | number }) => {
   if (keys.length) {
     const filterParam = keys.map((key: string) => `${key}=${param[key]}`).join("&");
     result = `${filterParam}`;
+    console.log(result);
   }
 
   return result;
@@ -42,11 +43,8 @@ const Products: FC = (): JSX.Element => {
 
   const onFilter = (result) => {
     console.log(result);
-    if (result.includes("all")) {
-      getResource("/api/games?").then((data) => setProductList(data));
-    } else {
-      getFilter(`/api/games?${transformParam(result)}`).then((data) => setProductList(data));
-    }
+    getFilter(`/api/games?${transformParam(result)}`).then((data) => setProductList(data));
+
   };
 
   useEffect(() => {

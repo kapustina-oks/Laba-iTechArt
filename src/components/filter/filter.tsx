@@ -48,7 +48,7 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
   const handleFilter = (e) => {
     const target = e.target.dataset;
     console.log(target);
-    switch (target) {
+    switch (e.target.dataset) {
       case target.genre:
         setFilter((prevFilter) => ({ ...prevFilter, genre: target.genre }));
         break;

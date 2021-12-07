@@ -15,7 +15,6 @@ export default webpackMockServer.add((app) => {
     if (_req.query.category) {
       const category = _req.query.category as string;
       gamesList = gamesList.filter((item) => item.categories.includes(category));
-      console.log(gamesList);
     }
     if (_req.query.sortBy) {
       const { sortBy } = _req.query;
@@ -31,33 +30,35 @@ export default webpackMockServer.add((app) => {
     }
     if (_req.query.genre) {
       const filterGenre = _req.query.genre;
-      gamesList = gamesList.filter((game) =>
-        game.genres.toLowerCase().includes((filterGenre as string).trim().toLowerCase())
-      );
+      if (filterGenre !== "all")
+        gamesList = gamesList.filter((game) => game.genres.toLowerCase() === (filterGenre as string).toLowerCase());
     }
     if (_req.query.age) {
       const filterAge = _req.query.age;
-      gamesList = gamesList.filter((game) => game.age.toLowerCase().includes((filterAge as string).trim().toLowerCase()));
+      if (filterAge !== "all")
+        gamesList = gamesList.filter((game) =>
+          game.age.toLowerCase().includes((filterAge as string).trim().toLowerCase())
+        );
     }
-    if (_req.query.rating) {
-      const sortRating = _req.query.rating;
-      if (sortRating === "ascending") {
-        gamesList = gamesList.sort((prev, next) => prev.rating - next.rating);
-      } else {
-        gamesList = gamesList.sort((prev, next) => next.rating - prev.rating);
-      }
-    }
-    if (_req.query.price) {
-      const sortPrice = _req.query.price;
-      if (sortPrice === "ascending") {
-        gamesList = gamesList.sort((prev, next) => parseInt(prev.price, 10) - parseInt(next.price, 10));
-      } else {
-        gamesList = gamesList.sort((prev, next) => parseInt(next.price, 10) - parseInt(prev.price, 10));
-      }
+
+    if (_req.query.sort) {
+      const direction = _req.query.direction || "ascending";
+      gamesList = gamesList.sort((prev: dataItems, next: dataItems) => {
+        const sortField = _req.query.sort as keyof dataItems;
+
+        const priceOrRatingFromPrev = prev[sortField];
+        const priceOrRatingFromNext = next[sortField];
+
+        if (direction === "ascending") {
+          return priceOrRatingFromPrev > priceOrRatingFromNext ? -1 : 1;
+        }
+        return priceOrRatingFromPrev > priceOrRatingFromNext ? 1 : -1;
+      });
     }
     const response = gamesList;
     res.json(response);
   });
+
   app.get("/api/categories", (_req, res) => {
     res.json(Object.values(categories));
   });
@@ -65,7 +66,6 @@ export default webpackMockServer.add((app) => {
   app.post("/api/auth/signIn", (req, res) => {
     const { login } = req.body;
     const { password } = req.body;
-    console.log(req.body);
     users.forEach((user) => {
       if (user.login === login && user.password === password) {
         res.status(201);

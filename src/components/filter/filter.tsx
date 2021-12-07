@@ -1,10 +1,11 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import "./filter.css";
+import { shallowEqual } from "react-redux";
 
 const initialState = {
   genre: "all",
   age: "all",
-  rating: "descending",
+  rating: "ascending",
   price: "ascending",
 };
 
@@ -19,56 +20,46 @@ interface FilterProps {
   onFilter: (type: string, filter: string) => void;
 }
 
-
-
 const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
   const [filter, setFilter] = useState<IFilterState>(initialState);
-  // const [genre, setGenre] = useState<string>("all");
-  // const [age, setAge] = useState<string>("all");
-  // const [rating, setRating] = useState<string>("descending");
-  // const [price, setPrice] = useState<string>("ascending");
+
+  // const loadFilter = useMemo(() => {
+  //   let prevFilter;
+  //
+  //   return async (filter) => {
+  //     if (shallowEqual(filter, prevFilter)) {
+  //       return;
+  //     }
+  //     prevFilter = filter;
+  //     const data = await loadFilter(filter);
+  //     setFilter(data);
+  //   };
+  // }, []);
 
   useEffect(() => {
     onFilter(filter);
     console.log(filter);
   }, [filter]);
 
-  // useEffect(() => {
-  //   onFilter("age", age);
-  // }, [age]);
-  //
-  // useEffect(() => {
-  //   onFilter("rating", rating);
-  // }, [rating]);
-  //
-  // useEffect(() => {
-  //   onFilter("price", price);
-  // }, [price]);
 
   const handleFilter = (e) => {
     const target = e.target.dataset;
-    console.log(target);
-    switch (e.target.dataset) {
-      case target.genre:
-        setFilter((prevFilter) => ({ ...prevFilter, genre: target.genre }));
-        break;
-      case target.age:
-        setFilter((prevFilter) => ({ ...prevFilter, age: target.age }));
-        break;
-      case target.rating:
-        setFilter((prevFilter) => ({ ...prevFilter, rating: target.rating }));
-        break;
-      case target.price:
-        setFilter((prevFilter) => ({ ...prevFilter, price: target.price }));
-        break;
-      default:
-        setFilter(filter);
-        break;
+    const key = Object.keys(target)[0];
+    console.log(key);
+
+    if (key) {
+      const value = target[key];
+      // if (value === filter[key]) {
+      //   return;
+      // }
+      console.log("value", value);
+      console.log("key", key);
+      if (key === "price" || key === "rating") {
+        setFilter((prevFilter) => ({ ...prevFilter, sort: key, direction: value, [key]: value }));
+      } else {
+        setFilter((prevFilter) => ({ ...prevFilter, [key]: value }));
+      }
     }
-    // if (e.target.dataset.genre) setGenre(e.target.dataset.genre);
-    // if (e.target.dataset.age) setAge(e.target.dataset.age);
-    // if (e.target.dataset.rating) setRating(e.target.dataset.rating);
-    // if (e.target.dataset.price) setPrice(e.target.dataset.price);
   };
 
   return (
@@ -167,18 +158,6 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
           checked={filter.age === "18+"}
         />
         <label className="label">18+</label>
-      </div>
-
-      <div className="filter_second">
-        <input
-          className="with-gap"
-          name="age"
-          type="radio"
-          data-age="all"
-          onChange={handleFilter}
-          checked={filter.age === "all"}
-        />
-        <label className="label">All ages</label>
       </div>
 
       <div>Sort by rating</div>

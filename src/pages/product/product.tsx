@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, Suspense } from "react";
 import { useParams } from "react-router-dom";
 import { getFilter, getResource } from "@/services/dataService";
 import Card from "@/components/card/card";
@@ -8,7 +8,7 @@ import Spinner from "@/components/spinner/spinner";
 import SearchPanel from "../../components/searchPanel/searchPanel";
 import Filter from "../../components/filter/filter";
 
-// const Filter = React.lazy(() => import("../../components/filter/filter"));
+const Filter = React.lazy(() => import("../../components/filter/filter"));
 
 interface IParams {
   categories?: string;
@@ -41,10 +41,8 @@ const Products: FC = (): JSX.Element => {
     getResource(`/api/games?category=${category}`).then((data) => setGameCategoryList(data));
   };
 
-  const onFilter = (result) => {
-    console.log(result);
-    getFilter(`/api/games?${transformParam(result)}`).then((data) => setProductList(data));
-
+  const onFilter = (filter) => {
+    getFilter(`/api/games?${transformParam(filter)}`).then((data) => setProductList(data));
   };
 
   useEffect(() => {
@@ -59,17 +57,22 @@ const Products: FC = (): JSX.Element => {
   const contentProduct = productList.map((game) => <Card game={game} key={game.id} />);
 
   return (
-    <div className="home_container">
-      <div className="grid_product">
-        <div className="search-grid">
-          <SearchPanel onRequestFilter={onRequestFilter} onLoading={(load) => setLoading(load)} />
+    <Suspense fallback={<Spinner />}>
+      <div className="home_container">
+        <div className="grid_product">
+          <div className="search-grid">
+            <Suspense fallback={<Spinner />}>
+              <SearchPanel onRequestFilter={onRequestFilter} onLoading={(load) => setLoading(load)} />
+            </Suspense>
+          </div>
+          <div className="sidebar">
+
+              <Filter onFilter={onFilter} />
+          </div>
+            {categories ? contentCategory : contentProduct}
         </div>
-        <div className="sidebar">
-          <Filter onFilter={onFilter} />
-        </div>
-        {categories ? contentCategory : contentProduct}
       </div>
-    </div>
+    </Suspense>
   );
 };
 

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState, Suspense } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getFilter, getResource } from "@/services/dataService";
 import Card from "@/components/card/card";
@@ -8,11 +8,23 @@ import Spinner from "@/components/spinner/spinner";
 import SearchPanel from "../../components/searchPanel/searchPanel";
 import Filter from "../../components/filter/filter";
 
-const Filter = React.lazy(() => import("../../components/filter/filter"));
+// const Filter = React.lazy(() => import("../../components/filter/filter"));
 
 interface IParams {
   categories?: string;
 }
+
+const transformParam = (param: { [key: string]: string | number }) => {
+  const keys = Object.keys(param);
+  let result = "";
+
+  if (keys.length) {
+    const filterParam = keys.map((key: string) => `${key}=${param[key]}`).join("&");
+    result = `${filterParam}`;
+  }
+
+  return result;
+};
 
 const Products: FC = (): JSX.Element => {
   const { categories } = useParams<IParams>();
@@ -28,12 +40,12 @@ const Products: FC = (): JSX.Element => {
     getResource(`/api/games?category=${category}`).then((data) => setGameCategoryList(data));
   };
 
-  const onFilter = (type: string, filter: string) => {
-    console.log(type, filter);
-    if (filter === "all") {
+  const onFilter = (result) => {
+    console.log(result);
+    if (result.includes("all")) {
       getResource("/api/games?").then((data) => setProductList(data));
     } else {
-      getFilter(`/api/games?${type}=${filter}`).then((data) => setProductList(data));
+      getFilter(`/api/games?${transformParam(result)}`).then((data) => setProductList(data));
     }
   };
 
@@ -49,20 +61,21 @@ const Products: FC = (): JSX.Element => {
   const contentProduct = productList.map((game) => <Card game={game} key={game.id} />);
 
   return (
-    <React.Suspense fallback={<Spinner />}>
-      <div className="home_container">
-        <div className="grid_product">
-          <div className="search-grid">
-            <SearchPanel onRequestFilter={onRequestFilter} onLoading={(load) => setLoading(load)} />
-          </div>
-          <div className="sidebar">
-            <Filter onFilter={onFilter} />
-          </div>
-          {categories ? contentCategory : contentProduct}
+    <div className="home_container">
+      <div className="grid_product">
+        <div className="search-grid">
+          <SearchPanel onRequestFilter={onRequestFilter} onLoading={(load) => setLoading(load)} />
         </div>
+        <div className="sidebar">
+          <Filter onFilter={onFilter} />
+        </div>
+        {categories ? contentCategory : contentProduct}
       </div>
-    </React.Suspense>
+    </div>
   );
 };
 
 export default Products;
+
+// <React.Suspense fallback={<Spinner />}>
+// </React.Suspense>

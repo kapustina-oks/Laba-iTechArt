@@ -1,4 +1,4 @@
-import { IUsersRegistration, IUsersAuthorisation } from "@/types/types";
+import { IUsersRegistration, IUsersAuthorisation, IUsersChangePassword, IUsersProfileInfo } from "@/types/types";
 
 export const getResource = async (url: string): Promise<[]> => {
   const res = await fetch(url, {
@@ -43,6 +43,35 @@ export const usersAuthorisation: (url: string, body: IUsersAuthorisation) => Pro
 export const usersRegistration: (url: string, body: IUsersRegistration) => Promise<Response> = async (url, body) => {
   const res = await fetch(url, {
     method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    throw new Error(`Could not fetch url: ${url}, status: ${res.status}`);
+  }
+  return res;
+};
+
+export const usersChangePassword: (url: string, body: IUsersChangePassword) => Promise<Response> = async (url, body) => {
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    throw new Error(`Could not fetch url: ${url}, status: ${res.status}`);
+  }
+  return res;
+};
+
+
+export const usersSaveProfile: (url: string, body: IUsersProfileInfo) => Promise<Response> = async (url, body) => {
+  const res = await fetch(url, {
+    method: "POST",
     headers: {
       "Content-Type": "application/json",
     },

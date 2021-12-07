@@ -1,7 +1,6 @@
 import Portal from "@/components/portal/portal";
 import "./modal.css";
-import FormSignIn from "../formSignIn/formSignIn";
-import FormSignUp from "../formSignUp/formSignUp";
+import { modal } from "@/utils/modalUtils";
 
 interface PropsModal {
   title: string;
@@ -9,6 +8,7 @@ interface PropsModal {
 }
 
 const Modal: ({ title, onSubmit }: PropsModal) => JSX.Element = ({ title, onSubmit }) => {
+  const form = modal(title, onSubmit);
   return (
     <>
       <Portal>
@@ -19,7 +19,7 @@ const Modal: ({ title, onSubmit }: PropsModal) => JSX.Element = ({ title, onSubm
               <div className="icons-close" onClick={onSubmit}>
                 <i className="far fa-times-circle" />
               </div>
-              {title === "Authorization" ? <FormSignIn onSubmit={onSubmit} /> : <FormSignUp onSubmit={onSubmit} />}
+              {form}
             </div>
           </div>
         </div>

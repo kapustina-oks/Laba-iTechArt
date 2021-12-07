@@ -1,71 +1,43 @@
 import { ChangeEvent, FocusEvent, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { PropsForm } from "@/types/types";
-import { usersRegistration } from "@/services/dataService";
-import { useDispatch } from "react-redux";
-import { authLogInAction, authLogOutAction } from "@/store/actionCreators/authActions";
-import { userNameAction } from "@/store/actionCreators/userNameAction";
-import mockServerHelper from "webpack-mock-server/lib/mockServerHelper";
-import { validateLogin, validatePassword, validateRepeatPassword } from "@/utils/validation";
+import { usersChangePassword } from "@/services/dataService";
+import { IUsersChangePassword, PropsForm } from "@/types/types";
+import { validatePassword, validateRepeatPassword } from "@/utils/validation";
 
-const FormSignUp = ({ onSubmit }: PropsForm): JSX.Element => {
-  const [login, setLogin] = useState<string>("");
+const FormChangePassword = ({ onSubmit }: PropsForm): JSX.Element => {
   const [password, setPassword] = useState<string>("");
   const [passwordRepeat, setPasswordRepeat] = useState<string>("");
 
-  const [loginDirty, setLoginDirty] = useState<boolean>(false);
   const [passwordDirty, setPasswordDirty] = useState<boolean>(false);
   const [passwordRepeatDirty, setPasswordRepeatDirty] = useState<boolean>(false);
 
-  const [loginDirtyErr, setLoginDirtyErr] = useState<string>("Логин не может быть пустым");
   const [passwordDirtyErr, setPasswordDirtyErr] = useState<string>("Пароль не может быть пустым");
   const [passwordRepeatDirtyErr, setPasswordRepeatDirtyErr] = useState<string>("Пароль не может быть пустым");
 
   const [formValid, setFormValid] = useState<boolean>(false);
-  const [data, setData] = useState({
-    login,
+  const [data, setData] = useState<IUsersChangePassword>({
     password,
     passwordRepeat,
-    id: mockServerHelper.getUniqueIdInt(),
+    id: localStorage.getItem("id"),
   });
 
-  const router = useHistory();
-  const dispatch = useDispatch();
-
   const handleSubmitForm = () => {
-    usersRegistration("/api/auth/signUp", data)
+    console.log(data);
+    usersChangePassword("/api/changePassword", data)
       .then((res) => {
         if (res.ok) {
-          dispatch(authLogInAction());
-          dispatch(userNameAction(login));
-          localStorage.setItem("user", login);
-          localStorage.setItem("id", String(data.id));
           console.log(res);
-          router.push("/profile");
-        } else {
-          dispatch(authLogOutAction());
-          localStorage.clear();
         }
       })
       .then(onSubmit);
   };
 
   useEffect(() => {
-    if (loginDirtyErr || passwordDirtyErr || passwordRepeatDirtyErr) {
+    if (passwordDirtyErr || passwordRepeatDirtyErr) {
       setFormValid(false);
     } else {
       setFormValid(true);
     }
-  }, [loginDirtyErr, passwordDirtyErr, passwordRepeatDirtyErr]);
-
-
-
-  const handleChangeLogin = (e: ChangeEvent<HTMLInputElement>) => {
-    const loginValue = e.target.value;
-    setData({ ...data, login: e.target.value });
-    setLogin(e.target.value);
-    setLoginDirtyErr(validateLogin(loginValue));
-  };
+  }, [passwordDirtyErr, passwordRepeatDirtyErr]);
 
   const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     const passwordValue = e.target.value;
@@ -83,9 +55,6 @@ const FormSignUp = ({ onSubmit }: PropsForm): JSX.Element => {
 
   const blurHandler = (e: FocusEvent<HTMLInputElement>) => {
     switch (e.target.name) {
-      case "login":
-        setLoginDirty(true);
-        break;
       case "password":
         setPasswordDirty(true);
         break;
@@ -100,19 +69,6 @@ const FormSignUp = ({ onSubmit }: PropsForm): JSX.Element => {
   return (
     <div className="form">
       <div className="form-group">
-        <label htmlFor="login">
-          Login
-          {loginDirty ? <div style={{ color: "red", fontSize: "13px" }}>{loginDirtyErr}</div> : null}
-          <input
-            onChange={handleChangeLogin}
-            onBlur={blurHandler}
-            value={login}
-            className="input-form"
-            type="text"
-            name="login"
-            placeholder="login..."
-          />
-        </label>
         <label htmlFor="password">
           Password
           {passwordDirty ? <div style={{ color: "red", fontSize: "13px" }}>{passwordDirtyErr}</div> : null}
@@ -148,4 +104,5 @@ const FormSignUp = ({ onSubmit }: PropsForm): JSX.Element => {
     </div>
   );
 };
-export default FormSignUp;
+
+export default FormChangePassword;

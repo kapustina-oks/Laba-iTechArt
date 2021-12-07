@@ -37,11 +37,32 @@ export interface IUsersRegistration {
   login: string;
   password: string;
   passwordRepeat: string;
+  id: number;
 }
 
 export interface IUsersAuthorisation {
   login: string;
   password: string;
+}
+
+export interface IUsersProfileInfo {
+  name: string;
+  description: string;
+}
+
+export interface IUsersChangePassword {
+  password: string;
+  passwordRepeat: string;
+  id: string | null;
+}
+
+export interface IUsers {
+  password: string;
+  passwordRepeat: string;
+  login: string;
+  description: string;
+  photo: string;
+  id: number;
 }
 
 export interface PropsForm {
@@ -53,6 +74,16 @@ export interface IInitialState {
   modal: boolean;
   userName: string;
 }
+
+export interface saveProfile {
+  login: string;
+  password: string;
+  description: string;
+  photo: string;
+  id: number;
+
+}
+
 
 export enum ActionTypes {
   LOG_IN = "LOG_IN",

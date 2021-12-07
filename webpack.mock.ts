@@ -30,15 +30,30 @@ export default webpackMockServer.add((app) => {
       }
     }
     if (_req.query.genre) {
-      const filter = _req.query.genre;
+      const filterGenre = _req.query.genre;
       gamesList = gamesList.filter((game) =>
-        game.genres.toLowerCase().includes((filter as string).trim().toLowerCase())
+        game.genres.toLowerCase().includes((filterGenre as string).trim().toLowerCase())
       );
     }
-
     if (_req.query.age) {
-      const filter = _req.query.age;
-      gamesList = gamesList.filter((game) => game.age.toLowerCase().includes((filter as string).trim().toLowerCase()));
+      const filterAge = _req.query.age;
+      gamesList = gamesList.filter((game) => game.age.toLowerCase().includes((filterAge as string).trim().toLowerCase()));
+    }
+    if (_req.query.rating) {
+      const sortRating = _req.query.rating;
+      if (sortRating === "ascending") {
+        gamesList = gamesList.sort((prev, next) => prev.rating - next.rating);
+      } else {
+        gamesList = gamesList.sort((prev, next) => next.rating - prev.rating);
+      }
+    }
+    if (_req.query.price) {
+      const sortPrice = _req.query.price;
+      if (sortPrice === "ascending") {
+        gamesList = gamesList.sort((prev, next) => parseInt(prev.price, 10) - parseInt(next.price, 10));
+      } else {
+        gamesList = gamesList.sort((prev, next) => parseInt(next.price, 10) - parseInt(prev.price, 10));
+      }
     }
     const response = gamesList;
     res.json(response);

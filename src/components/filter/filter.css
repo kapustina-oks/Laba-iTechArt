@@ -24,3 +24,17 @@
   justify-content: flex-end;
   align-items: center;
 }
+
+.filter_third {
+  font-size: 15px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.filter_fourth {
+  font-size: 15px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}

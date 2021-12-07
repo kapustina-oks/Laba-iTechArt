@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: repeat(4, 300px);
   grid-template-rows: auto;
-  justify-content: flex-end;
+  justify-content: center;
   column-gap: 50px;
   row-gap: 30px;
   padding: 60px 50px 100px;

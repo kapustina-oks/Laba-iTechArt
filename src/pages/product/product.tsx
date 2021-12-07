@@ -1,11 +1,14 @@
-import { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, Suspense } from "react";
 import { useParams } from "react-router-dom";
 import { getFilter, getResource } from "@/services/dataService";
 import Card from "@/components/card/card";
 import { dataItems } from "@/types/types";
 import "./product.css";
+import Spinner from "@/components/spinner/spinner";
 import SearchPanel from "../../components/searchPanel/searchPanel";
 import Filter from "../../components/filter/filter";
+
+const Filter = React.lazy(() => import("../../components/filter/filter"));
 
 interface IParams {
   categories?: string;
@@ -26,17 +29,13 @@ const Products: FC = (): JSX.Element => {
   };
 
   const onFilter = (type: string, filter: string) => {
-    console.log(type, filter)
+    console.log(type, filter);
     if (filter === "all") {
       getResource("/api/games?").then((data) => setProductList(data));
     } else {
       getFilter(`/api/games?${type}=${filter}`).then((data) => setProductList(data));
     }
   };
-
-  // const onFilterAge = (age: string) => {
-  //   getFilter(`/api/games?age=${age}`).then((data) => setProductList(data));
-  // };
 
   useEffect(() => {
     if (categories) {
@@ -50,7 +49,7 @@ const Products: FC = (): JSX.Element => {
   const contentProduct = productList.map((game) => <Card game={game} key={game.id} />);
 
   return (
-    <>
+    <React.Suspense fallback={<Spinner />}>
       <div className="home_container">
         <div className="grid_product">
           <div className="search-grid">
@@ -62,7 +61,7 @@ const Products: FC = (): JSX.Element => {
           {categories ? contentCategory : contentProduct}
         </div>
       </div>
-    </>
+    </React.Suspense>
   );
 };
 

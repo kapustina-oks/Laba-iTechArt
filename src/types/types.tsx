@@ -119,3 +119,14 @@ export type IAction =
   | openModalTypeAction
   | closeModalTypeAction
   | userNameTypeAction;
+
+export interface IFilterState {
+  genre: string;
+  age: string;
+  rating: string;
+  price: string;
+}
+
+// export interface IObjectKeys extends IFilterState {
+//   [key: string]: string | number;
+// }

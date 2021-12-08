@@ -1,6 +1,6 @@
-import { FC, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import "./filter.css";
-import { shallowEqual } from "react-redux";
+import { IFilterState } from "@/types/types";
 
 const initialState = {
   genre: "all",
@@ -9,40 +9,19 @@ const initialState = {
   price: "ascending",
 };
 
-interface IFilterState {
-  genre: string;
-  age: string;
-  rating: string;
-  price: string;
-}
-
 interface FilterProps {
-  onFilter: (type: string, filter: string) => void;
+  onFilter: (filter: IFilterState) => void;
 }
 
 const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
   const [filter, setFilter] = useState<IFilterState>(initialState);
-
-  // const loadFilter = useMemo(() => {
-  //   let prevFilter;
-  //
-  //   return async (filter) => {
-  //     if (shallowEqual(filter, prevFilter)) {
-  //       return;
-  //     }
-  //     prevFilter = filter;
-  //     const data = await loadFilter(filter);
-  //     setFilter(data);
-  //   };
-  // }, []);
 
   useEffect(() => {
     onFilter(filter);
     console.log(filter);
   }, [filter]);
 
-
-  const handleFilter = (e) => {
+  const handleFilter = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target.dataset;
     const key = Object.keys(target)[0];
     console.log(key);
@@ -64,7 +43,7 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
 
   return (
     <div className="filters">
-      <div>Filter by genre</div>
+      <div className="filter_title">Filter by genre</div>
       <div className="filter_first">
         <input
           className="with-gap"
@@ -112,7 +91,7 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
         <label className="label">Fighting</label>
       </div>
 
-      <div>Filter by age</div>
+      <div className="filter_title">Filter by age</div>
       <div className="filter_second">
         <input
           className="with-gap"
@@ -160,7 +139,7 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
         <label className="label">18+</label>
       </div>
 
-      <div>Sort by rating</div>
+      <div className="filter_title">Sort by rating</div>
       <div className="filter_third">
         <input
           className="with-gap"
@@ -184,7 +163,7 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
         <label className="label">Descending</label>
       </div>
 
-      <div>Sort by price</div>
+      <div className="filter_title">Sort by price</div>
       <div className="filter_fourth">
         <input
           className="with-gap"

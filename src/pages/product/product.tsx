@@ -1,25 +1,30 @@
 import React, { FC, useEffect, useState, Suspense } from "react";
 import { useParams } from "react-router-dom";
 import { getFilter, getResource } from "@/services/dataService";
-import Card from "@/components/card/card";
-import { dataItems } from "@/types/types";
+// import Card from "@/components/card/card";
+import { dataItems, IFilterState } from "@/types/types";
 import "./product.css";
 import Spinner from "@/components/spinner/spinner";
-import SearchPanel from "../../components/searchPanel/searchPanel";
+// import SearchPanel from "../../components/searchPanel/searchPanel";
 import Filter from "../../components/filter/filter";
 
-const Filter = React.lazy(() => import("../../components/filter/filter"));
+const Card = React.lazy(() => import("@/components/card/card"));
+const SearchPanel = React.lazy(() => import("../../components/searchPanel/searchPanel"));
 
 interface IParams {
   categories?: string;
 }
 
-const transformParam = (param: { [key: string]: string | number }) => {
+export interface IObjectKeys extends IFilterState {
+  [key: string]: string | number;
+}
+
+const transformParam = (param: IObjectKeys): string => {
   const keys = Object.keys(param);
   let result = "";
 
   if (keys.length) {
-    const filterParam = keys.map((key: string) => `${key}=${param[key]}`).join("&");
+    const filterParam = keys.map((key) => `${key}=${param[key]}`).join("&");
     result = `${filterParam}`;
     console.log(result);
   }
@@ -41,8 +46,8 @@ const Products: FC = (): JSX.Element => {
     getResource(`/api/games?category=${category}`).then((data) => setGameCategoryList(data));
   };
 
-  const onFilter = (filter) => {
-    getFilter(`/api/games?${transformParam(filter)}`).then((data) => setProductList(data));
+  const onFilter = (filter: IFilterState) => {
+    getFilter(`/api/games?${transformParam(filter as IObjectKeys)}`).then((data) => setProductList(data));
   };
 
   useEffect(() => {
@@ -55,21 +60,19 @@ const Products: FC = (): JSX.Element => {
 
   const contentCategory = gameCategoryList.map((game) => <Card game={game} key={game.id} />);
   const contentProduct = productList.map((game) => <Card game={game} key={game.id} />);
+  const content = categories ? contentCategory : contentProduct;
 
   return (
     <Suspense fallback={<Spinner />}>
       <div className="home_container">
         <div className="grid_product">
           <div className="search-grid">
-            <Suspense fallback={<Spinner />}>
-              <SearchPanel onRequestFilter={onRequestFilter} onLoading={(load) => setLoading(load)} />
-            </Suspense>
+            <SearchPanel onRequestFilter={onRequestFilter} onLoading={(load) => setLoading(load)} />
           </div>
           <div className="sidebar">
-
-              <Filter onFilter={onFilter} />
+            <Filter onFilter={onFilter} />
           </div>
-            {categories ? contentCategory : contentProduct}
+          <Suspense fallback={<Spinner />}> {content} </Suspense>
         </div>
       </div>
     </Suspense>
@@ -77,6 +80,3 @@ const Products: FC = (): JSX.Element => {
 };
 
 export default Products;
-
-// <React.Suspense fallback={<Spinner />}>
-// </React.Suspense>

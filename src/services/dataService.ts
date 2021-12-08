@@ -13,6 +13,8 @@ export const getResource = async (url: string): Promise<[]> => {
   return res.json();
 };
 
+
+
 export const getFilter = async (url: string): Promise<[]> => {
   const res = await fetch(url, {
     headers: {

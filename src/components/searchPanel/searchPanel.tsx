@@ -9,6 +9,8 @@ interface SearchPanelProps {
   onLoading(load: boolean): void;
 }
 
+// const Filter = React.lazy(() => import("../../components/filter/filter"));
+
 const SearchPanel: FC<SearchPanelProps> = ({ onRequestFilter, onLoading }): JSX.Element => {
   const handleSubmit = (e: { target: { value: string } }) => {
     console.log(e.target.value);

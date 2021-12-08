@@ -45,16 +45,14 @@ const Home: FC = (): JSX.Element => {
     getResource("/api/categories").then((data) => setCategoriesList(data));
   };
 
+  useEffect(() => {
+    onRequestSort();
+    onRequestCategories();
+  }, []);
+
   const onRequestFilter = (response: dataItems[]): void => {
     setGameList(response);
   };
-
-  useEffect(() => {
-    if (!loading) {
-      onRequestSort();
-    }
-    onRequestCategories();
-  }, [loading]);
 
   const handleCategory = (category: string): void => {
     router.push(`/products/${category}`);
@@ -62,7 +60,11 @@ const Home: FC = (): JSX.Element => {
   return (
     <>
       <div className="home_container">
-        <SearchPanel onRequestFilter={onRequestFilter} onLoading={(load) => setLoading(load)} />
+        <SearchPanel
+          onRequestFilter={onRequestFilter}
+          onLoading={(load) => setLoading(load)}
+          reset={onRequestSort}
+        />
         <div className="new-games">Categories</div>
         <div className="grid_category">
           {categoriesList.map((category: ICategories) => (

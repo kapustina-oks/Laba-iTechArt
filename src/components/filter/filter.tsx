@@ -1,6 +1,8 @@
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import "./filter.css";
 import { IFilterState } from "@/types/types";
+import transformParam from "@/utils/transformParam";
+import { IObjectKeys } from "@/pages/product/product";
 
 const initialState = {
   genre: "all",
@@ -18,6 +20,7 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
 
   useEffect(() => {
     onFilter(filter);
+    localStorage.setItem("filter", transformParam(filter as IObjectKeys));
     console.log(filter);
   }, [filter]);
 

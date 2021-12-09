@@ -16,11 +16,14 @@ export default webpackMockServer.add((app) => {
         elem.name.toLowerCase().includes((searchString as string).trim().toLowerCase())
       );
     }
+
     if (_req.query.category) {
       const category = _req.query.category as string;
-      gamesList = gamesList.filter((item) => item.categories.includes(category));
-      console.log(gamesList);
+      if (category !== "undefined") {
+        gamesList = gamesList.filter((item) => item.categories.includes(category));
+      }
     }
+
     if (_req.query.sortBy) {
       const { sortBy } = _req.query;
       if (sortBy === "date") {
@@ -33,10 +36,38 @@ export default webpackMockServer.add((app) => {
         gamesList = gamesList.slice(0, limit);
       }
     }
+    if (_req.query.genre) {
+      const filterGenre = _req.query.genre;
+      if (filterGenre !== "all") {
+        gamesList = gamesList.filter((game) => game.genres.toLowerCase() === (filterGenre as string).toLowerCase());
+      }
+    }
+
+    if (_req.query.age) {
+      const filterAge = _req.query.age;
+      if (filterAge !== "all")
+        gamesList = gamesList.filter((game) =>
+          game.age.toLowerCase().includes((filterAge as string).trim().toLowerCase())
+        );
+    }
+
+    if (_req.query.sort) {
+      const direction = _req.query.direction || "ascending";
+      gamesList = gamesList.sort((prev: dataItems, next: dataItems) => {
+        const sortField = _req.query.sort as keyof dataItems;
+
+        const priceOrRatingFromPrev = prev[sortField];
+        const priceOrRatingFromNext = next[sortField];
+
+        if (direction === "ascending") {
+          return priceOrRatingFromPrev > priceOrRatingFromNext ? -1 : 1;
+        }
+        return priceOrRatingFromPrev > priceOrRatingFromNext ? 1 : -1;
+      });
+    }
     const response = gamesList;
     res.json(response);
   });
-
   app.get("/api/categories", (_req, res) => {
     res.json(Object.values(categories));
   });

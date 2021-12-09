@@ -17,6 +17,8 @@ export interface dataItems {
   id: number;
   img: string;
   rating: number;
+  genres: string;
+  age: string;
   price: string;
   categories: string[];
   date: Date;
@@ -81,9 +83,7 @@ export interface saveProfile {
   description: string;
   photo: string;
   id: number;
-
 }
-
 
 export enum ActionTypes {
   LOG_IN = "LOG_IN",
@@ -117,3 +117,10 @@ export type IAction =
   | openModalTypeAction
   | closeModalTypeAction
   | userNameTypeAction;
+
+export interface IFilterState {
+  genre: string;
+  age: string;
+  rating: string;
+  price: string;
+}

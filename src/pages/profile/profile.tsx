@@ -120,63 +120,66 @@ const Profile: FC = (): JSX.Element => {
   };
 
   return (
-    <div className="container">
-      <form className="profile-form">
-        <div className="photo">
-          <div className="img-holder">
-            <img src={photo} alt="user" id="photo" className="photo-img" />
-          </div>
-          <input
-            ref={imgRef}
-            className="image-upload"
-            type="file"
-            accept=".jpg, .jpeg, .png"
-            name="image-upload"
-            id="input"
-          />
-          <button className="photo-btn" onClick={imageHandler}>
-            Change your photo
-          </button>
-        </div>
-
-        <div className="group-profile">
-          <label htmlFor="name">
-            Username
-            {nameDirty ? <div style={{ color: "red", fontSize: "13px" }}>{nameDirtyErr}</div> : null}
+    <>
+      <div className="new-games">Profile page</div>
+      <div className="container">
+        <form className="profile-form">
+          <div className="photo">
+            <div className="img-holder">
+              <img src={photo} alt="user" id="photo" className="photo-img" />
+            </div>
             <input
-              className="input-form"
-              type="text"
-              id="name"
-              name="name"
-              value={name}
-              onBlur={blurHandler}
-              onChange={handleChangeName}
+              ref={imgRef}
+              className="image-upload"
+              type="file"
+              accept=".jpg, .jpeg, .png"
+              name="image-upload"
+              id="input"
             />
-          </label>
-          <label htmlFor="message">
-            Profile description
-            {descriptionDirty ? <div style={{ color: "red", fontSize: "13px" }}>{descriptionDirtyErr}</div> : null}
-            <textarea
-              className="input-form"
-              id="description"
-              name="description"
-              value={description}
-              onBlur={blurHandler}
-              onChange={handleChangeDescription}
-            />
-          </label>
-          <div className="btn-group">
-            <button type="submit" disabled={!formValid} className="profile-btn" onClick={handleSubmitForm}>
-              Save profile
-            </button>
-            <button type="submit" className="profile-btn" onClick={openPasswordModal}>
-              Change password
+            <button className="photo-btn" onClick={imageHandler}>
+              Change your photo
             </button>
           </div>
-        </div>
-      </form>
-      {isModalPassword ? <Modal title="Change Password" onSubmit={closePasswordModal} /> : null}
-    </div>
+
+          <div className="group-profile">
+            <label htmlFor="name">
+              Username
+              {nameDirty ? <div style={{ color: "red", fontSize: "13px" }}>{nameDirtyErr}</div> : null}
+              <input
+                className="input-form"
+                type="text"
+                id="name"
+                name="name"
+                value={name}
+                onBlur={blurHandler}
+                onChange={handleChangeName}
+              />
+            </label>
+            <label htmlFor="message">
+              Profile description
+              {descriptionDirty ? <div style={{ color: "red", fontSize: "13px" }}>{descriptionDirtyErr}</div> : null}
+              <textarea
+                className="input-form"
+                id="description"
+                name="description"
+                value={description}
+                onBlur={blurHandler}
+                onChange={handleChangeDescription}
+              />
+            </label>
+            <div className="btn-group">
+              <button type="submit" disabled={!formValid} className="profile-btn" onClick={handleSubmitForm}>
+                Save profile
+              </button>
+              <button type="submit" className="profile-btn" onClick={openPasswordModal}>
+                Change password
+              </button>
+            </div>
+          </div>
+        </form>
+        {isModalPassword ? <Modal title="Change Password" onSubmit={closePasswordModal} /> : null}
+      </div>
+    </>
   );
 };
 

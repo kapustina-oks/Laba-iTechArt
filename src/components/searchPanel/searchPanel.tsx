@@ -7,16 +7,24 @@ import { debounce } from "../debounce/debounce";
 interface SearchPanelProps {
   onRequestFilter(res: dataItems[]): void;
   onLoading(load: boolean): void;
+  reset(): void;
 }
 
-const SearchPanel: FC<SearchPanelProps> = ({ onRequestFilter, onLoading }): JSX.Element => {
+const SearchPanel: FC<SearchPanelProps> = ({ onRequestFilter, onLoading, reset }): JSX.Element => {
   const handleSubmit = (e: { target: { value: string } }) => {
+    const filterStr = localStorage.getItem("filter");
+    const categories = localStorage.getItem("category");
     console.log(e.target.value);
     if (e.target.value === "") {
       onLoading(false);
+      reset();
       return;
     }
-    getResource(`/api/games?filter=${e.target.value}`)
+    let categoryQuery = "";
+    if (categories !== null) {
+      categoryQuery = `&category=${categories}`;
+    }
+    getResource(`/api/games?${filterStr}&filter=${e.target.value}${categoryQuery}`)
       .then((res) => onRequestFilter(res))
       .then(() => onLoading(false));
   };

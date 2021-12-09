@@ -9,7 +9,7 @@ import SearchPanel from "../../components/searchPanel/searchPanel";
 import Filter from "../../components/filter/filter";
 import transformParam from "../../utils/transformParam";
 
-// const Card = React.lazy(() => import("@/components/card/card"));
+// const Filter = lazy(() => import("../../components/filter/filter"));
 // const SearchPanel = React.lazy(() => import("../../components/searchPanel/searchPanel"));
 
 interface IParams {
@@ -32,7 +32,6 @@ const Products: FC = (): JSX.Element => {
   };
 
   const onRequest = (category: string) => {
-    console.log("return to product");
     console.log(category);
     if (category) {
       getResource(`/api/games?category=${category}&${filterStr}`).then((data) => setProductList(data));
@@ -46,10 +45,6 @@ const Products: FC = (): JSX.Element => {
   };
 
   const getProduct = () => {
-    console.log("this is getproduct");
-    // if (categories) {
-    //   getResource(`/api/games?${filterStr}&category=${categories}`).then((data) => setProductList(data));
-    // }
     getResource(`/api/games?${filterStr}&category=${categories}`).then((data) => setProductList(data));
   };
 

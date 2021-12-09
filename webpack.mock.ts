@@ -16,14 +16,13 @@ export default webpackMockServer.add((app) => {
         elem.name.toLowerCase().includes((searchString as string).trim().toLowerCase())
       );
     }
-    console.log("filter: " + gamesList);
+
     if (_req.query.category) {
       const category = _req.query.category as string;
       if (category !== "undefined") {
         gamesList = gamesList.filter((item) => item.categories.includes(category));
       }
     }
-    console.log("category: " + gamesList);
 
     if (_req.query.sortBy) {
       const { sortBy } = _req.query;
@@ -43,7 +42,7 @@ export default webpackMockServer.add((app) => {
         gamesList = gamesList.filter((game) => game.genres.toLowerCase() === (filterGenre as string).toLowerCase());
       }
     }
-    console.log("genre: " + gamesList);
+
     if (_req.query.age) {
       const filterAge = _req.query.age;
       if (filterAge !== "all")
@@ -51,7 +50,7 @@ export default webpackMockServer.add((app) => {
           game.age.toLowerCase().includes((filterAge as string).trim().toLowerCase())
         );
     }
-    console.log("after age: " + gamesList);
+
     if (_req.query.sort) {
       const direction = _req.query.direction || "ascending";
       gamesList = gamesList.sort((prev: dataItems, next: dataItems) => {
@@ -68,7 +67,6 @@ export default webpackMockServer.add((app) => {
     }
     const response = gamesList;
     res.json(response);
-    console.log("last: " + gamesList);
   });
   app.get("/api/categories", (_req, res) => {
     res.json(Object.values(categories));

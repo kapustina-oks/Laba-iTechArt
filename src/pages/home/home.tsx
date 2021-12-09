@@ -60,11 +60,7 @@ const Home: FC = (): JSX.Element => {
   return (
     <>
       <div className="home_container">
-        <SearchPanel
-          onRequestFilter={onRequestFilter}
-          onLoading={(load) => setLoading(load)}
-          reset={onRequestSort}
-        />
+        <SearchPanel onRequestFilter={onRequestFilter} onLoading={(load) => setLoading(load)} reset={onRequestSort} />
         <div className="new-games">Categories</div>
         <div className="grid_category">
           {categoriesList.map((category: ICategories) => (

@@ -32,7 +32,13 @@ const Products: FC = (): JSX.Element => {
   };
 
   const onRequest = (category: string) => {
-    getResource(`/api/games?category=${category}&${filterStr}`).then((data) => setProductList(data));
+    console.log("return to product");
+    console.log(category);
+    if (category) {
+      getResource(`/api/games?category=${category}&${filterStr}`).then((data) => setProductList(data));
+    } else {
+      getResource(`/api/games?${filterStr}`).then((data) => setProductList(data));
+    }
   };
 
   const onFilter = (filter: IFilterState) => {
@@ -40,6 +46,10 @@ const Products: FC = (): JSX.Element => {
   };
 
   const getProduct = () => {
+    console.log("this is getproduct");
+    // if (categories) {
+    //   getResource(`/api/games?${filterStr}&category=${categories}`).then((data) => setProductList(data));
+    // }
     getResource(`/api/games?${filterStr}&category=${categories}`).then((data) => setProductList(data));
   };
 
@@ -49,8 +59,12 @@ const Products: FC = (): JSX.Element => {
 
   useEffect(() => {
     if (categories) {
+      console.log(categories);
       onRequest(categories);
       localStorage.setItem("category", categories);
+    } else {
+      localStorage.removeItem("category");
+      getResource(`/api/games?${filterStr}`).then((data) => setProductList(data));
     }
   }, [categories, filterStr]);
 

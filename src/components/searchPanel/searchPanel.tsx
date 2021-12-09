@@ -20,7 +20,11 @@ const SearchPanel: FC<SearchPanelProps> = ({ onRequestFilter, onLoading, reset }
       reset();
       return;
     }
-    getResource(`/api/games?${filterStr}&filter=${e.target.value}&category=${categories}`)
+    let categoryQuery = "";
+    if (categories !== null) {
+      categoryQuery = `&category=${categories}`;
+    }
+    getResource(`/api/games?${filterStr}&filter=${e.target.value}${categoryQuery}`)
       .then((res) => onRequestFilter(res))
       .then(() => onLoading(false));
   };

@@ -73,6 +73,9 @@ export interface IInitialState {
   auth: boolean;
   modal: boolean;
   userName: string;
+  products: dataItems[];
+  cart: [] | dataItems[];
+  total: number;
 }
 
 export interface saveProfile {
@@ -81,9 +84,7 @@ export interface saveProfile {
   description: string;
   photo: string;
   id: number;
-
 }
-
 
 export enum ActionTypes {
   LOG_IN = "LOG_IN",

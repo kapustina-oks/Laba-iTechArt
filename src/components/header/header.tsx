@@ -12,14 +12,17 @@ import Dropdown from "../dropdown/dropdown";
 const { home, product, about } = links;
 
 const Header: FC = (): JSX.Element => {
-  const [dropdown, setDropdown] = useState<boolean>(false);
-  const [isOpenModalSignIn, setIsOpenModalSignIn] = useState<boolean>(false);
-  const [isOpenModalSignUp, setIsOpenModalSignUp] = useState<boolean>(false);
-
   const dispatch = useDispatch();
   const modal = useSelector((state: RootState) => state.modal.modal);
   const auth = useSelector((state: RootState) => state.auth.auth);
   const userName = useSelector((state: RootState) => state.userName.userName);
+  const total = useSelector((state: RootState) => state.cart.total);
+
+  const [dropdown, setDropdown] = useState<boolean>(false);
+  const [isOpenModalSignIn, setIsOpenModalSignIn] = useState<boolean>(false);
+  const [isOpenModalSignUp, setIsOpenModalSignUp] = useState<boolean>(false);
+
+
 
   useEffect(() => {
     if (modal) {
@@ -79,10 +82,10 @@ const Header: FC = (): JSX.Element => {
                 </Link>
               </li>
               <li className="nav-elem" data-sign="signIn">
-                <Link className="nav-link" to="/">
+                <Link className="nav-link" to="/cart">
                   <div className="icons-flex">
                     <i className="fas fa-shopping-cart icons-size" />
-                    <div className="icons-text">0</div>
+                    <div className="icons-text">{total}</div>
                   </div>
                 </Link>
               </li>

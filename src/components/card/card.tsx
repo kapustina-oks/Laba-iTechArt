@@ -1,12 +1,16 @@
 import { FC } from "react";
 import { dataItems } from "@/types/types";
 import "./card.css";
+import { addToCart } from "@/store/actionCreators/cartActions";
+import { useDispatch } from "react-redux";
 
 interface CardProps {
   game: dataItems;
 }
 
 const Card: FC<CardProps> = ({ game }): JSX.Element => {
+  const dispatch = useDispatch();
+
   let star = "";
   if (game.rating) {
     for (let i = 0; i < game.rating; i++) {
@@ -32,7 +36,9 @@ const Card: FC<CardProps> = ({ game }): JSX.Element => {
         </div>
         <div className="card-back text">
           {game.description}
-          <button className="btn">Add to cart</button>
+          <button className="btn" onClick={() => dispatch(addToCart(game.id))}>
+            Add to cart
+          </button>
         </div>
       </div>
     </div>

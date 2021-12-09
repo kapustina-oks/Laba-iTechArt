@@ -1,0 +1,20 @@
+.grid_cart {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: auto;
+  justify-content: center;
+  align-items: center;
+  column-gap: 50px;
+  row-gap: 30px;
+  padding: 60px 50px 100px;
+}
+
+.cart-title {
+  text-align: center;
+}
+
+.cart-input {
+  min-width: 1em;
+  width: 50%;
+  margin-bottom: 0;
+}

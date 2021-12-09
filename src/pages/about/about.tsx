@@ -1,16 +1,5 @@
-import { useState, useEffect, FC } from "react";
-import Home from "../home/home";
+import { FC } from "react";
 
-const About: FC = (): JSX.Element => {
-  const [error, setError] = useState<boolean>(false);
-  useEffect(() => {
-    setError(true);
-  });
-
-  if (error) {
-    return <Home />;
-  }
-  return <div>About</div>;
-};
+const About: FC = (): JSX.Element => <div>About</div>;
 
 export default About;

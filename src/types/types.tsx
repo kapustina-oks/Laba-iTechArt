@@ -83,9 +83,7 @@ export interface saveProfile {
   description: string;
   photo: string;
   id: number;
-
 }
-
 
 export enum ActionTypes {
   LOG_IN = "LOG_IN",
@@ -126,7 +124,3 @@ export interface IFilterState {
   rating: string;
   price: string;
 }
-
-// export interface IObjectKeys extends IFilterState {
-//   [key: string]: string | number;
-// }

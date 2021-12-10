@@ -1,4 +1,4 @@
-import { ADD_TO_CART, ADJUST_ITEM_QTY, REMOVE_ALL_ITEM, REMOVE_FROM_CART } from "@/store/actions";
+import { ADD_TO_CART, ADJUST_ITEM_QTY, REMOVE_ALL_ITEM, REMOVE_FROM_CART, TOTAL_ITEMS } from "@/store/actions";
 
 export const addToCart = (itemID: number) => ({
   type: ADD_TO_CART,
@@ -24,4 +24,9 @@ export const adjustItemQty = (itemID: number, qty: string) => ({
 
 export const removeAllItems = () => ({
   type: REMOVE_ALL_ITEM,
+});
+
+export const totalItemsCart = (num: number) => ({
+  type: TOTAL_ITEMS,
+  payload: { num },
 });

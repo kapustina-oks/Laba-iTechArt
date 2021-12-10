@@ -115,6 +115,14 @@ export enum ActionCartTypes {
   ADJUST_ITEM_QTY = "ADJUST_ITEM_QTY",
   REMOVE_FROM_CART = "REMOVE_FROM_CART",
   REMOVE_ALL_ITEM = "REMOVE_ALL_ITEM",
+  TOTAL_ITEMS = "TOTAL_ITEMS",
+}
+
+interface totalItemsCart {
+  type: ActionCartTypes.TOTAL_ITEMS;
+  payload: {
+    num: number;
+  };
 }
 
 interface addToCart {
@@ -143,7 +151,7 @@ interface removeAllItems {
   type: ActionCartTypes.REMOVE_ALL_ITEM;
 }
 
-export type IActionCart = addToCart | adjustItemQty | removeFromCart | removeAllItems;
+export type IActionCart = addToCart | adjustItemQty | removeFromCart | removeAllItems | totalItemsCart;
 
 interface LoginTypeAction {
   type: ActionTypes.LOG_IN;

@@ -1,5 +1,5 @@
 import initialState from "@/store/initialState";
-import { ADD_TO_CART, ADJUST_ITEM_QTY, REMOVE_ALL_ITEM, REMOVE_FROM_CART } from "@/store/actions";
+import { ADD_TO_CART, ADJUST_ITEM_QTY, REMOVE_ALL_ITEM, REMOVE_FROM_CART, TOTAL_ITEMS } from "@/store/actions";
 import { IActionCart, IInitialState } from "@/types/types";
 
 const cartReducer = (state = initialState, action: IActionCart): IInitialState => {
@@ -34,6 +34,13 @@ const cartReducer = (state = initialState, action: IActionCart): IInitialState =
         cart: [],
         total: 0,
       };
+
+    case TOTAL_ITEMS:
+      return {
+        ...state,
+        total: action.payload.num,
+      };
+
     default:
       return state;
   }

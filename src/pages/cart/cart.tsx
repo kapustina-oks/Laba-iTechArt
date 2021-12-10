@@ -1,17 +1,18 @@
 import "./cart.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/reducers/rootReducer";
 import { useEffect, useState } from "react";
-import { dataItems, ICart } from "@/types/types";
+import { ICart } from "@/types/types";
 import CartItem from "../../components/cartItem/cartItem";
 import Modal from "../../components/modal/modal";
+import { totalItemsCart } from "@/store/actionCreators/cartActions";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart.cart);
-
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [totalItems, setTotalItems] = useState(0);
-  const [cartModal, setCartModal] = useState(false);
+  const dispatch = useDispatch();
+  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [totalItems, setTotalItems] = useState<number>(0);
+  const [cartModal, setCartModal] = useState<boolean>(false);
 
   useEffect(() => {
     let items = 0;
@@ -24,6 +25,9 @@ const Cart = () => {
 
     setTotalItems(items);
     setTotalPrice(price);
+
+    dispatch(totalItemsCart(totalItems));
+
   }, [cart, totalPrice, totalItems, setTotalPrice, setTotalItems]);
 
   const openModal = () => {
@@ -48,7 +52,7 @@ const Cart = () => {
           </tr>
         </thead>
         <tbody>
-          {cart.map((game: dataItems) => (
+          {cart.map((game: ICart) => (
             <CartItem key={game.id} game={game} />
           ))}
         </tbody>

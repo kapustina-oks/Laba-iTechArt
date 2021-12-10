@@ -25,6 +25,20 @@ export interface dataItems {
   description: string;
 }
 
+export interface ICart {
+  name: string;
+  id: number;
+  img: string;
+  rating: number;
+  genres: string;
+  age: string;
+  price: string;
+  categories: string[];
+  date: Date;
+  description: string;
+  qty: number;
+}
+
 export interface IContext {
   auth: boolean;
   userName: string;
@@ -76,7 +90,7 @@ export interface IInitialState {
   modal: boolean;
   userName: string;
   products: dataItems[];
-  cart: [] | dataItems[];
+  cart: ICart[];
   total: number;
 }
 
@@ -95,6 +109,41 @@ export enum ActionTypes {
   OPEN_MODAL = "OPEN_MODAL",
   CLOSE_MODAL = "CLOSE_MODAL",
 }
+
+export enum ActionCartTypes {
+  ADD_TO_CART = "ADD_TO_CART",
+  ADJUST_ITEM_QTY = "ADJUST_ITEM_QTY",
+  REMOVE_FROM_CART = "REMOVE_FROM_CART",
+  REMOVE_ALL_ITEM = "REMOVE_ALL_ITEM",
+}
+
+interface addToCart {
+  type: ActionCartTypes.ADD_TO_CART;
+  payload: {
+    id: number;
+  };
+}
+
+interface removeFromCart {
+  type: ActionCartTypes.REMOVE_FROM_CART;
+  payload: {
+    id: number;
+  };
+}
+
+interface adjustItemQty {
+  type: ActionCartTypes.ADJUST_ITEM_QTY;
+  payload: {
+    id: number;
+    qty: number;
+  };
+}
+
+interface removeAllItems {
+  type: ActionCartTypes.REMOVE_ALL_ITEM;
+}
+
+export type IActionCart = addToCart | adjustItemQty | removeFromCart | removeAllItems;
 
 interface LoginTypeAction {
   type: ActionTypes.LOG_IN;

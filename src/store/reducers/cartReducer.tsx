@@ -1,7 +1,8 @@
 import initialState from "@/store/initialState";
-import { ADD_TO_CART, ADJUST_ITEM_QTY, REMOVE_ALL_ITEM, REMOVE_FROM_CART, TOTAL_AMOUNT_ITEMS } from "@/store/actions";
+import { ADD_TO_CART, ADJUST_ITEM_QTY, REMOVE_ALL_ITEM, REMOVE_FROM_CART } from "@/store/actions";
+import { IActionCart, IInitialState } from "@/types/types";
 
-const cartReducer = (state = initialState, action) => {
+const cartReducer = (state = initialState, action: IActionCart): IInitialState => {
   switch (action.type) {
     case ADD_TO_CART:
       // Great Item data from products array
@@ -20,6 +21,7 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         cart: state.cart.filter((game) => game.id !== action.payload.id),
+        total: state.total - 1,
       };
     case ADJUST_ITEM_QTY:
       return {
@@ -30,6 +32,7 @@ const cartReducer = (state = initialState, action) => {
       return {
         ...state,
         cart: [],
+        total: 0,
       };
     default:
       return state;

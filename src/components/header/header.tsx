@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./header.css";
 import { links } from "@/links";
@@ -21,8 +21,6 @@ const Header: FC = (): JSX.Element => {
   const [dropdown, setDropdown] = useState<boolean>(false);
   const [isOpenModalSignIn, setIsOpenModalSignIn] = useState<boolean>(false);
   const [isOpenModalSignUp, setIsOpenModalSignUp] = useState<boolean>(false);
-
-
 
   useEffect(() => {
     if (modal) {

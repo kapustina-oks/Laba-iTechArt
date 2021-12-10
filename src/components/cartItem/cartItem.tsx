@@ -1,24 +1,37 @@
 import { adjustItemQty, removeFromCart } from "@/store/actionCreators/cartActions";
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { RootState } from "@/store/reducers/rootReducer";
+import { useDispatch } from "react-redux";
+import { ChangeEvent, useState } from "react";
+import { ICart } from "@/types/types";
 
-const CartItem = ({ game }) => {
+interface ICartItem {
+  game: ICart;
+}
+
+const CartItem = ({ game }: ICartItem) => {
   const dispatch = useDispatch();
 
-  const [input, setInput] = useState(game.qty);
+  const [input, setInput] = useState<string | number>(game.qty);
 
-  const onChangeHandler = (e) => {
-    setInput(e.target.value);
-    dispatch(adjustItemQty(game.id, e.target.value));
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const num = e.target.value;
+    setInput(num);
+    dispatch(adjustItemQty(game.id, num));
   };
 
   return (
-    <>
-      <div className="cart-title">{game.name}</div>
-      <select name="select">{game.categories.map((item, i) => <option key={i} value="value3">{item}</option>)}</select>
-      <div className="cart-title">{new Date().toLocaleDateString()}</div>
-      <div className="cart-title">
+    <tr>
+      <td className="cart-title">{game.name}</td>
+      <td>
+        <select className="cart-select" name="select">
+          {game.categories.map((item, i) => (
+            <option key={i} value="value3">
+              {item}
+            </option>
+          ))}
+        </select>
+      </td>
+      <td className="cart-title">{new Date().toLocaleDateString()}</td>
+      <td className="cart-title">
         <input
           className="cart-input"
           min="1"
@@ -28,13 +41,15 @@ const CartItem = ({ game }) => {
           value={input}
           onChange={onChangeHandler}
         />
-      </div>
+      </td>
 
-      <div className="cart-title">{parseInt(game.price,10) * input}$</div>
-      <button onClick={() => dispatch(removeFromCart(game.id))}>
-        <i className="fas fa-trash-alt" />
-      </button>
-    </>
+      <td className="cart-title">{parseInt(game.price, 10) * +input}$</td>
+      <td>
+        <button onClick={() => dispatch(removeFromCart(game.id))}>
+          <i className="fas fa-trash-alt cart-icon" />
+        </button>
+      </td>
+    </tr>
   );
 };
 

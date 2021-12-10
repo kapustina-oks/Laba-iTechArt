@@ -1,34 +1,32 @@
 import "./cart.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "@/store/reducers/rootReducer";
-import React, { useEffect, useState } from "react";
-import Modal from "@/components/modal/modal";
+import { useEffect, useState } from "react";
+import { dataItems, ICart } from "@/types/types";
 import CartItem from "../../components/cartItem/cartItem";
+import Modal from "../../components/modal/modal";
 
 const Cart = () => {
-  const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cart.cart);
 
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalItems, setTotalItems] = useState(0);
   const [cartModal, setCartModal] = useState(false);
 
-
   useEffect(() => {
     let items = 0;
     let price = 0;
 
-    cart.forEach((item) => {
+    cart.forEach((item: ICart) => {
       items += item.qty;
       price += item.qty * parseInt(item.price, 10);
     });
 
     setTotalItems(items);
     setTotalPrice(price);
-
   }, [cart, totalPrice, totalItems, setTotalPrice, setTotalItems]);
 
-  const openModal = (event: React.SyntheticEvent<HTMLElement>) => {
+  const openModal = () => {
     setCartModal(true);
   };
 
@@ -37,24 +35,32 @@ const Cart = () => {
   };
 
   return (
-    <div className="home_container">
-      <div>
-        <p>TOTAL: ({totalItems} items)</p>
+    <div className="cart_container">
+      <table className="resp-tab">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Platform</th>
+            <th>Order date</th>
+            <th>Amount</th>
+            <th>Price($)</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          {cart.map((game: dataItems) => (
+            <CartItem key={game.id} game={game} />
+          ))}
+        </tbody>
+      </table>
+      <div className="cart-info">
+        <p>TOTAL: {totalItems} items</p>
         <p>Games cost: {totalPrice}$</p>
         <p>Your balance: 1000$</p>
-        <button onClick={openModal}>Buy</button>
+        <button className="btn-cart" onClick={openModal}>
+          Buy
+        </button>
         {cartModal && <Modal title="Buy games" onSubmit={closeModal} />}
-      </div>
-      <div className="grid_cart">
-        <div className="cart-title">Name</div>
-        <div className="cart-title">Platform</div>
-        <div className="cart-title">Order date</div>
-        <div className="cart-title">Amount</div>
-        <div className="cart-title">Price($)</div>
-        <div className="cart-title">Remove</div>
-        {cart.map((game) => (
-          <CartItem key={game.id} game={game} />
-        ))}
       </div>
     </div>
   );

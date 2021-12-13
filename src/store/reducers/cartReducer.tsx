@@ -1,8 +1,13 @@
 import initialState from "@/store/initialState";
-import { ADD_TO_CART, ADJUST_ITEM_QTY, REMOVE_ALL_ITEM, REMOVE_FROM_CART, TOTAL_ITEMS, LOCAL_STORAGE_CART } from "@/store/actions";
+import {
+  ADD_TO_CART,
+  ADJUST_ITEM_QTY,
+  REMOVE_ALL_ITEM,
+  REMOVE_FROM_CART,
+  TOTAL_ITEMS,
+  LOCAL_STORAGE_CART,
+} from "@/store/actions";
 import { IActionCart, ICart, IInitialState } from "@/types/types";
-import { Simulate } from "react-dom/test-utils";
-import loadedData = Simulate.loadedData;
 
 const cartReducer = (state = initialState, action: IActionCart): IInitialState => {
   let item;
@@ -20,7 +25,6 @@ const cartReducer = (state = initialState, action: IActionCart): IInitialState =
     switch (action.type) {
       case ADD_TO_CART:
         localStorage.setItem("cart", JSON.stringify(selectedGames));
-
         return {
           ...state,
           cart: selectedGames,
@@ -40,11 +44,6 @@ const cartReducer = (state = initialState, action: IActionCart): IInitialState =
           total: state.total - 1,
         };
       case ADJUST_ITEM_QTY:
-        const saved = localStorage.getItem("cart");
-        const savedParse = JSON.parse(saved);
-        const editGame = savedParse.find((product) => product.id === action.payload.id);
-        editGame.qty = +action.payload.qty;
-        localStorage.setItem("cart", JSON.stringify(savedParse));
         return {
           ...state,
           cart: state.cart.map((game) =>
@@ -53,6 +52,7 @@ const cartReducer = (state = initialState, action: IActionCart): IInitialState =
         };
 
       case TOTAL_ITEMS:
+        localStorage.setItem("total", String(action.payload.num));
         return {
           ...state,
           total: action.payload.num,

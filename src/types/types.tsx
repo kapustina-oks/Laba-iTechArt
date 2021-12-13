@@ -116,6 +116,15 @@ export enum ActionCartTypes {
   REMOVE_FROM_CART = "REMOVE_FROM_CART",
   REMOVE_ALL_ITEM = "REMOVE_ALL_ITEM",
   TOTAL_ITEMS = "TOTAL_ITEMS",
+  LOCAL_STORAGE_CART = "LOCAL_STORAGE_CART",
+}
+
+interface addCartFromLS {
+  type: ActionCartTypes.LOCAL_STORAGE_CART;
+  payload: {
+    savedGames: ICart[];
+    id?: number;
+  };
 }
 
 interface totalItemsCart {
@@ -152,7 +161,7 @@ interface removeAllItems {
   type: ActionCartTypes.REMOVE_ALL_ITEM;
 }
 
-export type IActionCart = addToCart | adjustItemQty | removeFromCart | removeAllItems | totalItemsCart;
+export type IActionCart = addToCart | adjustItemQty | removeFromCart | removeAllItems | totalItemsCart | addCartFromLS;
 
 interface LoginTypeAction {
   type: ActionTypes.LOG_IN;

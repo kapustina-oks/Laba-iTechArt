@@ -16,6 +16,25 @@ const CartItem = ({ game }: ICartItem) => {
     const num = e.target.value;
     setInput(num);
     dispatch(adjustItemQty(game.id, num));
+    const savedCart = localStorage.getItem("cart");
+    let savedCartParsed;
+    if (savedCart != null) {
+      savedCartParsed = JSON.parse(savedCart);
+      const currentGame = savedCartParsed.find((item: ICart) => item.id === game.id);
+      currentGame.qty = +num;
+    }
+    localStorage.setItem("cart", JSON.stringify(savedCartParsed));
+  };
+
+  const onRemoveItem = (id: number) => {
+    dispatch(removeFromCart(id));
+    const savedCart = localStorage.getItem("cart");
+    let newListOfGames;
+    if (savedCart != null) {
+      const savedCartParsed = JSON.parse(savedCart);
+      newListOfGames = savedCartParsed.filter((item: ICart) => item.id !== id);
+    }
+    localStorage.setItem("cart", JSON.stringify(newListOfGames));
   };
 
   return (
@@ -45,7 +64,7 @@ const CartItem = ({ game }: ICartItem) => {
 
       <td className="cart-title">{parseInt(game.price, 10) * +input}$</td>
       <td>
-        <button onClick={() => dispatch(removeFromCart(game.id))}>
+        <button onClick={() => onRemoveItem(game.id)}>
           <i className="fas fa-trash-alt cart-icon" />
         </button>
       </td>

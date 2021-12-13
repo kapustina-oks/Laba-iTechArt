@@ -8,6 +8,7 @@ import { authLogOutAction } from "@/store/actionCreators/authActions";
 import { RootState } from "@/store/reducers/rootReducer";
 import Modal from "../modal/modal";
 import Dropdown from "../dropdown/dropdown";
+import { totalItemsCart } from "@/store/actionCreators/cartActions";
 
 const { home, product, about } = links;
 
@@ -21,12 +22,12 @@ const Header: FC = (): JSX.Element => {
   const [dropdown, setDropdown] = useState<boolean>(false);
   const [isOpenModalSignIn, setIsOpenModalSignIn] = useState<boolean>(false);
   const [isOpenModalSignUp, setIsOpenModalSignUp] = useState<boolean>(false);
-  const [titalItems, setTotalItems] = useState(0);
-
+  const amount = localStorage.getItem("total");
   useEffect(() => {
-    const amount = localStorage.getItem("total");
-    setTotalItems(amount);
-  }, [total]);
+    if (amount) {
+      dispatch(totalItemsCart(+amount));
+    }
+  }, [amount]);
 
   useEffect(() => {
     if (modal) {

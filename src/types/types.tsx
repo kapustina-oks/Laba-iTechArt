@@ -75,6 +75,10 @@ export interface IInitialState {
   auth: boolean;
   modal: boolean;
   userName: string;
+  editModal: boolean;
+  game: dataItems;
+  loading: boolean;
+  error: string;
 }
 
 export interface saveProfile {

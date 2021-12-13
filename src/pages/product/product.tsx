@@ -1,4 +1,4 @@
-import { FC, useEffect, useState, Suspense } from "react";
+import React, { FC, useEffect, useState, Suspense } from "react";
 import { useParams } from "react-router-dom";
 import { getFilter, getResource } from "@/services/dataService";
 import Card from "@/components/card/card";
@@ -8,6 +8,7 @@ import Spinner from "@/components/spinner/spinner";
 import SearchPanel from "../../components/searchPanel/searchPanel";
 import Filter from "../../components/filter/filter";
 import transformParam from "../../utils/transformParam";
+import Modal from "@/components/modal/modal";
 
 // const Filter = lazy(() => import("../../components/filter/filter"));
 // const SearchPanel = React.lazy(() => import("../../components/searchPanel/searchPanel"));
@@ -24,6 +25,7 @@ const Products: FC = (): JSX.Element => {
   const { categories } = useParams<IParams>();
   const [productList, setProductList] = useState<dataItems[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [editModal, setEditModal] = useState<boolean>(false);
 
   const filterStr = localStorage.getItem("filter");
 
@@ -63,7 +65,9 @@ const Products: FC = (): JSX.Element => {
     }
   }, [categories, filterStr]);
 
-  const contentProduct = productList.map((game) => <Card game={game} key={game.id} />);
+  const contentProduct = productList.map((game) => (
+    <Card game={game} key={game.id} onEditModal={() => setEditModal(true)} />
+  ));
 
   return (
     <Suspense fallback={<Spinner />}>
@@ -76,6 +80,7 @@ const Products: FC = (): JSX.Element => {
             <Filter onFilter={onFilter} />
           </div>
           {loading ? <Spinner /> : contentProduct}
+          {editModal && <Modal title="Edit Modal" onSubmit={() => setEditModal(false)} />}
         </div>
       </div>
     </Suspense>

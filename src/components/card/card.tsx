@@ -4,9 +4,10 @@ import "./card.css";
 
 interface CardProps {
   game: dataItems;
+  onEditModal(): void;
 }
 
-const Card: FC<CardProps> = ({ game }): JSX.Element => {
+const Card: FC<CardProps> = ({ game, onEditModal }): JSX.Element => {
   let star = "";
   if (game.rating) {
     for (let i = 0; i < game.rating; i++) {
@@ -32,7 +33,12 @@ const Card: FC<CardProps> = ({ game }): JSX.Element => {
         </div>
         <div className="card-back text">
           {game.description}
-          <button className="btn">Add to cart</button>
+          <div className="btn-group-card">
+            <button className="btn1">Add to cart</button>
+            <button className="btn2" onClick={onEditModal}>
+              Edit card
+            </button>
+          </div>
         </div>
       </div>
     </div>

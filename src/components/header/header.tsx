@@ -21,6 +21,12 @@ const Header: FC = (): JSX.Element => {
   const [dropdown, setDropdown] = useState<boolean>(false);
   const [isOpenModalSignIn, setIsOpenModalSignIn] = useState<boolean>(false);
   const [isOpenModalSignUp, setIsOpenModalSignUp] = useState<boolean>(false);
+  const [titalItems, setTotalItems] = useState(0);
+
+  useEffect(() => {
+    const amount = localStorage.getItem("total");
+    setTotalItems(amount);
+  }, [total]);
 
   useEffect(() => {
     if (modal) {

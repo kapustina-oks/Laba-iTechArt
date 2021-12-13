@@ -2,11 +2,13 @@ import { ChangeEvent, FocusEvent, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { PropsForm } from "@/types/types";
 import { usersRegistration } from "@/services/dataService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authLogInAction, authLogOutAction } from "@/store/actionCreators/authActions";
 import { userNameAction } from "@/store/actionCreators/userNameAction";
 import mockServerHelper from "webpack-mock-server/lib/mockServerHelper";
 import { validateLogin, validatePassword, validateRepeatPassword } from "@/utils/validation";
+import { removeAllItems } from "@/store/actionCreators/cartActions";
+import { RootState } from "@/store/reducers/rootReducer";
 
 const FormSignUp = ({ onSubmit }: PropsForm): JSX.Element => {
   const [login, setLogin] = useState<string>("");
@@ -31,6 +33,7 @@ const FormSignUp = ({ onSubmit }: PropsForm): JSX.Element => {
 
   const router = useHistory();
   const dispatch = useDispatch();
+  const auth = useSelector((state: RootState) => state.auth.auth);
 
   const handleSubmitForm = () => {
     usersRegistration("/api/auth/signUp", data)
@@ -44,10 +47,14 @@ const FormSignUp = ({ onSubmit }: PropsForm): JSX.Element => {
           router.push("/profile");
         } else {
           dispatch(authLogOutAction());
-          localStorage.clear();
         }
       })
-      .then(onSubmit);
+      .then(onSubmit)
+      .finally(() => {
+        if (!auth) {
+          dispatch(removeAllItems());
+        }
+      });
   };
 
   useEffect(() => {
@@ -57,7 +64,6 @@ const FormSignUp = ({ onSubmit }: PropsForm): JSX.Element => {
       setFormValid(true);
     }
   }, [loginDirtyErr, passwordDirtyErr, passwordRepeatDirtyErr]);
-
 
 
   const handleChangeLogin = (e: ChangeEvent<HTMLInputElement>) => {

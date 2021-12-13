@@ -122,6 +122,7 @@ interface totalItemsCart {
   type: ActionCartTypes.TOTAL_ITEMS;
   payload: {
     num: number;
+    id?: number;
   };
 }
 

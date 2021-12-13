@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/reducers/rootReducer";
 import { useEffect, useState } from "react";
 import { ICart } from "@/types/types";
+import { addCartFromLS, totalItemsCart } from "@/store/actionCreators/cartActions";
 import CartItem from "../../components/cartItem/cartItem";
 import Modal from "../../components/modal/modal";
-import { totalItemsCart } from "@/store/actionCreators/cartActions";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart.cart);
@@ -13,6 +13,15 @@ const Cart = () => {
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalItems, setTotalItems] = useState<number>(0);
   const [cartModal, setCartModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    const savedGames = localStorage.getItem("cart");
+
+    if (savedGames) {
+      const savedGamesParse = JSON.parse(savedGames);
+      dispatch(addCartFromLS(savedGamesParse));
+    }
+  }, []);
 
   useEffect(() => {
     let items = 0;
@@ -27,7 +36,6 @@ const Cart = () => {
     setTotalPrice(price);
 
     dispatch(totalItemsCart(totalItems));
-
   }, [cart, totalPrice, totalItems, setTotalPrice, setTotalItems]);
 
   const openModal = () => {

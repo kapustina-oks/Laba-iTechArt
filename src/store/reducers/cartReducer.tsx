@@ -1,13 +1,11 @@
 import initialState from "@/store/initialState";
 import { ADD_TO_CART, ADJUST_ITEM_QTY, REMOVE_ALL_ITEM, REMOVE_FROM_CART, TOTAL_ITEMS } from "@/store/actions";
-import { IActionCart, IInitialState } from "@/types/types";
+import { IActionCart, ICart, IInitialState } from "@/types/types";
 
 const cartReducer = (state = initialState, action: IActionCart): IInitialState => {
   switch (action.type) {
     case ADD_TO_CART:
-      // Great Item data from products array
-      const item = state.products.find((product) => product.id === action.payload.id);
-      // Check if Item is in cart already
+      const item = state.products.find((product) => product.id === action.payload.id) as ICart;
       const inCart = state.cart.find((game) => game.id === action.payload.id);
 
       return {

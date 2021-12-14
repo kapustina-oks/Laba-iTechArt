@@ -25,7 +25,8 @@ const Products: FC = (): JSX.Element => {
   const { categories } = useParams<IParams>();
   const [productList, setProductList] = useState<dataItems[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [editModal, setEditModal] = useState<boolean>(false);
+
+  const [createModal, setCreateModal] = useState<boolean>(false);
 
   const filterStr = localStorage.getItem("filter");
 
@@ -65,12 +66,10 @@ const Products: FC = (): JSX.Element => {
     }
   }, [categories, filterStr]);
 
-  const openModal = () => {
-    setEditModal(true);
-  };
+
 
   const contentProduct = productList.map((game) => (
-    <Card game={game} key={game.id} onEditModal={openModal} />
+    <Card game={game} key={game.id} />
   ));
 
   return (
@@ -82,9 +81,11 @@ const Products: FC = (): JSX.Element => {
           </div>
           <div className="sidebar">
             <Filter onFilter={onFilter} />
+            <button className="btn-create-card" onClick={() => setCreateModal(true)}>Create card</button>
           </div>
           {loading ? <Spinner /> : contentProduct}
-          {editModal && <Modal title="Edit Modal" onSubmit={() => setEditModal(false)} />}
+
+          {createModal && <Modal title="Create Card" onSubmit={() => setCreateModal(false)} />}
         </div>
       </div>
     </Suspense>

@@ -25,6 +25,32 @@
   /*border-radius: 10px;*/
 }
 
+.create-card {
+  /*grid-row-start: 1;*/
+  /*grid-row-end: 2;*/
+  /*grid-column-start: 4;*/
+  /*grid-column-end: 5;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-create-card {
+  width: 120px;
+  height: 40px;
+  border-radius: 20px;
+  background: #9833cc;
+  border: 1px solid black;
+  margin-top: 20px;
+  transition: 0.3s;
+  bottom: 100px;
+  color: white;
+  font-size: 18px;
+}
+
+.btn-create-card:hover {
+  background: #56057e;
+}
 /*.sidebar {*/
 /*  background-color: #cfa4d9;*/
 /*  height: 100%;*/

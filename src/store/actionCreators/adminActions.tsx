@@ -5,22 +5,21 @@ import {
   FETCH_GAME_REQUEST,
   FETCH_GAME_FAILURE,
   REMOVE_GAME,
+  DELETE_SET_SUCCESS,
 } from "@/store/actions";
-import { getResource } from "@/services/dataService";
+import { editedGames, getResource, removeGame } from "@/services/dataService";
 
 export const createGame = (game) => ({
   type: CREATE_NEW_GAME,
   game,
 });
 
-export const deleteGame = (id) => ({
-  type: REMOVE_GAME,
-  id,
-});
 
-export const editGames = (id) => ({
+export const editGames = (game) => ({
   type: EDIT_GAME,
-  id,
+  payload: {
+    game,
+  },
 });
 
 export const fetchGameRequest = (itemID) => ({
@@ -40,6 +39,21 @@ export const fetchGameFailure = (error) => ({
   payload: error,
 });
 
+export function deleteSetSuccess(id) {
+  return {
+    type: DELETE_SET_SUCCESS,
+    id,
+  };
+}
+
+export function deleteGame(id) {
+  return (dispatch) => {
+    removeGame(`/api/games/${id}`)
+      .then((response) => console.log(response))
+      .then((id) => dispatch(deleteSetSuccess(id)));
+  };
+}
+
 export const getGame = (id) => (dispatch) => {
   dispatch(fetchGameRequest(id));
   getResource(`/api/games?product=${id}`)
@@ -49,6 +63,18 @@ export const getGame = (id) => (dispatch) => {
     })
     .catch((error) => {
       dispatch(fetchGameFailure(error.message));
+    });
+};
+
+export const addGame = (gameObj) => (dispatch) => {
+  console.log(gameObj);
+  editedGames("/api/games", gameObj)
+    .then((response) => {
+      const game = response;
+      dispatch(editGames(game));
+    })
+    .catch((error) => {
+      console.log(error);
     });
 };
 

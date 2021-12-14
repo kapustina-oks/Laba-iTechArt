@@ -6,6 +6,7 @@ const initialState: IInitialState = {
   userName: "",
   editModal: false,
   game: [],
+  editedGame: [],
   loading: false,
   error: "",
 };

@@ -1,8 +1,11 @@
-import { FC } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { dataItems } from "@/types/types";
 import "./card.css";
 import { getGame } from "@/store/actionCreators/adminActions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/reducers/rootReducer";
+import Modal from "@/components/modal/modal";
+import FormEditModal from "@/components/formEditModal/formEditModal";
 
 interface CardProps {
   game: dataItems;
@@ -10,12 +13,15 @@ interface CardProps {
 }
 
 const Card: FC<CardProps> = ({ game, onEditModal }): JSX.Element => {
+  const [editModal, setEditModal] = useState<boolean>(false);
   const dispatch = useDispatch();
 
-  // const onEditHandler = () => {
-  //   onEditModal;
-  //   dispatch(getGame(game.id));
-  // }
+
+  useEffect(() => {
+    if (editModal) {
+      dispatch(getGame(game.id));
+    }
+  }, [editModal]);
 
   let star = "";
   if (game.rating) {
@@ -46,13 +52,11 @@ const Card: FC<CardProps> = ({ game, onEditModal }): JSX.Element => {
             <button className="btn1">Add to cart</button>
             <button
               className="btn2"
-              onClick={() => {
-                dispatch(getGame(game.id));
-                onEditModal();
-              }}
+              onClick={() => setEditModal(true)}
             >
               Edit card
             </button>
+            {editModal && <Modal title="Edit Card" game={game} onSubmit={() => setEditModal(false)} />}
           </div>
         </div>
       </div>

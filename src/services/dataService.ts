@@ -84,3 +84,33 @@ export const usersSaveProfile: (url: string, body: IUsersProfileInfo) => Promise
   }
   return res;
 };
+
+
+export const editedGames: (url: string, body) => Promise<Response> = async (url, body) => {
+  console.log("editedGames");
+  const res = await fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    throw new Error(`Could not fetch url: ${url}, status: ${res.status}`);
+  }
+  return res;
+};
+
+export const removeGame: (url: string) => Promise<Response> = async (url) => {
+  console.log("deleteGame");
+  const res = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (!res.ok) {
+    throw new Error(`Could not fetch url: ${url}, status: ${res.status}`);
+  }
+  return res;
+};

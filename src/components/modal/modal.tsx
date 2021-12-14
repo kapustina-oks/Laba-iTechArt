@@ -1,14 +1,16 @@
 import Portal from "@/components/portal/portal";
 import "./modal.css";
 import { modal } from "@/utils/modalUtils";
+import { dataItems } from "@/types/types";
 
 interface PropsModal {
   title: string;
   onSubmit: () => void;
+  game: dataItems;
 }
 
-const Modal: ({ title, onSubmit }: PropsModal) => JSX.Element = ({ title, onSubmit }) => {
-  const form = modal(title, onSubmit);
+const Modal: ({ title, onSubmit, game }: PropsModal) => JSX.Element = ({ title, onSubmit, game }) => {
+  const form = modal(title, onSubmit, game);
   return (
     <>
       <Portal>

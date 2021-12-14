@@ -7,18 +7,20 @@ interface UserDataObject {
   [key: string]: IUsers;
 }
 
+let gamesList = [...dataGames];
+
 export default webpackMockServer.add((app) => {
   app.get("/api/games", (_req, res) => {
-    let gamesList = [...dataGames];
+    let gamesListUpdated = [...gamesList];
 
     if (_req.query.product) {
       const itemID = _req.query.product;
-      gamesList = gamesList.filter((elem) => elem.id === +itemID);
+      gamesListUpdated = gamesListUpdated.filter((elem) => elem.id === +itemID);
     }
 
     if (_req.query.filter) {
       const searchString = _req.query.filter;
-      gamesList = gamesList.filter((elem) =>
+      gamesListUpdated = gamesListUpdated.filter((elem) =>
         elem.name.toLowerCase().includes((searchString as string).trim().toLowerCase())
       );
     }
@@ -26,40 +28,40 @@ export default webpackMockServer.add((app) => {
     if (_req.query.category) {
       const category = _req.query.category as string;
       if (category !== "undefined") {
-        gamesList = gamesList.filter((item) => item.categories.includes(category));
+        gamesListUpdated = gamesListUpdated.filter((item) => item.categories.includes(category));
       }
     }
 
     if (_req.query.sortBy) {
       const { sortBy } = _req.query;
       if (sortBy === "date") {
-        gamesList.sort((a: dataItems, b: dataItems) => b.date.valueOf() - a.date.valueOf());
+        gamesListUpdated.sort((a: dataItems, b: dataItems) => b.date.valueOf() - a.date.valueOf());
       }
     }
     if (_req.query.limit) {
       const limit = +_req.query.limit;
-      if (gamesList.length > limit) {
-        gamesList = gamesList.slice(0, limit);
+      if (gamesListUpdated.length > limit) {
+        gamesListUpdated = gamesListUpdated.slice(0, limit);
       }
     }
     if (_req.query.genre) {
       const filterGenre = _req.query.genre;
       if (filterGenre !== "all") {
-        gamesList = gamesList.filter((game) => game.genres.toLowerCase() === (filterGenre as string).toLowerCase());
+        gamesListUpdated = gamesListUpdated.filter((game) => game.genres.toLowerCase() === (filterGenre as string).toLowerCase());
       }
     }
 
     if (_req.query.age) {
       const filterAge = _req.query.age;
       if (filterAge !== "all")
-        gamesList = gamesList.filter((game) =>
+        gamesListUpdated = gamesListUpdated.filter((game) =>
           game.age.toLowerCase().includes((filterAge as string).trim().toLowerCase())
         );
     }
 
     if (_req.query.sort) {
       const direction = _req.query.direction || "ascending";
-      gamesList = gamesList.sort((prev: dataItems, next: dataItems) => {
+      gamesListUpdated = gamesListUpdated.sort((prev: dataItems, next: dataItems) => {
         const sortField = _req.query.sort as keyof dataItems;
 
         const priceOrRatingFromPrev = prev[sortField];
@@ -71,7 +73,7 @@ export default webpackMockServer.add((app) => {
         return priceOrRatingFromPrev > priceOrRatingFromNext ? 1 : -1;
       });
     }
-    const response = gamesList;
+    const response = gamesListUpdated;
     res.json(response);
   });
   app.get("/api/categories", (_req, res) => {
@@ -98,6 +100,26 @@ export default webpackMockServer.add((app) => {
     const userId: string = req.body.id;
     users[userId] = req.body;
     res.json({ body: req.body || null, success: true, users });
+  });
+
+  app.put("/api/games", (req, res) => {
+    console.log(req.body);
+    if (req.body.id) {
+      const editGame = gamesList.find((game) => game.id === req.body.id);
+      const editGameIndex = gamesList.findIndex((game) => game.id === req.body.id);
+      const merged = { ...editGame, ...req.body };
+      gamesList[editGameIndex] = merged;
+    } else {
+      res.status(400);
+    }
+    res.json({ body: req.body || null, success: true, users });
+  });
+
+  app.delete("/api/games/:id", (req, res) => {
+    if (req.params.id) {
+      gamesList = gamesList.filter((game) => game.id !== +req.params.id);
+      res.status(200);
+    }
   });
 
   app.post("/api/saveProfile", (req, res) => {

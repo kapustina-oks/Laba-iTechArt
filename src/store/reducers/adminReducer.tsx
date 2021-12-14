@@ -1,4 +1,4 @@
-import { CREATE_NEW_GAME, EDIT_GAME, GET_ALL_GAMES, REMOVE_GAME } from "@/store/actions";
+import { CREATE_NEW_GAME, DELETE_SET_SUCCESS, EDIT_GAME, GET_ALL_GAMES, REMOVE_GAME } from "@/store/actions";
 
 const adminReducer = (state = [], action) => {
   switch (action.type){
@@ -10,7 +10,14 @@ const adminReducer = (state = [], action) => {
     case REMOVE_GAME:
       return state.filter((data, i) => i !== action.id);
     case EDIT_GAME:
-      return state.filter((data, i) => i !== action.id);
+      return {
+        ...state,
+        editedGame: action.payload.game,
+      };
+
+    case DELETE_SET_SUCCESS:
+      return action.id;
+
     case GET_ALL_GAMES:
       return state.filter((data, i) => i !== action.id);
     default:

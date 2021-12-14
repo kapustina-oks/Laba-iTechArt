@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeModalAction } from "@/store/actionCreators/modalActions";
 import { authLogOutAction } from "@/store/actionCreators/authActions";
 import { RootState } from "@/store/reducers/rootReducer";
+import { addCartFromLS, totalItemsCart } from "@/store/actionCreators/cartActions";
 import Modal from "../modal/modal";
 import Dropdown from "../dropdown/dropdown";
 
@@ -21,16 +22,19 @@ const Header: FC = (): JSX.Element => {
   const [dropdown, setDropdown] = useState<boolean>(false);
   const [isOpenModalSignIn, setIsOpenModalSignIn] = useState<boolean>(false);
   const [isOpenModalSignUp, setIsOpenModalSignUp] = useState<boolean>(false);
-  const [items, setItems] = useState(0);
 
-  let amount;
   useEffect(() => {
-    localStorage.setItem("total", String(total));
-    amount = localStorage.getItem("total");
-    if (amount) {
-      setItems(+amount);
+    const savedGames = localStorage.getItem("cart");
+    const totalGames = localStorage.getItem("total");
+
+    if (savedGames) {
+      dispatch(addCartFromLS(JSON.parse(savedGames)));
     }
-  }, [total]);
+
+    if (totalGames) {
+      dispatch(totalItemsCart(+JSON.parse(totalGames)));
+    }
+  }, []);
 
   useEffect(() => {
     if (modal) {
@@ -93,7 +97,7 @@ const Header: FC = (): JSX.Element => {
                 <Link className="nav-link" to="/cart">
                   <div className="icons-flex">
                     <i className="fas fa-shopping-cart icons-size" />
-                    <div className="icons-text">{items}</div>
+                    <div className="icons-text">{total}</div>
                   </div>
                 </Link>
               </li>

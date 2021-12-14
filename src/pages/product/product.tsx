@@ -66,8 +66,7 @@ const Products: FC = (): JSX.Element => {
     }
   }, [categories, filterStr]);
 
-
-
+  
   const contentProduct = productList.map((game) => (
     <Card game={game} key={game.id} />
   ));

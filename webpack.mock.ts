@@ -47,7 +47,9 @@ export default webpackMockServer.add((app) => {
     if (_req.query.genre) {
       const filterGenre = _req.query.genre;
       if (filterGenre !== "all") {
-        gamesListUpdated = gamesListUpdated.filter((game) => game.genres.toLowerCase() === (filterGenre as string).toLowerCase());
+        gamesListUpdated = gamesListUpdated.filter(
+          (game) => game.genres.toLowerCase() === (filterGenre as string).toLowerCase()
+        );
       }
     }
 
@@ -100,6 +102,12 @@ export default webpackMockServer.add((app) => {
     const userId: string = req.body.id;
     users[userId] = req.body;
     res.json({ body: req.body || null, success: true, users });
+  });
+
+  app.post("/api/games", (req, res) => {
+    console.log(req.body);
+    gamesList.push(req.body);
+    res.status(201);
   });
 
   app.put("/api/games", (req, res) => {

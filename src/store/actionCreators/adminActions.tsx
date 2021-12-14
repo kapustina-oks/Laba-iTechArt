@@ -7,7 +7,7 @@ import {
   REMOVE_GAME,
   DELETE_SET_SUCCESS,
 } from "@/store/actions";
-import { editedGames, getResource, removeGame } from "@/services/dataService";
+import { createGames, editedGames, getResource, removeGame } from "@/services/dataService";
 
 export const createGame = (game) => ({
   type: CREATE_NEW_GAME,
@@ -66,12 +66,24 @@ export const getGame = (id) => (dispatch) => {
     });
 };
 
-export const addGame = (gameObj) => (dispatch) => {
+export const editNewGame = (gameObj) => (dispatch) => {
   console.log(gameObj);
   editedGames("/api/games", gameObj)
     .then((response) => {
       const game = response;
       dispatch(editGames(game));
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const createNewGame = (gameObj) => (dispatch) => {
+  console.log(gameObj);
+  createGames("/api/games", gameObj)
+    .then((response) => {
+      const game = response;
+      dispatch(createGame(game));
     })
     .catch((error) => {
       console.log(error);

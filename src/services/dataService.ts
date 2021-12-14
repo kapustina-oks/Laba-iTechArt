@@ -114,3 +114,19 @@ export const removeGame: (url: string) => Promise<Response> = async (url) => {
   }
   return res;
 };
+
+export const createGames: (url: string, body) => Promise<Response> = async (url, body) => {
+  console.log("create game")
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+  if (!res.ok) {
+    throw new Error(`Could not fetch url: ${url}, status: ${res.status}`);
+  }
+  return res;
+};
+

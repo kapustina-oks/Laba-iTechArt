@@ -9,6 +9,7 @@ import About from "../../pages/about/about";
 import Home from "../../pages/home/home";
 import Footer from "../footer/footer";
 import ProtectedRouter from "../protectedRouter/protectedRouter";
+import Cart from "../../pages/cart/cart";
 
 const { home, product, about, profile, other } = links;
 
@@ -51,6 +52,9 @@ class App extends React.Component<PropsApp, IState> {
             </ProtectedRouter>
             <ProtectedRouter path={profile}>
               <Profile />
+            </ProtectedRouter>
+            <ProtectedRouter path="/cart">
+              <Cart />
             </ProtectedRouter>
             <Route exact path="/:login?">
               <Home />

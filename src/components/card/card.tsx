@@ -1,6 +1,9 @@
 import React, { FC, useEffect, useState } from "react";
 import { dataItems } from "@/types/types";
 import "./card.css";
+import { addToCart, totalItemsCart } from "@/store/actionCreators/cartActions";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/store/reducers/rootReducer";
 import { getGame } from "@/store/actionCreators/adminActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/reducers/rootReducer";
@@ -22,6 +25,15 @@ const Card: FC<CardProps> = ({ game, onEditModal }): JSX.Element => {
       dispatch(getGame(game.id));
     }
   }, [editModal]);
+
+const Card: FC<CardProps> = ({ game }): JSX.Element => {
+  const dispatch = useDispatch();
+  const totalItems = useSelector((state: RootState) => state.cart.total);
+
+  const onAddHandler = () => {
+    dispatch(addToCart(game.id));
+    dispatch(totalItemsCart(totalItems + 1));
+  };
 
   let star = "";
   if (game.rating) {
@@ -58,6 +70,9 @@ const Card: FC<CardProps> = ({ game, onEditModal }): JSX.Element => {
             </button>
             {editModal && <Modal title="Edit Card" game={game} onSubmit={() => setEditModal(false)} />}
           </div>
+          <button className="btn" onClick={onAddHandler}>
+            Add to cart
+          </button>
         </div>
       </div>
     </div>

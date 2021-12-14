@@ -34,7 +34,7 @@
   background-color: black;
 }
 
-.card:hover {
+.scene:hover .card {
   transform: rotateY(180deg);
 }
 

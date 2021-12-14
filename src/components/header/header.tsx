@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./header.css";
 import { links } from "@/links";
@@ -6,20 +6,35 @@ import { useDispatch, useSelector } from "react-redux";
 import { closeModalAction } from "@/store/actionCreators/modalActions";
 import { authLogOutAction } from "@/store/actionCreators/authActions";
 import { RootState } from "@/store/reducers/rootReducer";
+import { addCartFromLS, totalItemsCart } from "@/store/actionCreators/cartActions";
 import Modal from "../modal/modal";
 import Dropdown from "../dropdown/dropdown";
 
 const { home, product, about } = links;
 
 const Header: FC = (): JSX.Element => {
-  const [dropdown, setDropdown] = useState<boolean>(false);
-  const [isOpenModalSignIn, setIsOpenModalSignIn] = useState<boolean>(false);
-  const [isOpenModalSignUp, setIsOpenModalSignUp] = useState<boolean>(false);
-
   const dispatch = useDispatch();
   const modal = useSelector((state: RootState) => state.modal.modal);
   const auth = useSelector((state: RootState) => state.auth.auth);
   const userName = useSelector((state: RootState) => state.userName.userName);
+  const total = useSelector((state: RootState) => state.cart.total);
+
+  const [dropdown, setDropdown] = useState<boolean>(false);
+  const [isOpenModalSignIn, setIsOpenModalSignIn] = useState<boolean>(false);
+  const [isOpenModalSignUp, setIsOpenModalSignUp] = useState<boolean>(false);
+
+  useEffect(() => {
+    const savedGames = localStorage.getItem("cart");
+    const totalGames = localStorage.getItem("total");
+
+    if (savedGames) {
+      dispatch(addCartFromLS(JSON.parse(savedGames)));
+    }
+
+    if (totalGames) {
+      dispatch(totalItemsCart(+JSON.parse(totalGames)));
+    }
+  }, []);
 
   useEffect(() => {
     if (modal) {
@@ -79,10 +94,10 @@ const Header: FC = (): JSX.Element => {
                 </Link>
               </li>
               <li className="nav-elem" data-sign="signIn">
-                <Link className="nav-link" to="/">
+                <Link className="nav-link" to="/cart">
                   <div className="icons-flex">
                     <i className="fas fa-shopping-cart icons-size" />
-                    <div className="icons-text">0</div>
+                    <div className="icons-text">{total}</div>
                   </div>
                 </Link>
               </li>

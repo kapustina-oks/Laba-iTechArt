@@ -25,6 +25,20 @@ export interface dataItems {
   description: string;
 }
 
+export interface ICart {
+  name: string;
+  id: number;
+  img: string;
+  rating: number;
+  genres: string;
+  age: string;
+  price: string;
+  categories: string[];
+  date: Date;
+  description: string;
+  qty: number;
+}
+
 export interface IContext {
   auth: boolean;
   userName: string;
@@ -75,10 +89,6 @@ export interface IInitialState {
   auth: boolean;
   modal: boolean;
   userName: string;
-  editModal: boolean;
-  game: dataItems[];
-  loading: boolean;
-  error: string;
 }
 
 export interface saveProfile {
@@ -96,6 +106,59 @@ export enum ActionTypes {
   OPEN_MODAL = "OPEN_MODAL",
   CLOSE_MODAL = "CLOSE_MODAL",
 }
+
+export enum ActionCartTypes {
+  ADD_TO_CART = "ADD_TO_CART",
+  ADJUST_ITEM_QTY = "ADJUST_ITEM_QTY",
+  REMOVE_FROM_CART = "REMOVE_FROM_CART",
+  REMOVE_ALL_ITEM = "REMOVE_ALL_ITEM",
+  TOTAL_ITEMS = "TOTAL_ITEMS",
+  LOCAL_STORAGE_CART = "LOCAL_STORAGE_CART",
+}
+
+interface addCartFromLS {
+  type: ActionCartTypes.LOCAL_STORAGE_CART;
+  payload: {
+    savedGames: ICart[];
+    id?: number;
+  };
+}
+
+interface totalItemsCart {
+  type: ActionCartTypes.TOTAL_ITEMS;
+  payload: {
+    num: number;
+    id?: number;
+  };
+}
+
+interface addToCart {
+  type: ActionCartTypes.ADD_TO_CART;
+  payload: {
+    id: number;
+  };
+}
+
+interface removeFromCart {
+  type: ActionCartTypes.REMOVE_FROM_CART;
+  payload: {
+    id: number;
+  };
+}
+
+interface adjustItemQty {
+  type: ActionCartTypes.ADJUST_ITEM_QTY;
+  payload: {
+    id: number;
+    qty: number;
+  };
+}
+
+interface removeAllItems {
+  type: ActionCartTypes.REMOVE_ALL_ITEM;
+}
+
+export type IActionCart = addToCart | adjustItemQty | removeFromCart | removeAllItems | totalItemsCart | addCartFromLS;
 
 interface LoginTypeAction {
   type: ActionTypes.LOG_IN;

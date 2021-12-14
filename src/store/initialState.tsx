@@ -1,4 +1,7 @@
 import { IInitialState } from "@/types/types";
+import dataGames from "../mock/dataBase";
+
+const gamesList = [...dataGames];
 
 const initialState: IInitialState = {
   auth: false,
@@ -9,6 +12,9 @@ const initialState: IInitialState = {
   editedGame: [],
   loading: false,
   error: "",
+  products: gamesList,
+  cart: [],
+  total: 0,
 };
 
 export default initialState;

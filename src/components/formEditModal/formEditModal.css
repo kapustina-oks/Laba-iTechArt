@@ -3,6 +3,14 @@
   min-height: 100px;
 }
 
-.select{
+.checkbox{
   height: 20px;
+  margin: 0;
+  padding: 0;
+  right: 85px;
+  top: -20px;
+}
+
+.label-product {
+  width: 100%;
 }

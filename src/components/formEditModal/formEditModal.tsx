@@ -68,69 +68,108 @@ const FormEditModal = () => {
 
   return (
     <form onSubmit={handleEditFormSubmit}>
-      <input
-        type="text"
-        value={editFormData.gameName}
-        name="gameName"
-        required="required"
-        onChange={handleEditFormChange}
-      />
-      <input
-        type="text"
-        value={editFormData.gameGenres}
-        name="gameGenres"
-        required="required"
-        //placeholder={game.genres}
-        onChange={handleEditFormChange}
-      />
-      <input
-        type="text"
-        value={editFormData.gamePrice}
-        name="gamePrice"
-        required="required"
-        //placeholder={game.price}
-        onChange={handleEditFormChange}
-      />
-      <input
-        type="email"
-        value={editFormData.gameImg}
-        name="gameImg"
-        required="required"
-        //placeholder={game.img}
-        onChange={handleEditFormChange}
-      />
-      <textarea
-        type="email"
-        className="description-textarea"
-        value={editFormData.gameDescription}
-        name="gameDescription"
-        required="required"
-        //placeholder={game.description}
-        onChange={handleEditFormChange}
-      />
-      <select className="select" name="select" defaultValue={editFormData.gameAge}>
-        <option value="6+">6+</option>
-        <option value="12+">12+</option>
-        <option value="18+">18+</option>
-      </select>
-      <input
-        type="checkbox"
-        id="xbox"
-        defaultChecked={hasCategory.hasXbox}
-        onChange={() => setHasCategory({ ...hasCategory, hasXbox: !hasCategory.hasXbox })}
-      />
-      <input
-        type="checkbox"
-        id="pc"
-        defaultChecked={hasCategory.hasPC}
-        onChange={() => setHasCategory({ ...hasCategory, hasPC: !hasCategory.hasPC })}
-      />
-      <input
-        type="checkbox"
-        id="playstation"
-        defaultChecked={hasCategory.hasPS}
-        onChange={() => setHasCategory({ ...hasCategory, hasPS: !hasCategory.hasPS })}
-      />
+      <label className="label-product">
+        Name
+        <input
+          type="text"
+          value={editFormData.gameName}
+          name="gameName"
+          required="required"
+          onChange={handleEditFormChange}
+        />
+      </label>
+
+      <label className="label-product">
+        Genre
+        <input
+          type="text"
+          value={editFormData.gameGenres}
+          name="gameGenres"
+          required="required"
+          //placeholder={game.genres}
+          onChange={handleEditFormChange}
+        />
+      </label>
+
+      <label className="label-product">
+        Price
+        <input
+          type="text"
+          value={editFormData.gamePrice}
+          name="gamePrice"
+          required="required"
+          //placeholder={game.price}
+          onChange={handleEditFormChange}
+        />
+      </label>
+
+      <label className="label-product">
+        Img
+        <input
+          type="email"
+          value={editFormData.gameImg}
+          name="gameImg"
+          required="required"
+          //placeholder={game.img}
+          onChange={handleEditFormChange}
+        />
+      </label>
+
+      <label className="label-product">
+        Description
+        <textarea
+          type="email"
+          className="description-textarea"
+          value={editFormData.gameDescription}
+          name="gameDescription"
+          required="required"
+          //placeholder={game.description}
+          onChange={handleEditFormChange}
+        />
+      </label>
+
+      <label className="label-product">
+        Age
+        <select name="select" defaultValue={editFormData.gameAge}>
+          <option value="6+">6+</option>
+          <option value="12+">12+</option>
+          <option value="18+">18+</option>
+        </select>
+      </label>
+
+      <label className="label-product">
+        Xbox
+        <input
+          className="checkbox"
+          type="checkbox"
+          id="xbox"
+          defaultChecked={hasCategory.hasXbox}
+          onChange={() => setHasCategory({ ...hasCategory, hasXbox: !hasCategory.hasXbox })}
+        />
+      </label>
+
+      <label className="label-product">
+        PC
+        <input
+          className="checkbox"
+          type="checkbox"
+          id="pc"
+          defaultChecked={hasCategory.hasPC}
+          onChange={() => setHasCategory({ ...hasCategory, hasPC: !hasCategory.hasPC })}
+        />
+      </label>
+
+      <label className="label-product">
+        Playstation
+        <input
+          className="checkbox"
+          type="checkbox"
+          id="playstation"
+          defaultChecked={hasCategory.hasPS}
+          onChange={() => setHasCategory({ ...hasCategory, hasPS: !hasCategory.hasPS })}
+        />
+      </label>
+
       <button type="submit">Add</button>
     </form>
   );

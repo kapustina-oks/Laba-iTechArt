@@ -65,8 +65,12 @@ const Products: FC = (): JSX.Element => {
     }
   }, [categories, filterStr]);
 
+  const openModal = () => {
+    setEditModal(true);
+  };
+
   const contentProduct = productList.map((game) => (
-    <Card game={game} key={game.id} onEditModal={() => setEditModal(true)} />
+    <Card game={game} key={game.id} onEditModal={openModal} />
   ));
 
   return (

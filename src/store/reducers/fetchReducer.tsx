@@ -2,6 +2,7 @@ import { FETCH_GAME_FAILURE, FETCH_GAME_REQUEST, FETCH_GAME_SUCCESS } from "@/st
 import initialState from "@/store/initialState";
 
 const fetchReducer = (state = initialState, action) => {
+  console.log(action.type);
   switch (action.type) {
     case FETCH_GAME_REQUEST:
       return {

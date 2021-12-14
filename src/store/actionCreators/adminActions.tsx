@@ -42,7 +42,7 @@ export const fetchGameFailure = (error) => ({
 
 export const getGame = (id) => (dispatch) => {
   dispatch(fetchGameRequest(id));
-  getResource(`/api/games/product=${id}`)
+  getResource(`/api/games?product=${id}`)
     .then((response) => {
       const game = response;
       dispatch(fetchGameSuccess(game));
@@ -51,3 +51,11 @@ export const getGame = (id) => (dispatch) => {
       dispatch(fetchGameFailure(error.message));
     });
 };
+
+// export const getGame = (id) => async (dispatch) => {
+//   dispatch({ type: fetchGameRequest(id) });
+//   const response = await getResource(`/api/games/product=${id}`);
+//   setTimeout((game) => {
+//     dispatch({ type: fetchGameSuccess(game), payload: response.data });
+//   }, 500);
+// };

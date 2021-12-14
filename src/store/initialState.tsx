@@ -5,7 +5,7 @@ const initialState: IInitialState = {
   modal: false,
   userName: "",
   editModal: false,
-  game: {},
+  game: [],
   loading: false,
   error: "",
 };

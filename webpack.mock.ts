@@ -10,6 +10,12 @@ interface UserDataObject {
 export default webpackMockServer.add((app) => {
   app.get("/api/games", (_req, res) => {
     let gamesList = [...dataGames];
+
+    if (_req.query.product) {
+      const itemID = _req.query.product;
+      gamesList = gamesList.filter((elem) => elem.id === +itemID);
+    }
+
     if (_req.query.filter) {
       const searchString = _req.query.filter;
       gamesList = gamesList.filter((elem) =>

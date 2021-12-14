@@ -76,7 +76,7 @@ export interface IInitialState {
   modal: boolean;
   userName: string;
   editModal: boolean;
-  game: dataItems;
+  game: dataItems[];
   loading: boolean;
   error: string;
 }

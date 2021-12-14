@@ -1,6 +1,8 @@
 import { FC } from "react";
 import { dataItems } from "@/types/types";
 import "./card.css";
+import { getGame } from "@/store/actionCreators/adminActions";
+import { useDispatch } from "react-redux";
 
 interface CardProps {
   game: dataItems;
@@ -8,6 +10,13 @@ interface CardProps {
 }
 
 const Card: FC<CardProps> = ({ game, onEditModal }): JSX.Element => {
+  const dispatch = useDispatch();
+
+  // const onEditHandler = () => {
+  //   onEditModal;
+  //   dispatch(getGame(game.id));
+  // }
+
   let star = "";
   if (game.rating) {
     for (let i = 0; i < game.rating; i++) {
@@ -35,7 +44,13 @@ const Card: FC<CardProps> = ({ game, onEditModal }): JSX.Element => {
           {game.description}
           <div className="btn-group-card">
             <button className="btn1">Add to cart</button>
-            <button className="btn2" onClick={onEditModal}>
+            <button
+              className="btn2"
+              onClick={() => {
+                dispatch(getGame(game.id));
+                onEditModal();
+              }}
+            >
               Edit card
             </button>
           </div>

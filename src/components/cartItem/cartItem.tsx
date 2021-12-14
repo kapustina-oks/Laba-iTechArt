@@ -17,24 +17,22 @@ const CartItem = ({ game }: ICartItem) => {
     setInput(num);
     dispatch(adjustItemQty(game.id, num));
     const savedCart = localStorage.getItem("cart");
-    let savedCartParsed;
     if (savedCart != null) {
-      savedCartParsed = JSON.parse(savedCart);
+      const savedCartParsed = JSON.parse(savedCart);
       const currentGame = savedCartParsed.find((item: ICart) => item.id === game.id);
       currentGame.qty = +num;
+      localStorage.setItem("cart", JSON.stringify(savedCartParsed));
     }
-    localStorage.setItem("cart", JSON.stringify(savedCartParsed));
   };
 
   const onRemoveItem = (id: number) => {
     dispatch(removeFromCart(id));
     const savedCart = localStorage.getItem("cart");
-    let newListOfGames;
     if (savedCart != null) {
       const savedCartParsed = JSON.parse(savedCart);
-      newListOfGames = savedCartParsed.filter((item: ICart) => item.id !== id);
+      const newListOfGames = savedCartParsed.filter((item: ICart) => item.id !== id);
+      localStorage.setItem("cart", JSON.stringify(newListOfGames));
     }
-    localStorage.setItem("cart", JSON.stringify(newListOfGames));
   };
 
   return (

@@ -10,18 +10,18 @@ import {
 import { IActionCart, ICart, IInitialState } from "@/types/types";
 
 const cartReducer = (state = initialState, action: IActionCart): IInitialState => {
-  let item;
-  let inCart;
+  // let item;
+  // let inCart;
 
   if ("payload" in action) {
-    item = state.products.find((product) => product.id === action.payload.id) as ICart;
-    inCart = state.cart.find((game) => game.id === action.payload.id) as ICart;
+    const item = state.products.find((product) => product.id === action.payload.id) as ICart;
+    const inCart = state.cart.find((game) => game.id === action.payload.id) as ICart;
     const selectedGames = inCart
       ? state.cart.map((itemCart) =>
           itemCart.id === action.payload.id ? { ...itemCart, qty: itemCart.qty + 1 } : itemCart
         )
       : [...state.cart, { ...item, qty: 1 }];
-
+    console.log(action.type)
     switch (action.type) {
       case ADD_TO_CART:
         localStorage.setItem("cart", JSON.stringify(selectedGames));

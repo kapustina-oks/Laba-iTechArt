@@ -42,7 +42,6 @@ const Cart = () => {
     setTotalPrice(price);
 
     dispatch(totalItemsCart(totalItems));
-    //localStorage.setItem("total", totalItems);
   }, [total, cart, totalPrice, totalItems, setTotalPrice, setTotalItems]);
 
   const openModal = () => {

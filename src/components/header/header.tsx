@@ -8,7 +8,6 @@ import { authLogOutAction } from "@/store/actionCreators/authActions";
 import { RootState } from "@/store/reducers/rootReducer";
 import Modal from "../modal/modal";
 import Dropdown from "../dropdown/dropdown";
-import { totalItemsCart } from "@/store/actionCreators/cartActions";
 
 const { home, product, about } = links;
 
@@ -22,12 +21,16 @@ const Header: FC = (): JSX.Element => {
   const [dropdown, setDropdown] = useState<boolean>(false);
   const [isOpenModalSignIn, setIsOpenModalSignIn] = useState<boolean>(false);
   const [isOpenModalSignUp, setIsOpenModalSignUp] = useState<boolean>(false);
-  const amount = localStorage.getItem("total");
+  const [items, setItems] = useState(0);
+
+  let amount;
   useEffect(() => {
+    localStorage.setItem("total", String(total));
+    amount = localStorage.getItem("total");
     if (amount) {
-      dispatch(totalItemsCart(+amount));
+      setItems(+amount);
     }
-  }, [amount]);
+  }, [total]);
 
   useEffect(() => {
     if (modal) {
@@ -90,7 +93,7 @@ const Header: FC = (): JSX.Element => {
                 <Link className="nav-link" to="/cart">
                   <div className="icons-flex">
                     <i className="fas fa-shopping-cart icons-size" />
-                    <div className="icons-text">{total}</div>
+                    <div className="icons-text">{items}</div>
                   </div>
                 </Link>
               </li>

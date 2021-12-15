@@ -43,5 +43,7 @@ export const removeAllItems = () => ({
 
 export const totalItemsCart = (num: number) => ({
   type: TOTAL_ITEMS,
-  payload: { num },
+  payload: {
+    num,
+  },
 });

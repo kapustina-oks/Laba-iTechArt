@@ -1,4 +1,10 @@
-import { IUsersRegistration, IUsersAuthorisation, IUsersChangePassword, IUsersProfileInfo } from "@/types/types";
+import {
+  IUsersRegistration,
+  IUsersAuthorisation,
+  IUsersChangePassword,
+  IUsersProfileInfo,
+  dataItems,
+} from "@/types/types";
 
 export const getResource = async (url: string): Promise<[]> => {
   const res = await fetch(url, {
@@ -85,8 +91,7 @@ export const usersSaveProfile: (url: string, body: IUsersProfileInfo) => Promise
   return res;
 };
 
-
-export const editedGames: (url: string, body) => Promise<Response> = async (url, body) => {
+export const editedGames: (url: string, body: dataItems) => Promise<Response> = async (url, body) => {
   console.log("editedGames");
   const res = await fetch(url, {
     method: "PUT",
@@ -115,8 +120,8 @@ export const removeGame: (url: string) => Promise<Response> = async (url) => {
   return res;
 };
 
-export const createGames: (url: string, body) => Promise<Response> = async (url, body) => {
-  console.log("create game")
+export const createGames: (url: string, body: dataItems) => Promise<Response> = async (url, body) => {
+  console.log("create game");
   const res = await fetch(url, {
     method: "POST",
     headers: {
@@ -129,4 +134,3 @@ export const createGames: (url: string, body) => Promise<Response> = async (url,
   }
   return res;
 };
-

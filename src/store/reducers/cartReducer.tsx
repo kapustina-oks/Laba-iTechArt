@@ -10,12 +10,12 @@ import {
 import { IActionCart, ICart, IInitialState } from "@/types/types";
 
 const cartReducer = (state = initialState, action: IActionCart): IInitialState => {
-  // let item;
-  // let inCart;
+  let item;
+  let inCart;
 
   if ("payload" in action) {
-    const item = state.products.find((product) => product.id === action.payload.id) as ICart;
-    const inCart = state.cart.find((game) => game.id === action.payload.id) as ICart;
+    item = state.products.find((product) => product.id === action.payload.id) as ICart;
+    inCart = state.cart.find((game) => game.id === action.payload.id) as ICart;
     const selectedGames = inCart
       ? state.cart.map((itemCart) =>
           itemCart.id === action.payload.id ? { ...itemCart, qty: itemCart.qty + 1 } : itemCart
@@ -30,13 +30,11 @@ const cartReducer = (state = initialState, action: IActionCart): IInitialState =
           cart: selectedGames,
           total: state.total + 1,
         };
-
       case LOCAL_STORAGE_CART:
         return {
           ...state,
           cart: action.payload.savedGames,
         };
-
       case REMOVE_FROM_CART:
         return {
           ...state,
@@ -50,7 +48,6 @@ const cartReducer = (state = initialState, action: IActionCart): IInitialState =
             game.id === action.payload.id ? { ...game, qty: +action.payload.qty } : game
           ),
         };
-
       case TOTAL_ITEMS:
         localStorage.setItem("total", String(action.payload.num));
         return {

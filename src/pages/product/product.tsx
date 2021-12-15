@@ -1,14 +1,14 @@
-import React, { FC, useEffect, useState, Suspense } from "react";
+import { FC, useEffect, useState, Suspense } from "react";
 import { useParams } from "react-router-dom";
 import { getFilter, getResource } from "@/services/dataService";
 import Card from "@/components/card/card";
 import { dataItems, IFilterState } from "@/types/types";
 import "./product.css";
 import Spinner from "@/components/spinner/spinner";
+import Modal from "@/components/modal/modal";
 import SearchPanel from "../../components/searchPanel/searchPanel";
 import Filter from "../../components/filter/filter";
 import transformParam from "../../utils/transformParam";
-import Modal from "@/components/modal/modal";
 
 // const Filter = lazy(() => import("../../components/filter/filter"));
 // const SearchPanel = React.lazy(() => import("../../components/searchPanel/searchPanel"));
@@ -66,10 +66,7 @@ const Products: FC = (): JSX.Element => {
     }
   }, [categories, filterStr]);
 
-  
-  const contentProduct = productList.map((game) => (
-    <Card game={game} key={game.id} />
-  ));
+  const contentProduct = productList.map((game) => <Card game={game} key={game.id} />);
 
   return (
     <Suspense fallback={<Spinner />}>
@@ -80,10 +77,11 @@ const Products: FC = (): JSX.Element => {
           </div>
           <div className="sidebar">
             <Filter onFilter={onFilter} />
-            <button className="btn-create-card" onClick={() => setCreateModal(true)}>Create card</button>
+            <button className="btn-create-card" onClick={() => setCreateModal(true)}>
+              Create card
+            </button>
           </div>
           {loading ? <Spinner /> : contentProduct}
-
           {createModal && <Modal title="Create Card" onSubmit={() => setCreateModal(false)} />}
         </div>
       </div>

@@ -1,13 +1,20 @@
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import "./formEditModal.css";
-import { editNewGame, deleteGame, createNewGame } from "@/store/actionCreators/adminActions";
+import "./formCreateAndEditCard.css";
+import { editNewGame, createNewGame } from "@/store/actionCreators/adminActions";
 import mockServerHelper from "webpack-mock-server/lib/mockServerHelper";
+import { dataItems } from "@/types/types";
+import Modal from "@/components/modal/modal";
 
-const FormEditModal = ({ game, onSubmit }) => {
+interface IFormCreateAndEditCard {
+  onSubmit: () => void;
+  game?: dataItems | undefined;
+}
+
+const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
   const dispatch = useDispatch();
-
-  const [editFormData, setEditFormData] = useState(
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
+  const [formCreateAndEditCard, setFormCreateAndEditCard] = useState(
     game
       ? {
           name: game.name,
@@ -32,9 +39,9 @@ const FormEditModal = ({ game, onSubmit }) => {
   );
 
   const [hasCategory, setHasCategory] = useState({
-    hasPC: !!editFormData.categories.includes("pc"),
-    hasPS: !!editFormData.categories.includes("playstation"),
-    hasXbox: !!editFormData.categories.includes("xbox"),
+    hasPC: formCreateAndEditCard.categories.includes("pc"),
+    hasPS: formCreateAndEditCard.categories.includes("playstation"),
+    hasXbox: formCreateAndEditCard.categories.includes("xbox"),
   });
 
   useEffect(() => {
@@ -43,96 +50,73 @@ const FormEditModal = ({ game, onSubmit }) => {
     if (hasCategory.hasPS) savedCategory.push("playstation");
     if (hasCategory.hasXbox) savedCategory.push("xbox");
 
-    setEditFormData({ ...editFormData, categories: savedCategory });
+    setFormCreateAndEditCard({ ...formCreateAndEditCard, categories: savedCategory });
   }, [hasCategory]);
 
-  const handleEditFormSubmit = (event) => {
+  const handleEditFormSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
     console.log("submit");
     onSubmit();
 
     if (game) {
-      dispatch(editNewGame(editFormData));
+      dispatch(editNewGame(formCreateAndEditCard));
+    } else {
+      dispatch(createNewGame(formCreateAndEditCard));
     }
-    dispatch(createNewGame(editFormData));
   };
 
-  const handleEditFormChange = (event) => {
-    event.preventDefault();
+  const onChangeSelect = (e: { target: { value: string } }) => {
+    setFormCreateAndEditCard({ ...formCreateAndEditCard, age: e.target.value });
+    console.log(e.target.value);
+  };
 
-    const fieldName = event.target.getAttribute("name");
-    const fieldValue = event.target.value;
+  const handleEditFormChange = (e: ChangeEvent) => {
+    e.preventDefault();
 
-    const newFormData = { ...editFormData };
+    const fieldName = e.target.getAttribute("name");
+    const fieldValue = e.target.value;
+
+    const newFormData = { ...formCreateAndEditCard };
     newFormData[fieldName] = fieldValue;
 
-    setEditFormData(newFormData);
-  };
-
-  const onChangeSelect = (e) => {
-    setEditFormData({ ...editFormData, age: e.target.value });
-    console.log(e.target.value);
+    setFormCreateAndEditCard(newFormData);
   };
 
   return (
     <form>
       <label className="label-product">
         Name
-        <input type="text" value={editFormData.name} name="name" required="required" onChange={handleEditFormChange} />
+        <input type="text" value={formCreateAndEditCard.name} name="name" onChange={handleEditFormChange} />
       </label>
 
       <label className="label-product">
         Genre
-        <input
-          type="text"
-          value={editFormData.genres}
-          name="genres"
-          required="required"
-          // placeholder={game.genres}
-          onChange={handleEditFormChange}
-        />
+        <input type="text" value={formCreateAndEditCard.genres} name="genres" onChange={handleEditFormChange} />
       </label>
 
       <label className="label-product">
         Price
-        <input
-          type="text"
-          value={editFormData.price}
-          name="price"
-          required="required"
-          // placeholder={game.price}
-          onChange={handleEditFormChange}
-        />
+        <input type="text" value={formCreateAndEditCard.price} name="price" onChange={handleEditFormChange} />
       </label>
 
       <label className="label-product">
         Img
-        <input
-          type="email"
-          value={editFormData.img}
-          name="img"
-          required="required"
-          // placeholder={game.img}
-          onChange={handleEditFormChange}
-        />
+        <input type="text" value={formCreateAndEditCard.img} name="img" onChange={handleEditFormChange} />
       </label>
 
       <label className="label-product">
         Description
         <textarea
-          type="email"
           className="description-textarea"
-          value={editFormData.description}
+          value={formCreateAndEditCard.description}
           name="description"
-          required="required"
-          // placeholder={game.description}
           onChange={handleEditFormChange}
         />
       </label>
 
       <label className="label-product">
         Age
-        <select name="select" defaultValue={editFormData.age} onChange={onChangeSelect}>
+        <select name="select" defaultValue={formCreateAndEditCard.age} onChange={onChangeSelect}>
           <option value="6+">6+</option>
           <option value="12+">12+</option>
           <option value="18+">18+</option>
@@ -175,11 +159,18 @@ const FormEditModal = ({ game, onSubmit }) => {
       <button type="submit" onClick={handleEditFormSubmit}>
         Submit
       </button>
-      <button type="submit" onClick={() => dispatch(deleteGame(editFormData.id))}>
+      <button
+        type="submit"
+        onClick={(e) => {
+          e.preventDefault();
+          setDeleteModal(true);
+        }}
+      >
         Delete Card
       </button>
+      {deleteModal && <Modal title="Delete Card" gameID={formCreateAndEditCard.id} onSubmit={() => setDeleteModal(false)} />}
     </form>
   );
 };
 
-export default FormEditModal;
+export default FormCreateAndEditCard;

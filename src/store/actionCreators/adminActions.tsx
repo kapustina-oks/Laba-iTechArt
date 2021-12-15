@@ -1,99 +1,48 @@
-import {
-  CREATE_NEW_GAME,
-  EDIT_GAME,
-  FETCH_GAME_SUCCESS,
-  FETCH_GAME_REQUEST,
-  FETCH_GAME_FAILURE,
-  REMOVE_GAME,
-  DELETE_SET_SUCCESS,
-} from "@/store/actions";
-import { createGames, editedGames, getResource, removeGame } from "@/services/dataService";
+import { CREATE_NEW_GAME, EDIT_GAME, DELETE_SET_SUCCESS } from "@/store/actions";
+import { createGames, editedGames, removeGame } from "@/services/dataService";
+import { dataItems } from "@/types/types";
+import { Dispatch } from "redux";
 
-export const createGame = (game) => ({
+export const createGame = () => ({
   type: CREATE_NEW_GAME,
-  game,
 });
 
-
-export const editGames = (game) => ({
+export const editGames = () => ({
   type: EDIT_GAME,
-  payload: {
-    game,
-  },
 });
 
-export const fetchGameRequest = (itemID) => ({
-  type: FETCH_GAME_REQUEST,
-  payload: {
-    id: itemID,
-  },
-});
-
-export const fetchGameSuccess = (game) => ({
-  type: FETCH_GAME_SUCCESS,
-  payload: game,
-});
-
-export const fetchGameFailure = (error) => ({
-  type: FETCH_GAME_FAILURE,
-  payload: error,
-});
-
-export function deleteSetSuccess(id) {
+export function deleteSetSuccess() {
   return {
     type: DELETE_SET_SUCCESS,
-    id,
   };
 }
 
-export function deleteGame(id) {
-  return (dispatch) => {
+export function deleteGame(id: dataItems | number | undefined) {
+  return (dispatch: Dispatch) => {
     removeGame(`/api/games/${id}`)
       .then((response) => console.log(response))
-      .then((id) => dispatch(deleteSetSuccess(id)));
+      .then(() => dispatch(deleteSetSuccess()));
   };
 }
 
-export const getGame = (id) => (dispatch) => {
-  dispatch(fetchGameRequest(id));
-  getResource(`/api/games?product=${id}`)
-    .then((response) => {
-      const game = response;
-      dispatch(fetchGameSuccess(game));
-    })
-    .catch((error) => {
-      dispatch(fetchGameFailure(error.message));
-    });
-};
-
-export const editNewGame = (gameObj) => (dispatch) => {
+export const editNewGame = (gameObj: dataItems) => (dispatch: Dispatch) => {
   console.log(gameObj);
   editedGames("/api/games", gameObj)
-    .then((response) => {
-      const game = response;
-      dispatch(editGames(game));
+    .then(() => {
+      dispatch(editGames());
     })
     .catch((error) => {
       console.log(error);
     });
 };
 
-export const createNewGame = (gameObj) => (dispatch) => {
+export const createNewGame = (gameObj: dataItems) => (dispatch: Dispatch) => {
   console.log(gameObj);
   createGames("/api/games", gameObj)
-    .then((response) => {
-      const game = response;
-      dispatch(createGame(game));
+    .then(() => {
+      dispatch(createGame());
     })
     .catch((error) => {
       console.log(error);
     });
 };
-
-// export const getGame = (id) => async (dispatch) => {
-//   dispatch({ type: fetchGameRequest(id) });
-//   const response = await getResource(`/api/games/product=${id}`);
-//   setTimeout((game) => {
-//     dispatch({ type: fetchGameSuccess(game), payload: response.data });
-//   }, 500);
-// };

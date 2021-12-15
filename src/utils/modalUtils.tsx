@@ -3,9 +3,10 @@ import FormSignUp from "@/components/formSignUp/formSignUp";
 import FormChangePassword from "@/components/formChangePassword/formChangePassword";
 import ModalCart from "@/components/modalCart/modalCart";
 import { dataItems } from "@/types/types";
-import FormEditModal from "../components/formEditModal/formEditModal";
+import ModalDeleteCard from "@/components/modalDeleteCard/modalDeleteCard";
+import FormCreateAndEditCard from "../components/formCreateAndEditCard/formCreateAndEditCard";
 
-export const modal = (title: string, onSubmit: () => void, game: dataItems) => {
+export const modal = (title: string, onSubmit: () => void, game?: dataItems | undefined, gameID?: number) => {
   switch (title) {
     case "Authorization":
       return <FormSignIn onSubmit={onSubmit} />;
@@ -16,9 +17,11 @@ export const modal = (title: string, onSubmit: () => void, game: dataItems) => {
     case "Buy games":
       return <ModalCart onSubmit={onSubmit} />;
     case "Edit Card":
-      return <FormEditModal game={game} onSubmit={onSubmit} />;
+      return <FormCreateAndEditCard game={game} onSubmit={onSubmit} />;
     case "Create Card":
-      return <FormEditModal game={null} onSubmit={onSubmit} />;
+      return <FormCreateAndEditCard onSubmit={onSubmit} />;
+    case "Delete Card":
+      return <ModalDeleteCard gameID={gameID} onSubmit={onSubmit} />;
     default:
       break;
   }

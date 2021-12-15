@@ -1,34 +1,20 @@
-import React, { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { dataItems } from "@/types/types";
 import "./card.css";
 import { addToCart, totalItemsCart } from "@/store/actionCreators/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/reducers/rootReducer";
-import { getGame } from "@/store/actionCreators/adminActions";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store/reducers/rootReducer";
 import Modal from "@/components/modal/modal";
-import FormEditModal from "@/components/formEditModal/formEditModal";
 
 interface CardProps {
   game: dataItems;
-  onEditModal(): void;
 }
-
-const Card: FC<CardProps> = ({ game, onEditModal }): JSX.Element => {
-  const [editModal, setEditModal] = useState<boolean>(false);
-  const dispatch = useDispatch();
-
-
-  useEffect(() => {
-    if (editModal) {
-      dispatch(getGame(game.id));
-    }
-  }, [editModal]);
 
 const Card: FC<CardProps> = ({ game }): JSX.Element => {
   const dispatch = useDispatch();
   const totalItems = useSelector((state: RootState) => state.cart.total);
+
+  const [editModal, setEditModal] = useState<boolean>(false);
 
   const onAddHandler = () => {
     dispatch(addToCart(game.id));
@@ -61,18 +47,14 @@ const Card: FC<CardProps> = ({ game }): JSX.Element => {
         <div className="card-back text">
           {game.description}
           <div className="btn-group-card">
-            <button className="btn1">Add to cart</button>
-            <button
-              className="btn2"
-              onClick={() => setEditModal(true)}
-            >
+            <button className="btn1" onClick={onAddHandler}>
+              Add to cart
+            </button>
+            <button className="btn2" onClick={() => setEditModal(true)}>
               Edit card
             </button>
             {editModal && <Modal title="Edit Card" game={game} onSubmit={() => setEditModal(false)} />}
           </div>
-          <button className="btn" onClick={onAddHandler}>
-            Add to cart
-          </button>
         </div>
       </div>
     </div>

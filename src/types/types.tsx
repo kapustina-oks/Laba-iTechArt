@@ -89,6 +89,10 @@ export interface IInitialState {
   auth: boolean;
   modal: boolean;
   userName: string;
+  products: dataItems[];
+  cart: ICart[];
+  total: number;
+  game: dataItems[];
 }
 
 export interface saveProfile {
@@ -107,6 +111,12 @@ export enum ActionTypes {
   CLOSE_MODAL = "CLOSE_MODAL",
 }
 
+export enum ActionAdminTypes {
+  CREATE_NEW_GAME = "CREATE_NEW_GAME",
+  EDIT_GAME = "EDIT_GAME",
+  DELETE_SET_SUCCESS = "DELETE_SET_SUCCESS",
+}
+
 export enum ActionCartTypes {
   ADD_TO_CART = "ADD_TO_CART",
   ADJUST_ITEM_QTY = "ADJUST_ITEM_QTY",
@@ -115,6 +125,20 @@ export enum ActionCartTypes {
   TOTAL_ITEMS = "TOTAL_ITEMS",
   LOCAL_STORAGE_CART = "LOCAL_STORAGE_CART",
 }
+
+interface deleteSetSuccess {
+  type: ActionAdminTypes.DELETE_SET_SUCCESS;
+}
+
+interface editGames {
+  type: ActionAdminTypes.EDIT_GAME;
+}
+
+interface createGame {
+  type: ActionAdminTypes.CREATE_NEW_GAME;
+}
+
+export type IActionAdmin = createGame | editGames | deleteSetSuccess;
 
 interface addCartFromLS {
   type: ActionCartTypes.LOCAL_STORAGE_CART;

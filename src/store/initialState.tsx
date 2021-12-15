@@ -7,7 +7,6 @@ const initialState: IInitialState = {
   auth: false,
   modal: false,
   userName: "",
-  game: [],
   products: gamesList,
   cart: [],
   total: 0,

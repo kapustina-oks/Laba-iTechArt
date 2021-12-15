@@ -92,7 +92,6 @@ export interface IInitialState {
   products: dataItems[];
   cart: ICart[];
   total: number;
-  game: dataItems[];
 }
 
 export interface saveProfile {

@@ -31,7 +31,7 @@ const Card: FC<CardProps> = ({ game }): JSX.Element => {
     <div className="scene" key={game.id}>
       <div className="card">
         <div className="card-front">
-          <div>
+          <div className="product-img">
             <img className="size_img" src={game.img} alt="game_img" />
           </div>
           <div className="card-padding">

@@ -12,16 +12,19 @@ export const editGames = () => ({
 });
 
 export function deleteSetSuccess() {
+  console.log("delete ok");
   return {
     type: DELETE_SET_SUCCESS,
   };
 }
 
-export function deleteGame(id: dataItems | number | undefined) {
+export function deleteGame(id: number | undefined) {
   return (dispatch: Dispatch) => {
     removeGame(`/api/games/${id}`)
-      .then((response) => console.log(response))
-      .then(() => dispatch(deleteSetSuccess()));
+      .then(() => dispatch(deleteSetSuccess()))
+      .catch((error) => {
+        console.log(error);
+      });
   };
 }
 

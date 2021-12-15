@@ -14,26 +14,30 @@ interface IFormCreateAndEditCard {
 const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
   const dispatch = useDispatch();
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
-  const [formCreateAndEditCard, setFormCreateAndEditCard] = useState(
+  const [formCreateAndEditCard, setFormCreateAndEditCard] = useState<dataItems>(
     game
       ? {
           name: game.name,
           id: game.id,
           img: game.img,
+          rating: game.rating,
           genres: game.genres,
           age: game.age,
           price: game.price,
           categories: game.categories,
+          date: game.date,
           description: game.description,
         }
       : {
           name: "",
           id: mockServerHelper.getUniqueIdInt(),
-          img: "",
+          img: "https://media.contentapi.ea.com/content/dam/gin/images/2021/06/battlefield-2042-key-art.jpg.adapt.crop1x1.767p.jpg",
+          rating: 4,
           genres: "",
           age: "6+",
           price: "0$",
           categories: [],
+          date: new Date(),
           description: "",
         }
   );
@@ -83,26 +87,33 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
   };
 
   return (
-    <form>
-      <label className="label-product">
-        Name
-        <input type="text" value={formCreateAndEditCard.name} name="name" onChange={handleEditFormChange} />
-      </label>
+    <form className="product-form">
+      <div className="flex-product">
+        <div>
+          <img className="size_img" src={formCreateAndEditCard.img} alt="game_img" />
+        </div>
+        <div className="input-product-group">
+          <label className="label-product">
+            Name
+            <input type="text" value={formCreateAndEditCard.name} name="name" onChange={handleEditFormChange} />
+          </label>
 
-      <label className="label-product">
-        Genre
-        <input type="text" value={formCreateAndEditCard.genres} name="genres" onChange={handleEditFormChange} />
-      </label>
+          <label className="label-product">
+            Genre
+            <input type="text" value={formCreateAndEditCard.genres} name="genres" onChange={handleEditFormChange} />
+          </label>
 
-      <label className="label-product">
-        Price
-        <input type="text" value={formCreateAndEditCard.price} name="price" onChange={handleEditFormChange} />
-      </label>
+          <label className="label-product">
+            Price
+            <input type="text" value={formCreateAndEditCard.price} name="price" onChange={handleEditFormChange} />
+          </label>
 
-      <label className="label-product">
-        Img
-        <input type="text" value={formCreateAndEditCard.img} name="img" onChange={handleEditFormChange} />
-      </label>
+          <label className="label-product">
+            Img
+            <input type="text" value={formCreateAndEditCard.img} name="img" onChange={handleEditFormChange} />
+          </label>
+        </div>
+      </div>
 
       <label className="label-product">
         Description
@@ -116,7 +127,12 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
 
       <label className="label-product">
         Age
-        <select name="select" defaultValue={formCreateAndEditCard.age} onChange={onChangeSelect}>
+        <select
+          className="select-product"
+          name="select"
+          defaultValue={formCreateAndEditCard.age}
+          onChange={onChangeSelect}
+        >
           <option value="6+">6+</option>
           <option value="12+">12+</option>
           <option value="18+">18+</option>
@@ -133,7 +149,6 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
           onChange={() => setHasCategory({ ...hasCategory, hasXbox: !hasCategory.hasXbox })}
         />
       </label>
-
       <label className="label-product">
         PC
         <input
@@ -155,20 +170,31 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
           onChange={() => setHasCategory({ ...hasCategory, hasPS: !hasCategory.hasPS })}
         />
       </label>
-
-      <button type="submit" onClick={handleEditFormSubmit}>
-        Submit
-      </button>
-      <button
-        type="submit"
-        onClick={(e) => {
-          e.preventDefault();
-          setDeleteModal(true);
-        }}
-      >
-        Delete Card
-      </button>
-      {deleteModal && <Modal title="Delete Card" gameID={formCreateAndEditCard.id} onSubmit={() => setDeleteModal(false)} />}
+      <div className="btn-product-group">
+        <button className="btn-product" type="submit" onClick={handleEditFormSubmit}>
+          Submit
+        </button>
+        <button
+          className="btn-product"
+          type="submit"
+          onClick={(e) => {
+            e.preventDefault();
+            setDeleteModal(true);
+          }}
+        >
+          Delete Card
+        </button>
+      </div>
+      {deleteModal && (
+        <Modal
+          title="Delete Card"
+          gameID={formCreateAndEditCard.id}
+          onSubmit={() => {
+            setDeleteModal(false);
+            onSubmit();
+          }}
+        />
+      )}
     </form>
   );
 };

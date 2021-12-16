@@ -22,8 +22,10 @@ const cartReducer = (state = initialState, action: IActionCart): IInitialState =
         )
       : [...state.cart, { ...item, qty: 1 }];
     console.log(action.type);
+
     switch (action.type) {
       case ADD_TO_CART:
+        console.log(item);
         localStorage.setItem("cart", JSON.stringify(selectedGames));
         return {
           ...state,

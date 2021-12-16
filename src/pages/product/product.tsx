@@ -6,6 +6,9 @@ import { dataItems, IFilterState } from "@/types/types";
 import "./product.css";
 import Spinner from "@/components/spinner/spinner";
 import Modal from "@/components/modal/modal";
+import { useDispatch, useSelector } from "react-redux";
+import { loadGames } from "@/store/actionCreators/adminActions";
+import { RootState } from "@/store/reducers/rootReducer";
 import SearchPanel from "../../components/searchPanel/searchPanel";
 import Filter from "../../components/filter/filter";
 import transformParam from "../../utils/transformParam";
@@ -25,7 +28,6 @@ const Products: FC = (): JSX.Element => {
   const { categories } = useParams<IParams>();
   const [productList, setProductList] = useState<dataItems[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-
   const [createModal, setCreateModal] = useState<boolean>(false);
 
   const filterStr = localStorage.getItem("filter");
@@ -33,6 +35,12 @@ const Products: FC = (): JSX.Element => {
   const onRequestFilter = (response: dataItems[]): void => {
     setProductList(response);
   };
+  const dispatch = useDispatch();
+  const newProductsList = useSelector((state: RootState) => state.admin.products);
+
+  useEffect(() => {
+    setProductList(newProductsList);
+  }, [newProductsList]);
 
   const onRequest = (category: string) => {
     console.log(category);
@@ -52,7 +60,10 @@ const Products: FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    getResource("/api/games?").then((data) => setProductList(data));
+    getResource("/api/games?").then((data) => {
+      setProductList(data);
+      dispatch(loadGames(data));
+    });
   }, []);
 
   useEffect(() => {

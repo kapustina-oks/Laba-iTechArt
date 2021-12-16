@@ -114,6 +114,7 @@ export enum ActionAdminTypes {
   CREATE_NEW_GAME = "CREATE_NEW_GAME",
   EDIT_GAME = "EDIT_GAME",
   DELETE_SET_SUCCESS = "DELETE_SET_SUCCESS",
+  LOAD_GAME = "LOAD_GAME",
 }
 
 export enum ActionCartTypes {
@@ -123,6 +124,13 @@ export enum ActionCartTypes {
   REMOVE_ALL_ITEM = "REMOVE_ALL_ITEM",
   TOTAL_ITEMS = "TOTAL_ITEMS",
   LOCAL_STORAGE_CART = "LOCAL_STORAGE_CART",
+}
+
+interface loadGames {
+  type: ActionAdminTypes.LOAD_GAME;
+  payload: {
+    products: dataItems[];
+  };
 }
 
 interface deleteSetSuccess {
@@ -146,7 +154,7 @@ interface createGame {
   };
 }
 
-export type IActionAdmin = createGame | editGames | deleteSetSuccess;
+export type IActionAdmin = createGame | editGames | deleteSetSuccess | loadGames;
 
 interface addCartFromLS {
   type: ActionCartTypes.LOCAL_STORAGE_CART;

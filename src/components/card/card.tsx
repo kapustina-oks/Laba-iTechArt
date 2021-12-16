@@ -1,7 +1,7 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { dataItems } from "@/types/types";
 import "./card.css";
-import { addToCart, totalItemsCart } from "@/store/actionCreators/cartActions";
+import { addToCart, totalItemsCart, updateCartProductsAction } from "@/store/actionCreators/cartActions";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/reducers/rootReducer";
 import Modal from "@/components/modal/modal";
@@ -13,8 +13,17 @@ interface CardProps {
 const Card: FC<CardProps> = ({ game }): JSX.Element => {
   const dispatch = useDispatch();
   const totalItems = useSelector((state: RootState) => state.cart.total);
+  const cart = useSelector((state: RootState) => state.cart.cart);
+  const productsCart = useSelector((state: RootState) => state.cart.productsCart);
 
   const [editModal, setEditModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    const isCart = cart.find((item) => item.id === game.id);
+    if (isCart) {
+      dispatch(updateCartProductsAction(game.id, game));
+    }
+  }, [productsCart]);
 
   const onAddHandler = () => {
     dispatch(addToCart(game.id));

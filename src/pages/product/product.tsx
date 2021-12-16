@@ -9,6 +9,7 @@ import Modal from "@/components/modal/modal";
 import { useDispatch, useSelector } from "react-redux";
 import { loadGames } from "@/store/actionCreators/adminActions";
 import { RootState } from "@/store/reducers/rootReducer";
+import { loadCartProductsAction, updateCartProductsAction } from "@/store/actionCreators/cartActions";
 import SearchPanel from "../../components/searchPanel/searchPanel";
 import Filter from "../../components/filter/filter";
 import transformParam from "../../utils/transformParam";
@@ -41,6 +42,10 @@ const Products: FC = (): JSX.Element => {
   useEffect(() => {
     setProductList(newProductsList);
   }, [newProductsList]);
+
+  useEffect(() => {
+    dispatch(loadCartProductsAction(productList));
+  }, [productList]);
 
   const onRequest = (category: string) => {
     console.log(category);

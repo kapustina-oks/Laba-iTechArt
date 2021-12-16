@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/reducers/rootReducer";
 import { useEffect, useState } from "react";
 import { ICart } from "@/types/types";
-import { totalItemsCart } from "@/store/actionCreators/cartActions";
+import { totalItemsCart, updateCartProductsAction } from "@/store/actionCreators/cartActions";
 import CartItem from "../../components/cartItem/cartItem";
 import Modal from "../../components/modal/modal";
 

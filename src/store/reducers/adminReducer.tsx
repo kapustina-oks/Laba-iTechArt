@@ -8,7 +8,10 @@ const adminReducer = (state = initialState, action: IActionAdmin) => {
     case LOAD_GAME:
       return { ...state, products: action.payload.products };
     case CREATE_NEW_GAME:
-      return { ...state, products: [...state.products, action.payload.game] };
+      return {
+        ...state,
+        products: [...state.products, action.payload.game],
+      };
     case EDIT_GAME:
       return {
         ...state,

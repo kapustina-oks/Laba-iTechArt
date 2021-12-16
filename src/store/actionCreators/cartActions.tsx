@@ -5,6 +5,8 @@ import {
   REMOVE_FROM_CART,
   TOTAL_ITEMS,
   LOCAL_STORAGE_CART,
+  LOAD_CART_PRODUCTS,
+  UPDATE_CART_PRODUCTS,
 } from "@/store/actions";
 import { dataItems } from "@/types/types";
 
@@ -19,6 +21,21 @@ export const addCartFromLS = (savedGames: dataItems) => ({
   type: LOCAL_STORAGE_CART,
   payload: {
     savedGames,
+  },
+});
+
+export const loadCartProductsAction = (productsCartList: dataItems) => ({
+  type: LOAD_CART_PRODUCTS,
+  payload: {
+    productsCartList,
+  },
+});
+
+export const updateCartProductsAction = (newGameID: number, newGame: dataItems) => ({
+  type: UPDATE_CART_PRODUCTS,
+  payload: {
+    newGameID,
+    newGame,
   },
 });
 

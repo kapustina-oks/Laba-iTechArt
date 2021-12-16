@@ -108,6 +108,7 @@ export default webpackMockServer.add((app) => {
     console.log(req.body);
     gamesList.push(req.body);
     res.status(201);
+    res.json({ body: req.body || null, success: true, users });
   });
 
   app.put("/api/games", (req, res) => {
@@ -128,6 +129,7 @@ export default webpackMockServer.add((app) => {
       gamesList = gamesList.filter((game) => game.id !== +req.params.id);
       res.status(200);
     }
+    res.json({ body: req.body || null, success: true, users });
   });
 
   app.post("/api/saveProfile", (req, res) => {

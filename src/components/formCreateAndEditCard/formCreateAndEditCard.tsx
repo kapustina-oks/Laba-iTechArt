@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./formCreateAndEditCard.css";
-import { editNewGame, createNewGame } from "@/store/actionCreators/adminActions";
+import { editNewGame, createNewGame, createGame } from "@/store/actionCreators/adminActions";
 import mockServerHelper from "webpack-mock-server/lib/mockServerHelper";
 import { dataItems } from "@/types/types";
 import Modal from "@/components/modal/modal";

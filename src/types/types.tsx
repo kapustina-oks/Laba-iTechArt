@@ -127,14 +127,23 @@ export enum ActionCartTypes {
 
 interface deleteSetSuccess {
   type: ActionAdminTypes.DELETE_SET_SUCCESS;
+  payload: {
+    id: number;
+  };
 }
 
 interface editGames {
   type: ActionAdminTypes.EDIT_GAME;
+  payload: {
+    game: dataItems;
+  };
 }
 
 interface createGame {
   type: ActionAdminTypes.CREATE_NEW_GAME;
+  payload: {
+    game: dataItems;
+  };
 }
 
 export type IActionAdmin = createGame | editGames | deleteSetSuccess;

@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { PropsForm } from "@/types/types";
 import { usersRegistration } from "@/services/dataService";
 import { useDispatch, useSelector } from "react-redux";
-import { authLogInAction, authLogOutAction, userNameAction } from "@/store/actionCreators/authActions";
+import { authLogInAction, authLogOutAction, isAdminAction, userNameAction } from "@/store/actionCreators/authActions";
 import mockServerHelper from "webpack-mock-server/lib/mockServerHelper";
 import { validateLogin, validatePassword, validateRepeatPassword } from "@/utils/validation";
 import { removeAllItems } from "@/store/actionCreators/cartActions";
@@ -40,6 +40,7 @@ const FormSignUp = ({ onSubmit }: PropsForm): JSX.Element => {
         if (res.ok) {
           dispatch(authLogInAction());
           dispatch(userNameAction(login));
+          dispatch(isAdminAction(false));
           localStorage.setItem("user", login);
           localStorage.setItem("id", String(data.id));
           console.log(res);

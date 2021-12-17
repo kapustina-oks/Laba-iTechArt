@@ -44,8 +44,10 @@ const FormSignIn = ({ onSubmit }: PropsForm): JSX.Element => {
       .then((userBody) => {
         localStorage.setItem("id", userBody.currentUserId);
         if (userBody.isAdmin) {
-          dispatch(isAdminAction());
+          dispatch(isAdminAction(true));
           localStorage.setItem("isAdmin", userBody.isAdmin);
+        } else {
+          dispatch(isAdminAction(false));
         }
       })
       .then(onSubmit);

@@ -3,13 +3,20 @@ import { useDispatch } from "react-redux";
 import "./formCreateAndEditCard.css";
 import { editNewGame, createNewGame } from "@/store/actionCreators/adminActions";
 import mockServerHelper from "webpack-mock-server/lib/mockServerHelper";
-import { dataItems, dataItemsObj } from "@/types/types";
+import { dataItems } from "@/types/types";
 import Modal from "@/components/modal/modal";
 import InputForm from "@/components/formCreateAndEditCard/inputForm";
 
 interface IFormCreateAndEditCard {
   onSubmit: () => void;
   game?: dataItems | undefined;
+}
+
+interface expectedKeys {
+  name: string;
+  genres: string;
+  price: string;
+  img: string;
 }
 
 const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
@@ -79,10 +86,10 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
   const handleEditFormChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     e.preventDefault();
 
-    const fieldName = e.target.getAttribute("name") as keyof dataItemsObj;
+    const fieldName = e.target.getAttribute("name") as keyof expectedKeys;
     const fieldValue = e.target.value;
 
-    const newFormData = { ...formCreateAndEditCard };
+    const newFormData: dataItems = { ...formCreateAndEditCard };
     newFormData[fieldName] = fieldValue;
 
     setFormCreateAndEditCard(newFormData);

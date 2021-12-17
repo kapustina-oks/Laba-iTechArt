@@ -5,4 +5,4 @@ export const authLogOutAction = () => ({ type: LOG_OUT });
 export const openModalAction = () => ({ type: OPEN_MODAL });
 export const closeModalAction = () => ({ type: CLOSE_MODAL });
 export const userNameAction = (payload: string) => ({ type: USER_NAME, payload });
-export const isAdminAction = () => ({ type: IS_ADMIN });
+export const isAdminAction = (payload: boolean) => ({ type: IS_ADMIN, payload });

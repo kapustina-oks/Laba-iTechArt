@@ -17,7 +17,7 @@ const authReducer = (state = initialState, action: IAction): IInitialState => {
     case ActionTypes.USER_NAME:
       return { ...state, userName: action.payload };
     case ActionTypes.IS_ADMIN:
-      return { ...state, isAdmin: true };
+      return { ...state, isAdmin: action.payload };
     default:
       return state;
   }

@@ -9,6 +9,7 @@ export enum ActionTypes {
 
 interface isAdminAction {
   type: ActionTypes.IS_ADMIN;
+  payload: boolean
 }
 
 interface LoginTypeAction {

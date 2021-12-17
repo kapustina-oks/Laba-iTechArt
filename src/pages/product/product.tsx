@@ -72,12 +72,16 @@ const Products: FC = (): JSX.Element => {
       setProductList(data);
       dispatch(loadGames(data));
     });
+  }, []);
 
+  useEffect(() => {
     const isAdminLS = localStorage.getItem("isAdmin");
     if (isAdminLS) {
-      dispatch(isAdminAction());
+      dispatch(isAdminAction(true));
+    } else {
+      dispatch(isAdminAction(false));
     }
-  }, []);
+  }, [isAdmin]);
 
   useEffect(() => {
     if (categories) {

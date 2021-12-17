@@ -12,11 +12,7 @@ export interface Menu {
   id: number;
 }
 
-export interface dataItemsObj {
-  [key: string]: unknown;
-}
-
-export interface dataItems extends dataItemsObj {
+export interface dataItems {
   name: string;
   id: number;
   img: string;
@@ -107,4 +103,3 @@ export interface IFilterState {
   rating: string;
   price: string;
 }
-

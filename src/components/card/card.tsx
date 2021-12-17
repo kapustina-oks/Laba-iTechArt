@@ -30,6 +30,11 @@ const Card: FC<CardProps> = ({ game }): JSX.Element => {
     dispatch(totalItemsCart(totalItems + 1));
   };
 
+  const modalHandler =
+    (isOpen: boolean): (() => void) =>
+    () =>
+      setEditModal(isOpen);
+
   let star = "";
   if (game.rating) {
     for (let i = 0; i < game.rating; i++) {
@@ -59,10 +64,10 @@ const Card: FC<CardProps> = ({ game }): JSX.Element => {
             <button className="btn1" onClick={onAddHandler}>
               Add to cart
             </button>
-            <button className="btn2" onClick={() => setEditModal(true)}>
+            <button className="btn2" onClick={modalHandler(true)}>
               Edit card
             </button>
-            {editModal && <Modal title="Edit Card" game={game} onSubmit={() => setEditModal(false)} />}
+            {editModal && <Modal title="Edit Card" game={game} onSubmit={modalHandler(false)} />}
           </div>
         </div>
       </div>

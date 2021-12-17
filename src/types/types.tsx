@@ -91,6 +91,7 @@ export interface IInitialState {
   userName: string;
   products: dataItems[];
   cart: ICart[];
+  productsCart: dataItems[];
   total: number;
 }
 
@@ -124,7 +125,27 @@ export enum ActionCartTypes {
   REMOVE_ALL_ITEM = "REMOVE_ALL_ITEM",
   TOTAL_ITEMS = "TOTAL_ITEMS",
   LOCAL_STORAGE_CART = "LOCAL_STORAGE_CART",
+  LOAD_CART_PRODUCTS = "LOAD_CART_PRODUCTS",
+  UPDATE_CART_PRODUCTS = "UPDATE_CART_PRODUCTS",
 }
+
+interface loadCartProductsAction {
+  type: ActionCartTypes.LOAD_CART_PRODUCTS;
+  payload: {
+    productsCartList: dataItems[];
+    id?: number;
+  };
+}
+
+interface updateCartProductsAction {
+  type: ActionCartTypes.UPDATE_CART_PRODUCTS;
+  payload: {
+    newGameID: number;
+    newGame: dataItems;
+    id?: number;
+  };
+}
+
 
 interface loadGames {
   type: ActionAdminTypes.LOAD_GAME;
@@ -198,7 +219,15 @@ interface removeAllItems {
   type: ActionCartTypes.REMOVE_ALL_ITEM;
 }
 
-export type IActionCart = addToCart | adjustItemQty | removeFromCart | removeAllItems | totalItemsCart | addCartFromLS;
+export type IActionCart =
+  | addToCart
+  | adjustItemQty
+  | removeFromCart
+  | removeAllItems
+  | totalItemsCart
+  | addCartFromLS
+  | loadCartProductsAction
+  | updateCartProductsAction;
 
 interface LoginTypeAction {
   type: ActionTypes.LOG_IN;

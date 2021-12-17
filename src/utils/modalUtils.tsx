@@ -6,7 +6,7 @@ import { dataItems } from "@/types/types";
 import ModalDeleteCard from "@/components/modalDeleteCard/modalDeleteCard";
 import FormCreateAndEditCard from "../components/formCreateAndEditCard/formCreateAndEditCard";
 
-export const modal = (title: string, onSubmit: () => void, game?: dataItems | undefined, gameID?: number) => {
+export const modal = (title: string, onSubmit: () => void, gameID: number, game?: dataItems | undefined) => {
   switch (title) {
     case "Authorization":
       return <FormSignIn onSubmit={onSubmit} />;

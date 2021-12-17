@@ -4,7 +4,7 @@ import "./modalDeleteCard.css";
 
 interface IModalDeleteCard {
   onSubmit: () => void;
-  gameID?: number;
+  gameID: number;
 }
 
 const ModalDeleteCard = ({ onSubmit, gameID }: IModalDeleteCard): JSX.Element => {

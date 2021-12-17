@@ -6,7 +6,8 @@ import {
   REMOVE_FROM_CART,
   TOTAL_ITEMS,
   LOCAL_STORAGE_CART,
-  LOAD_CART_PRODUCTS, UPDATE_CART_PRODUCTS
+  LOAD_CART_PRODUCTS,
+  UPDATE_CART_PRODUCTS,
 } from "@/store/actions";
 import { IActionCart, ICart, IInitialState } from "@/types/types";
 
@@ -55,14 +56,14 @@ const cartReducer = (state = initialState, action: IActionCart): IInitialState =
       case LOAD_CART_PRODUCTS:
         return {
           ...state,
-          productsCart:  action.payload.productsCartList,
-       };
+          productsCart: action.payload.productsCartList,
+        };
 
       case UPDATE_CART_PRODUCTS:
         return {
           ...state,
-          cart: state.cart.map((item) =>
-            item.id === action.payload.newGameID ? {...item, ...action.payload.newGame} : item
+          cart: state.cart.map((game) =>
+            game.id === action.payload.newGameID ? { ...game, ...action.payload.newGame } : game
           ),
         };
 

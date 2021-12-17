@@ -6,12 +6,12 @@ import { dataItems } from "@/types/types";
 interface PropsModal {
   title: string;
   onSubmit: () => void;
-  game?: dataItems | undefined;
   gameID?: number;
+  game?: dataItems | undefined;
 }
 
-const Modal: ({ title, onSubmit, game, gameID }: PropsModal) => JSX.Element = ({ title, onSubmit, game, gameID }) => {
-  const form = modal(title, onSubmit, game, gameID);
+const Modal: ({ title, onSubmit, gameID, game }: PropsModal) => JSX.Element = ({ title, onSubmit, gameID, game }) => {
+  const form = modal(title, onSubmit, gameID as number, game);
   return (
     <>
       <Portal>

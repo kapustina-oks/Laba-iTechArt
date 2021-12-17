@@ -9,7 +9,7 @@ import Modal from "@/components/modal/modal";
 import { useDispatch, useSelector } from "react-redux";
 import { loadGames } from "@/store/actionCreators/adminActions";
 import { RootState } from "@/store/reducers/rootReducer";
-import { loadCartProductsAction, updateCartProductsAction } from "@/store/actionCreators/cartActions";
+import { loadCartProductsAction } from "@/store/actionCreators/cartActions";
 import SearchPanel from "../../components/searchPanel/searchPanel";
 import Filter from "../../components/filter/filter";
 import transformParam from "../../utils/transformParam";

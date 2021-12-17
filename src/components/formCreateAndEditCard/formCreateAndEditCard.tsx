@@ -5,6 +5,7 @@ import { editNewGame, createNewGame } from "@/store/actionCreators/adminActions"
 import mockServerHelper from "webpack-mock-server/lib/mockServerHelper";
 import { dataItems } from "@/types/types";
 import Modal from "@/components/modal/modal";
+import InputForm from "@/components/formCreateAndEditCard/inputForm";
 
 interface IFormCreateAndEditCard {
   onSubmit: () => void;
@@ -43,11 +44,13 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
         }
   );
 
-  const [hasCategory, setHasCategory] = useState({
+  const hasCategoryObj = {
     hasPC: formCreateAndEditCard.categories.includes("pc"),
     hasPS: formCreateAndEditCard.categories.includes("playstation"),
     hasXbox: formCreateAndEditCard.categories.includes("xbox"),
-  });
+  };
+
+  const [hasCategory, setHasCategory] = useState(hasCategoryObj);
 
   useEffect(() => {
     const savedCategory = [];
@@ -75,7 +78,7 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
     console.log(e.target.value);
   };
 
-  const handleEditFormChange = (e: ChangeEvent) => {
+  const handleEditFormChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     e.preventDefault();
 
     const fieldName = e.target.getAttribute("name");
@@ -94,25 +97,20 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
           <img className="size_img" src={formCreateAndEditCard.img} alt="game_img" />
         </div>
         <div className="input-product-group">
-          <label className="label-product">
-            Name
-            <input type="text" value={formCreateAndEditCard.name} name="name" onChange={handleEditFormChange} />
-          </label>
-
-          <label className="label-product">
-            Genre
-            <input type="text" value={formCreateAndEditCard.genres} name="genres" onChange={handleEditFormChange} />
-          </label>
-
-          <label className="label-product">
-            Price
-            <input type="text" value={formCreateAndEditCard.price} name="price" onChange={handleEditFormChange} />
-          </label>
-
-          <label className="label-product">
-            Img
-            <input type="text" value={formCreateAndEditCard.img} name="img" onChange={handleEditFormChange} />
-          </label>
+          <InputForm labelTitle="Name" value={formCreateAndEditCard.name} name="name" onChange={handleEditFormChange} />
+          <InputForm
+            labelTitle="Genre"
+            value={formCreateAndEditCard.genres}
+            name="genres"
+            onChange={handleEditFormChange}
+          />
+          <InputForm
+            labelTitle="Price"
+            value={formCreateAndEditCard.price}
+            name="price"
+            onChange={handleEditFormChange}
+          />
+          <InputForm labelTitle="Img" value={formCreateAndEditCard.img} name="img" onChange={handleEditFormChange} />
         </div>
       </div>
 
@@ -125,7 +123,6 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
           onChange={handleEditFormChange}
         />
       </label>
-
       <label className="label-product">
         Age
         <select

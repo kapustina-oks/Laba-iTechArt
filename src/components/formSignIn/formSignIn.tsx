@@ -2,8 +2,7 @@ import { ChangeEvent, FocusEvent, useEffect, useState } from "react";
 import { usersAuthorisation } from "@/services/dataService";
 import { PropsForm } from "@/types/types";
 import { useDispatch } from "react-redux";
-import { authLogInAction, authLogOutAction } from "@/store/actionCreators/authActions";
-import { userNameAction } from "@/store/actionCreators/userNameAction";
+import { authLogInAction, authLogOutAction, userNameAction } from "@/store/actionCreators/authActions";
 import { validateLogin, validatePassword } from "@/utils/validation";
 
 const FormSignIn = ({ onSubmit }: PropsForm): JSX.Element => {

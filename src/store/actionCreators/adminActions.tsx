@@ -1,4 +1,4 @@
-import { CREATE_NEW_GAME, EDIT_GAME, DELETE_SET_SUCCESS, LOAD_GAME } from "@/store/actions";
+import { CREATE_NEW_GAME, EDIT_GAME, DELETE_SET_SUCCESS, LOAD_GAME } from "@/store/actions/adminAction";
 import { createGames, editedGames, removeGame } from "@/services/dataService";
 import { dataItems } from "@/types/types";
 import { Dispatch } from "redux";

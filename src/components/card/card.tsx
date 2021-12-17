@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { dataItems } from "@/types/types";
+import { ICart } from "@/types/types";
 import "./card.css";
 import { addToCart, totalItemsCart, updateCartProductsAction } from "@/store/actionCreators/cartActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,7 +7,7 @@ import { RootState } from "@/store/reducers/rootReducer";
 import Modal from "@/components/modal/modal";
 
 interface CardProps {
-  game: dataItems;
+  game: ICart;
 }
 
 const Card: FC<CardProps> = ({ game }): JSX.Element => {

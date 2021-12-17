@@ -7,7 +7,7 @@ import {
   LOCAL_STORAGE_CART,
   LOAD_CART_PRODUCTS,
   UPDATE_CART_PRODUCTS,
-} from "@/store/actions";
+} from "@/store/actions/cartAction";
 import { dataItems, ICart } from "@/types/types";
 
 export const addToCart = (itemID: number) => ({
@@ -24,7 +24,7 @@ export const addCartFromLS = (savedGames: dataItems) => ({
   },
 });
 
-export const loadCartProductsAction = (productsCartList: ICart[]) => ({
+export const loadCartProductsAction = (productsCartList: dataItems[]) => ({
   type: LOAD_CART_PRODUCTS,
   payload: {
     productsCartList,

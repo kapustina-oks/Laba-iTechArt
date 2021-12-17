@@ -1,4 +1,4 @@
-import { FC, useEffect, useState, Suspense } from "react";
+import { FC, useEffect, useState, Suspense, lazy } from "react";
 import { useParams } from "react-router-dom";
 import { getFilter, getResource } from "@/services/dataService";
 import Card from "@/components/card/card";
@@ -10,12 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadGames } from "@/store/actionCreators/adminActions";
 import { RootState } from "@/store/reducers/rootReducer";
 import { loadCartProductsAction } from "@/store/actionCreators/cartActions";
-import SearchPanel from "../../components/searchPanel/searchPanel";
+// import SearchPanel from "../../components/searchPanel/searchPanel";
 import Filter from "../../components/filter/filter";
 import transformParam from "../../utils/transformParam";
 
-// const Filter = lazy(() => import("../../components/filter/filter"));
-// const SearchPanel = React.lazy(() => import("../../components/searchPanel/searchPanel"));
+const SearchPanel = lazy(() => import("../../components/searchPanel/searchPanel"));
 
 interface IParams {
   categories?: string;

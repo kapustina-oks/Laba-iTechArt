@@ -8,8 +8,9 @@ import {
   LOCAL_STORAGE_CART,
   LOAD_CART_PRODUCTS,
   UPDATE_CART_PRODUCTS,
-} from "@/store/actions";
-import { IActionCart, ICart, IInitialState } from "@/types/types";
+} from "@/store/actions/cartAction";
+import { ICart, IInitialState } from "@/types/types";
+import { IActionCart } from "../types/cartTypes";
 
 const cartReducer = (state = initialState, action: IActionCart): IInitialState => {
   let item;

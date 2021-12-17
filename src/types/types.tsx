@@ -12,7 +12,11 @@ export interface Menu {
   id: number;
 }
 
-export interface dataItems {
+export interface dataItemsObj {
+  [key: string]: unknown;
+}
+
+export interface dataItems extends dataItemsObj {
   name: string;
   id: number;
   img: string;
@@ -25,7 +29,7 @@ export interface dataItems {
   description: string;
 }
 
-export interface ICart {
+export interface ICart extends dataItems {
   name: string;
   id: number;
   img: string;
@@ -79,6 +83,7 @@ export interface IUsers {
   description: string;
   photo: string;
   id: number;
+  isAdmin: boolean;
 }
 
 export interface PropsForm {
@@ -93,6 +98,7 @@ export interface IInitialState {
   cart: ICart[];
   productsCart: dataItems[];
   total: number;
+  isAdmin: boolean;
 }
 
 export interface IFilterState {
@@ -101,3 +107,4 @@ export interface IFilterState {
   rating: string;
   price: string;
 }
+

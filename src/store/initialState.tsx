@@ -11,6 +11,7 @@ const initialState: IInitialState = {
   productsCart: gamesList,
   cart: [],
   total: 0,
+  isAdmin: false,
 };
 
 export default initialState;

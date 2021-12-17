@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from "react";
-import { ICart } from "@/types/types";
+import { dataItems, ICart } from "@/types/types";
 import "./card.css";
 import { addToCart, totalItemsCart, updateCartProductsAction } from "@/store/actionCreators/cartActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,21 +7,25 @@ import { RootState } from "@/store/reducers/rootReducer";
 import Modal from "@/components/modal/modal";
 
 interface CardProps {
-  game: ICart;
+  game: dataItems;
+  url: string;
 }
 
-const Card: FC<CardProps> = ({ game }): JSX.Element => {
+const Card: FC<CardProps> = ({ game, url }): JSX.Element => {
   const dispatch = useDispatch();
+
   const totalItems = useSelector((state: RootState) => state.cart.total);
   const cart = useSelector((state: RootState) => state.cart.cart);
   const productsCart = useSelector((state: RootState) => state.cart.productsCart);
+  const isAdmin = useSelector((state: RootState) => state.auth.isAdmin);
 
   const [editModal, setEditModal] = useState<boolean>(false);
 
   useEffect(() => {
+    console.log(url);
     const isCart = cart.find((item) => item.id === game.id);
     if (isCart) {
-      dispatch(updateCartProductsAction(game.id, game));
+      dispatch(updateCartProductsAction(game.id, game as ICart));
     }
   }, [productsCart]);
 
@@ -64,9 +68,11 @@ const Card: FC<CardProps> = ({ game }): JSX.Element => {
             <button className="btn1" onClick={onAddHandler}>
               Add to cart
             </button>
-            <button className="btn2" onClick={modalHandler(true)}>
-              Edit card
-            </button>
+            {url === "/products" && isAdmin ? (
+              <button className="btn2" onClick={modalHandler(true)}>
+                Edit card
+              </button>
+            ) : null}
             {editModal && <Modal title="Edit Card" game={game} onSubmit={modalHandler(false)} />}
           </div>
         </div>

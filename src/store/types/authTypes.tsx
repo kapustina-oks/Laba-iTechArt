@@ -4,6 +4,11 @@ export enum ActionTypes {
   USER_NAME = "USER_NAME",
   OPEN_MODAL = "OPEN_MODAL",
   CLOSE_MODAL = "CLOSE_MODAL",
+  IS_ADMIN = "IS_ADMIN",
+}
+
+interface isAdminAction {
+  type: ActionTypes.IS_ADMIN;
 }
 
 interface LoginTypeAction {
@@ -29,4 +34,5 @@ export type IAction =
   | logoutTypeAction
   | openModalTypeAction
   | closeModalTypeAction
+  | isAdminAction
   | userNameTypeAction;

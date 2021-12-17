@@ -1,5 +1,5 @@
 import { FC, useEffect, useState, Suspense, lazy } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { getFilter, getResource } from "@/services/dataService";
 import Card from "@/components/card/card";
 import { dataItems, IFilterState } from "@/types/types";
@@ -11,6 +11,7 @@ import { loadGames } from "@/store/actionCreators/adminActions";
 import { RootState } from "@/store/reducers/rootReducer";
 import { loadCartProductsAction } from "@/store/actionCreators/cartActions";
 // import SearchPanel from "../../components/searchPanel/searchPanel";
+import { isAdminAction } from "@/store/actionCreators/authActions";
 import Filter from "../../components/filter/filter";
 import transformParam from "../../utils/transformParam";
 
@@ -36,7 +37,10 @@ const Products: FC = (): JSX.Element => {
     setProductList(response);
   };
   const dispatch = useDispatch();
+  const location = useLocation();
+
   const newProductsList = useSelector((state: RootState) => state.admin.products);
+  const isAdmin = useSelector((state: RootState) => state.auth.isAdmin);
 
   useEffect(() => {
     setProductList(newProductsList);
@@ -68,6 +72,11 @@ const Products: FC = (): JSX.Element => {
       setProductList(data);
       dispatch(loadGames(data));
     });
+
+    const isAdminLS = localStorage.getItem("isAdmin");
+    if (isAdminLS) {
+      dispatch(isAdminAction());
+    }
   }, []);
 
   useEffect(() => {
@@ -81,7 +90,7 @@ const Products: FC = (): JSX.Element => {
     }
   }, [categories, filterStr]);
 
-  const contentProduct = productList.map((game) => <Card game={game} key={game.id} />);
+  const contentProduct = productList.map((game) => <Card url={location.pathname} game={game} key={game.id} />);
 
   return (
     <Suspense fallback={<Spinner />}>
@@ -92,9 +101,11 @@ const Products: FC = (): JSX.Element => {
           </div>
           <div className="sidebar">
             <Filter onFilter={onFilter} />
-            <button className="btn-create-card" onClick={() => setCreateModal(true)}>
-              Create card
-            </button>
+            {isAdmin ? (
+              <button className="btn-create-card" onClick={() => setCreateModal(true)}>
+                Create card
+              </button>
+            ) : null}
           </div>
           {loading ? <Spinner /> : contentProduct}
           {createModal && <Modal title="Create Card" onSubmit={() => setCreateModal(false)} />}

@@ -66,8 +66,8 @@ export default webpackMockServer.add((app) => {
       gamesListUpdated = gamesListUpdated.sort((prev: dataItems, next: dataItems) => {
         const sortField = _req.query.sort as keyof dataItems;
 
-        const priceOrRatingFromPrev = prev[sortField];
-        const priceOrRatingFromNext = next[sortField];
+        const priceOrRatingFromPrev = prev[sortField] as dataItems;
+        const priceOrRatingFromNext = next[sortField] as dataItems;
 
         if (direction === "ascending") {
           return priceOrRatingFromPrev > priceOrRatingFromNext ? -1 : 1;
@@ -82,20 +82,32 @@ export default webpackMockServer.add((app) => {
     res.json(Object.values(categories));
   });
 
-  const users: UserDataObject = {};
+  const users: UserDataObject = {
+    666: {
+      id: 666,
+      login: "admin",
+      password: "admin",
+      passwordRepeat: "admin",
+      description: "admin",
+      photo: "",
+      isAdmin: true,
+    },
+  };
 
   app.post("/api/auth/signIn", (req, res) => {
     const { login } = req.body;
     const { password } = req.body;
     let userId;
+    let isAdmin = false;
     console.log(req.body);
     const user = Object.values(users).find((data) => data.login === login);
     if (user && user.password === password) {
+      isAdmin = user.isAdmin;
       res.status(201);
     } else {
       res.status(401);
     }
-    res.json({ body: req.body || null, currentUserId: userId, success: true, users });
+    res.json({ body: req.body || null, currentUserId: userId, isAdmin, success: true, users });
   });
 
   app.put("/api/auth/signUp", (req, res) => {

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import "./formCreateAndEditCard.css";
 import { editNewGame, createNewGame } from "@/store/actionCreators/adminActions";
 import mockServerHelper from "webpack-mock-server/lib/mockServerHelper";
-import { dataItems } from "@/types/types";
+import { dataItems, dataItemsObj } from "@/types/types";
 import Modal from "@/components/modal/modal";
 import InputForm from "@/components/formCreateAndEditCard/inputForm";
 
@@ -14,8 +14,6 @@ interface IFormCreateAndEditCard {
 
 const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
   const dispatch = useDispatch();
-
-  const [deleteModal, setDeleteModal] = useState<boolean>(false);
   const [formCreateAndEditCard, setFormCreateAndEditCard] = useState<dataItems>(
     game
       ? {
@@ -51,6 +49,7 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
   };
 
   const [hasCategory, setHasCategory] = useState(hasCategoryObj);
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
   useEffect(() => {
     const savedCategory = [];
@@ -63,7 +62,6 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
 
   const handleEditFormSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-    console.log("submit");
     onSubmit();
 
     if (game) {
@@ -81,13 +79,36 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
   const handleEditFormChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     e.preventDefault();
 
-    const fieldName = e.target.getAttribute("name");
+    const fieldName = e.target.getAttribute("name") as keyof dataItemsObj;
     const fieldValue = e.target.value;
 
     const newFormData = { ...formCreateAndEditCard };
     newFormData[fieldName] = fieldValue;
 
     setFormCreateAndEditCard(newFormData);
+  };
+
+  const handleHasCategoryChange = (category: string): void => {
+    switch (category) {
+      case "hasXbox":
+        return setHasCategory({ ...hasCategory, hasXbox: !hasCategory.hasXbox });
+      case "hasPC":
+        return setHasCategory({ ...hasCategory, hasPC: !hasCategory.hasPC });
+      case "hasPS":
+        return setHasCategory({ ...hasCategory, hasPS: !hasCategory.hasPS });
+      default:
+        break;
+    }
+  };
+
+  const onModalSubmit = () => {
+    setDeleteModal(false);
+    onSubmit();
+  };
+
+  const onDeleteModal = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    setDeleteModal(true);
   };
 
   return (
@@ -113,7 +134,6 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
           <InputForm labelTitle="Img" value={formCreateAndEditCard.img} name="img" onChange={handleEditFormChange} />
         </div>
       </div>
-
       <label className="label-product">
         Description
         <textarea
@@ -136,7 +156,6 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
           <option value="18+">18+</option>
         </select>
       </label>
-
       <label className="label-product">
         Xbox
         <input
@@ -144,7 +163,7 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
           type="checkbox"
           id="xbox"
           defaultChecked={hasCategory.hasXbox}
-          onChange={() => setHasCategory({ ...hasCategory, hasXbox: !hasCategory.hasXbox })}
+          onChange={() => handleHasCategoryChange("hasXbox")}
         />
       </label>
       <label className="label-product">
@@ -154,7 +173,7 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
           type="checkbox"
           id="pc"
           defaultChecked={hasCategory.hasPC}
-          onChange={() => setHasCategory({ ...hasCategory, hasPC: !hasCategory.hasPC })}
+          onChange={() => handleHasCategoryChange("hasPC")}
         />
       </label>
 
@@ -165,34 +184,18 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
           type="checkbox"
           id="playstation"
           defaultChecked={hasCategory.hasPS}
-          onChange={() => setHasCategory({ ...hasCategory, hasPS: !hasCategory.hasPS })}
+          onChange={() => handleHasCategoryChange("hasPS")}
         />
       </label>
       <div className="btn-product-group">
         <button className="btn-product" type="submit" onClick={handleEditFormSubmit}>
           Submit
         </button>
-        <button
-          className="btn-product"
-          type="submit"
-          onClick={(e) => {
-            e.preventDefault();
-            setDeleteModal(true);
-          }}
-        >
+        <button className="btn-product" type="submit" onClick={onDeleteModal}>
           Delete Card
         </button>
       </div>
-      {deleteModal && (
-        <Modal
-          title="Delete Card"
-          gameID={formCreateAndEditCard.id}
-          onSubmit={() => {
-            setDeleteModal(false);
-            onSubmit();
-          }}
-        />
-      )}
+      {deleteModal && <Modal title="Delete Card" gameID={formCreateAndEditCard.id} onSubmit={onModalSubmit} />}
     </form>
   );
 };

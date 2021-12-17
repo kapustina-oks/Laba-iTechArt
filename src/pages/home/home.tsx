@@ -67,7 +67,7 @@ const Home: FC = (): JSX.Element => {
         </div>
         <div className="new-games">New games</div>
         <div className="grid_games">
-          {loading ? <Spinner /> : gameList.map((game) => <Card game={game} key={game.id} />)}
+          {loading ? <Spinner /> : gameList.map((game) => <Card url={location.pathname} game={game} key={game.id} />)}
         </div>
       </div>
     </>

@@ -31,11 +31,6 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
 
     if (key) {
       const value = target[key];
-      // if (value === filter[key]) {
-      //   return;
-      // }
-      console.log("value", value);
-      console.log("key", key);
       if (key === "price" || key === "rating") {
         setFilter((prevFilter) => ({ ...prevFilter, sort: key, direction: value, [key]: value }));
       } else {

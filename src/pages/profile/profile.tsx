@@ -3,7 +3,7 @@ import "./profile.css";
 import Modal from "@/components/modal/modal";
 import { useDispatch } from "react-redux";
 import { usersSaveProfile } from "@/services/dataService";
-import { userNameAction } from "@/store/actionCreators/userNameAction";
+import { userNameAction } from "@/store/actionCreators/authActions";
 import { validateDescription, validateLogin } from "@/utils/validation";
 
 const Profile: FC = (): JSX.Element => {

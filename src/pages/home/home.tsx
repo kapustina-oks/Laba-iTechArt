@@ -5,9 +5,7 @@ import { ICategories, dataItems } from "@/types/types";
 import { getResource } from "@/services/dataService";
 import "./home.css";
 import { useDispatch, useSelector } from "react-redux";
-import { authLogInAction } from "@/store/actionCreators/authActions";
-import { openModalAction } from "@/store/actionCreators/modalActions";
-import { userNameAction } from "@/store/actionCreators/userNameAction";
+import { authLogInAction, openModalAction, userNameAction } from "@/store/actionCreators/authActions";
 import { RootState } from "@/store/reducers/rootReducer";
 import CardCategory from "../../components/cardCategory/cardCategory";
 import Spinner from "../../components/spinner/spinner";
@@ -69,7 +67,7 @@ const Home: FC = (): JSX.Element => {
         </div>
         <div className="new-games">New games</div>
         <div className="grid_games">
-          {loading ? <Spinner /> : gameList.map((game) => <Card game={game} key={game.id} />)}
+          {loading ? <Spinner /> : gameList.map((game) => <Card url={location.pathname} game={game} key={game.id} />)}
         </div>
       </div>
     </>

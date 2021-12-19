@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import "./header.css";
 import { links } from "@/links";
 import { useDispatch, useSelector } from "react-redux";
-import { closeModalAction } from "@/store/actionCreators/modalActions";
-import { authLogOutAction } from "@/store/actionCreators/authActions";
+import { authLogOutAction, closeModalAction } from "@/store/actionCreators/authActions";
 import { RootState } from "@/store/reducers/rootReducer";
 import { addCartFromLS, totalItemsCart } from "@/store/actionCreators/cartActions";
 import Modal from "../modal/modal";
@@ -14,9 +13,9 @@ const { home, product, about } = links;
 
 const Header: FC = (): JSX.Element => {
   const dispatch = useDispatch();
-  const modal = useSelector((state: RootState) => state.modal.modal);
+  const modal = useSelector((state: RootState) => state.auth.modal);
   const auth = useSelector((state: RootState) => state.auth.auth);
-  const userName = useSelector((state: RootState) => state.userName.userName);
+  const userName = useSelector((state: RootState) => state.auth.userName);
   const total = useSelector((state: RootState) => state.cart.total);
 
   const [dropdown, setDropdown] = useState<boolean>(false);

@@ -7,9 +7,11 @@ const initialState: IInitialState = {
   auth: false,
   modal: false,
   userName: "",
-  products: gamesList,
+  products: [],
+  productsCart: gamesList,
   cart: [],
   total: 0,
+  isAdmin: false,
 };
 
 export default initialState;

@@ -1,16 +1,21 @@
-import { FC, useEffect, useState, Suspense } from "react";
-import { useParams } from "react-router-dom";
+import { FC, useEffect, useState, Suspense, lazy } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { getFilter, getResource } from "@/services/dataService";
 import Card from "@/components/card/card";
 import { dataItems, IFilterState } from "@/types/types";
 import "./product.css";
 import Spinner from "@/components/spinner/spinner";
-import SearchPanel from "../../components/searchPanel/searchPanel";
+import Modal from "@/components/modal/modal";
+import { useDispatch, useSelector } from "react-redux";
+import { loadGames } from "@/store/actionCreators/adminActions";
+import { RootState } from "@/store/reducers/rootReducer";
+import { loadCartProductsAction } from "@/store/actionCreators/cartActions";
+// import SearchPanel from "../../components/searchPanel/searchPanel";
+import { isAdminAction } from "@/store/actionCreators/authActions";
 import Filter from "../../components/filter/filter";
 import transformParam from "../../utils/transformParam";
 
-// const Filter = lazy(() => import("../../components/filter/filter"));
-// const SearchPanel = React.lazy(() => import("../../components/searchPanel/searchPanel"));
+const SearchPanel = lazy(() => import("../../components/searchPanel/searchPanel"));
 
 interface IParams {
   categories?: string;
@@ -24,12 +29,26 @@ const Products: FC = (): JSX.Element => {
   const { categories } = useParams<IParams>();
   const [productList, setProductList] = useState<dataItems[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [createModal, setCreateModal] = useState<boolean>(false);
 
   const filterStr = localStorage.getItem("filter");
 
   const onRequestFilter = (response: dataItems[]): void => {
     setProductList(response);
   };
+  const dispatch = useDispatch();
+  const location = useLocation();
+
+  const newProductsList = useSelector((state: RootState) => state.admin.products);
+  const isAdmin = useSelector((state: RootState) => state.auth.isAdmin);
+
+  useEffect(() => {
+    setProductList(newProductsList);
+  }, [newProductsList]);
+
+  useEffect(() => {
+    dispatch(loadCartProductsAction(productList));
+  }, [productList]);
 
   const onRequest = (category: string) => {
     console.log(category);
@@ -49,8 +68,20 @@ const Products: FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    getResource("/api/games?").then((data) => setProductList(data));
+    getResource("/api/games?").then((data) => {
+      setProductList(data);
+      dispatch(loadGames(data));
+    });
   }, []);
+
+  useEffect(() => {
+    const isAdminLS = localStorage.getItem("isAdmin");
+    if (isAdminLS) {
+      dispatch(isAdminAction(true));
+    } else {
+      dispatch(isAdminAction(false));
+    }
+  }, [isAdmin]);
 
   useEffect(() => {
     if (categories) {
@@ -63,7 +94,7 @@ const Products: FC = (): JSX.Element => {
     }
   }, [categories, filterStr]);
 
-  const contentProduct = productList.map((game) => <Card game={game} key={game.id} />);
+  const contentProduct = productList.map((game) => <Card url={location.pathname} game={game} key={game.id} />);
 
   return (
     <Suspense fallback={<Spinner />}>
@@ -74,8 +105,14 @@ const Products: FC = (): JSX.Element => {
           </div>
           <div className="sidebar">
             <Filter onFilter={onFilter} />
+            {isAdmin ? (
+              <button className="btn-create-card" onClick={() => setCreateModal(true)}>
+                Create card
+              </button>
+            ) : null}
           </div>
           {loading ? <Spinner /> : contentProduct}
+          {createModal && <Modal title="Create Card" onSubmit={() => setCreateModal(false)} />}
         </div>
       </div>
     </Suspense>

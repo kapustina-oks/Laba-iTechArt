@@ -2,8 +2,7 @@ import { ChangeEvent, FocusEvent, useEffect, useState } from "react";
 import { usersAuthorisation } from "@/services/dataService";
 import { PropsForm } from "@/types/types";
 import { useDispatch } from "react-redux";
-import { authLogInAction, authLogOutAction } from "@/store/actionCreators/authActions";
-import { userNameAction } from "@/store/actionCreators/userNameAction";
+import { authLogInAction, authLogOutAction, isAdminAction, userNameAction } from "@/store/actionCreators/authActions";
 import { validateLogin, validatePassword } from "@/utils/validation";
 
 const FormSignIn = ({ onSubmit }: PropsForm): JSX.Element => {
@@ -42,7 +41,15 @@ const FormSignIn = ({ onSubmit }: PropsForm): JSX.Element => {
         }
         return res.json();
       })
-      .then((userBody) => localStorage.setItem("id", userBody.currentUserId))
+      .then((userBody) => {
+        localStorage.setItem("id", userBody.currentUserId);
+        if (userBody.isAdmin) {
+          dispatch(isAdminAction(true));
+          localStorage.setItem("isAdmin", userBody.isAdmin);
+        } else {
+          dispatch(isAdminAction(false));
+        }
+      })
       .then(onSubmit);
   };
 

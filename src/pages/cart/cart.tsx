@@ -16,10 +16,6 @@ const Cart = () => {
   const [totalItems, setTotalItems] = useState<number>(0);
   const [cartModal, setCartModal] = useState<boolean>(false);
 
-  // useEffect(() => {
-  //   localStorage.setItem("total", total);
-  // }, [total]);
-
   useEffect(() => {
     let items = 0;
     let price = 0;

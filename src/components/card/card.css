@@ -59,21 +59,38 @@
   text-align: center;
 }
 
-.btn {
+.btn1 {
   position: absolute;
   width: 120px;
   height: 40px;
   border-radius: 20px;
   background: #9833cc;
   border: 1px solid black;
-  right: 15px;
+  left: 87px;
   transition: 0.3s;
-  left: 90px;
-  top: 350px;
+  bottom: 100px;
   color: white;
   font-size: 18px;
 }
 
-.btn:hover {
+.btn2 {
+  position: absolute;
+  width: 120px;
+  height: 40px;
+  border-radius: 20px;
+  background: #9833cc;
+  border: 1px solid black;
+  left: 87px;
+  transition: 0.3s;
+  bottom: 50px;
+  color: white;
+  font-size: 18px;
+}
+
+.btn1:hover {
+  background: #56057e;
+}
+
+.btn2:hover {
   background: #56057e;
 }

@@ -25,7 +25,7 @@ export interface dataItems {
   description: string;
 }
 
-export interface ICart {
+export interface ICart extends dataItems {
   name: string;
   id: number;
   img: string;
@@ -79,6 +79,7 @@ export interface IUsers {
   description: string;
   photo: string;
   id: number;
+  isAdmin: boolean;
 }
 
 export interface PropsForm {
@@ -91,102 +92,10 @@ export interface IInitialState {
   userName: string;
   products: dataItems[];
   cart: ICart[];
+  productsCart: dataItems[];
   total: number;
+  isAdmin: boolean;
 }
-
-export interface saveProfile {
-  login: string;
-  password: string;
-  description: string;
-  photo: string;
-  id: number;
-}
-
-export enum ActionTypes {
-  LOG_IN = "LOG_IN",
-  LOG_OUT = "LOG_OUT",
-  USER_NAME = "USER_NAME",
-  OPEN_MODAL = "OPEN_MODAL",
-  CLOSE_MODAL = "CLOSE_MODAL",
-}
-
-export enum ActionCartTypes {
-  ADD_TO_CART = "ADD_TO_CART",
-  ADJUST_ITEM_QTY = "ADJUST_ITEM_QTY",
-  REMOVE_FROM_CART = "REMOVE_FROM_CART",
-  REMOVE_ALL_ITEM = "REMOVE_ALL_ITEM",
-  TOTAL_ITEMS = "TOTAL_ITEMS",
-  LOCAL_STORAGE_CART = "LOCAL_STORAGE_CART",
-}
-
-interface addCartFromLS {
-  type: ActionCartTypes.LOCAL_STORAGE_CART;
-  payload: {
-    savedGames: ICart[];
-    id?: number;
-  };
-}
-
-interface totalItemsCart {
-  type: ActionCartTypes.TOTAL_ITEMS;
-  payload: {
-    num: number;
-    id?: number;
-  };
-}
-
-interface addToCart {
-  type: ActionCartTypes.ADD_TO_CART;
-  payload: {
-    id: number;
-  };
-}
-
-interface removeFromCart {
-  type: ActionCartTypes.REMOVE_FROM_CART;
-  payload: {
-    id: number;
-  };
-}
-
-interface adjustItemQty {
-  type: ActionCartTypes.ADJUST_ITEM_QTY;
-  payload: {
-    id: number;
-    qty: number;
-  };
-}
-
-interface removeAllItems {
-  type: ActionCartTypes.REMOVE_ALL_ITEM;
-}
-
-export type IActionCart = addToCart | adjustItemQty | removeFromCart | removeAllItems | totalItemsCart | addCartFromLS;
-
-interface LoginTypeAction {
-  type: ActionTypes.LOG_IN;
-}
-interface logoutTypeAction {
-  type: ActionTypes.LOG_OUT;
-}
-interface openModalTypeAction {
-  type: ActionTypes.OPEN_MODAL;
-}
-interface closeModalTypeAction {
-  type: ActionTypes.CLOSE_MODAL;
-}
-
-interface userNameTypeAction {
-  type: ActionTypes.USER_NAME;
-  payload: string;
-}
-
-export type IAction =
-  | LoginTypeAction
-  | logoutTypeAction
-  | openModalTypeAction
-  | closeModalTypeAction
-  | userNameTypeAction;
 
 export interface IFilterState {
   genre: string;

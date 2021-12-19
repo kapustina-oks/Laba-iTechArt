@@ -13,7 +13,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #FFF;
-  min-height: 500px;
+  height: 500px;
   min-width: 450px;
   display: flex;
   flex-direction: column;
@@ -21,6 +21,7 @@
   padding-top: 50px;
   border-radius: 15px;
   border-bottom: 10px solid black;
+  overflow-y: auto;
 }
 
 .modal-title {

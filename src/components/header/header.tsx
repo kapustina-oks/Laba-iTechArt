@@ -61,6 +61,16 @@ const Header: FC = (): JSX.Element => {
     className = "nav-elem arrow-top";
   }
 
+  const dropdownHandler =
+    (isOpen: boolean): (() => void) =>
+    () =>
+      setDropdown(isOpen);
+
+  const signUpHandler = () => {
+    dispatch(authLogOutAction());
+    localStorage.clear();
+  };
+
   return (
     <header>
       {auth ? (
@@ -73,7 +83,7 @@ const Header: FC = (): JSX.Element => {
                   Home
                 </Link>
               </li>
-              <li className={className} onMouseEnter={() => setDropdown(true)} onMouseLeave={() => setDropdown(false)}>
+              <li className={className} onMouseEnter={dropdownHandler(true)} onMouseLeave={dropdownHandler(false)}>
                 <Link className="nav-link" to={product}>
                   Products
                 </Link>
@@ -100,14 +110,7 @@ const Header: FC = (): JSX.Element => {
                   </div>
                 </Link>
               </li>
-              <li
-                className="nav-elem"
-                data-sign="signUp"
-                onClick={() => {
-                  dispatch(authLogOutAction());
-                  localStorage.clear();
-                }}
-              >
+              <li className="nav-elem" data-sign="signUp" onClick={signUpHandler}>
                 <Link className="nav-link" to="/">
                   <i className="fas fa-sign-out-alt icons-size" />
                 </Link>

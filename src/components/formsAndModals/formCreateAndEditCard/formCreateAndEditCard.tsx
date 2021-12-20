@@ -95,18 +95,20 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
     setFormCreateAndEditCard(newFormData);
   };
 
-  const handleHasCategoryChange = (category: string): void => {
-    switch (category) {
-      case "hasXbox":
-        return setHasCategory({ ...hasCategory, hasXbox: !hasCategory.hasXbox });
-      case "hasPC":
-        return setHasCategory({ ...hasCategory, hasPC: !hasCategory.hasPC });
-      case "hasPS":
-        return setHasCategory({ ...hasCategory, hasPS: !hasCategory.hasPS });
-      default:
-        break;
-    }
-  };
+  const handleHasCategoryChange =
+    (category: string): (() => void) =>
+    () => {
+      switch (category) {
+        case "hasXbox":
+          return setHasCategory({ ...hasCategory, hasXbox: !hasCategory.hasXbox });
+        case "hasPC":
+          return setHasCategory({ ...hasCategory, hasPC: !hasCategory.hasPC });
+        case "hasPS":
+          return setHasCategory({ ...hasCategory, hasPS: !hasCategory.hasPS });
+        default:
+          break;
+      }
+    };
 
   const onModalSubmit = () => {
     setDeleteModal(false);
@@ -170,7 +172,7 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
           type="checkbox"
           id="xbox"
           defaultChecked={hasCategory.hasXbox}
-          onChange={() => handleHasCategoryChange("hasXbox")}
+          onChange={handleHasCategoryChange("hasXbox")}
         />
       </label>
       <label className="label-product">
@@ -180,7 +182,7 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
           type="checkbox"
           id="pc"
           defaultChecked={hasCategory.hasPC}
-          onChange={() => handleHasCategoryChange("hasPC")}
+          onChange={handleHasCategoryChange("hasPC")}
         />
       </label>
 
@@ -191,7 +193,7 @@ const FormCreateAndEditCard = ({ onSubmit, game }: IFormCreateAndEditCard) => {
           type="checkbox"
           id="playstation"
           defaultChecked={hasCategory.hasPS}
-          onChange={() => handleHasCategoryChange("hasPS")}
+          onChange={handleHasCategoryChange("hasPS")}
         />
       </label>
       <div className="btn-product-group">

@@ -1,4 +1,4 @@
-import { FC, lazy, useEffect, useState } from "react";
+import { FC, lazy, memo, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { getFilter, getResource } from "@/services/dataService";
 import { dataItems, IFilterState } from "@/types/types";
@@ -101,6 +101,11 @@ const Products: FC = (): JSX.Element => {
     }
   }, [productList]);
 
+  const modalHandler =
+    (isOpen: boolean): (() => void) =>
+    () =>
+      setCreateModal(isOpen);
+
   return (
     <div className="home_container">
       <div className="grid_product">
@@ -110,16 +115,16 @@ const Products: FC = (): JSX.Element => {
         <div className="sidebar">
           <Filter onFilter={onFilter} />
           {isAdmin ? (
-            <button className="btn-create-card" onClick={() => setCreateModal(true)}>
+            <button className="btn-create-card" onClick={modalHandler(true)}>
               Create card
             </button>
           ) : null}
         </div>
         {children}
-        {createModal && <Modal title="Create Card" onSubmit={() => setCreateModal(false)} />}
+        {createModal && <Modal title="Create Card" onSubmit={modalHandler(false)} />}
       </div>
     </div>
   );
 };
 
-export default Products;
+export default memo(Products);

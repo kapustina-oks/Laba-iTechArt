@@ -1,7 +1,6 @@
-import { FC, useEffect, useState, Suspense, lazy } from "react";
+import { FC, lazy, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { getFilter, getResource } from "@/services/dataService";
-import Card from "@/components/card/card";
 import { dataItems, IFilterState } from "@/types/types";
 import "./product.css";
 import Spinner from "@/components/spinner/spinner";
@@ -10,12 +9,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadGames } from "@/store/actionCreators/adminActions";
 import { RootState } from "@/store/reducers/rootReducer";
 import { loadCartProductsAction } from "@/store/actionCreators/cartActions";
-// import SearchPanel from "../../components/searchPanel/searchPanel";
 import { isAdminAction } from "@/store/actionCreators/authActions";
+import SearchPanel from "../../components/searchPanel/searchPanel";
 import Filter from "../../components/filter/filter";
 import transformParam from "../../utils/transformParam";
+import useSuspense from "./useSuspense";
 
-const SearchPanel = lazy(() => import("../../components/searchPanel/searchPanel"));
+const Card = lazy(() => import("../../components/card/card"));
 
 interface IParams {
   categories?: string;
@@ -51,7 +51,6 @@ const Products: FC = (): JSX.Element => {
   }, [productList]);
 
   const onRequest = (category: string) => {
-    console.log(category);
     if (category) {
       getResource(`/api/games?category=${category}&${filterStr}`).then((data) => setProductList(data));
     } else {
@@ -85,7 +84,6 @@ const Products: FC = (): JSX.Element => {
 
   useEffect(() => {
     if (categories) {
-      console.log(categories);
       onRequest(categories);
       localStorage.setItem("category", categories);
     } else {
@@ -95,27 +93,32 @@ const Products: FC = (): JSX.Element => {
   }, [categories, filterStr]);
 
   const contentProduct = productList.map((game) => <Card url={location.pathname} game={game} key={game.id} />);
+  const children = useSuspense(500, loading, setLoading, contentProduct, <Spinner />);
+
+  useEffect(() => {
+    if (loading) {
+      setLoading(false);
+    }
+  }, [productList]);
 
   return (
-    <Suspense fallback={<Spinner />}>
-      <div className="home_container">
-        <div className="grid_product">
-          <div className="search-grid">
-            <SearchPanel onRequestFilter={onRequestFilter} onLoading={(load) => setLoading(load)} reset={getProduct} />
-          </div>
-          <div className="sidebar">
-            <Filter onFilter={onFilter} />
-            {isAdmin ? (
-              <button className="btn-create-card" onClick={() => setCreateModal(true)}>
-                Create card
-              </button>
-            ) : null}
-          </div>
-          {loading ? <Spinner /> : contentProduct}
-          {createModal && <Modal title="Create Card" onSubmit={() => setCreateModal(false)} />}
+    <div className="home_container">
+      <div className="grid_product">
+        <div className="search-grid">
+          <SearchPanel onRequestFilter={onRequestFilter} onLoading={(load) => setLoading(load)} reset={getProduct} />
         </div>
+        <div className="sidebar">
+          <Filter onFilter={onFilter} />
+          {isAdmin ? (
+            <button className="btn-create-card" onClick={() => setCreateModal(true)}>
+              Create card
+            </button>
+          ) : null}
+        </div>
+        {children}
+        {createModal && <Modal title="Create Card" onSubmit={() => setCreateModal(false)} />}
       </div>
-    </Suspense>
+    </div>
   );
 };
 

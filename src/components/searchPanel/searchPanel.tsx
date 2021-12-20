@@ -1,8 +1,8 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import "./searchPanel.css";
 import { getResource } from "@/services/dataService";
 import { dataItems } from "@/types/types";
-import { debounce } from "../debounce/debounce";
+import { debounce } from "@/utils/debounce";
 
 interface SearchPanelProps {
   onRequestFilter(res: dataItems[]): void;

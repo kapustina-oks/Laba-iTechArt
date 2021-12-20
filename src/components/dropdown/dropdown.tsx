@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu } from "@/types/types";
-import { MenuItems } from "../menuItems/menuItems";
+import { MenuItems } from "./menuItems/menuItems";
 import "./dropdown.css";
 
 const Dropdown: FC = (): JSX.Element => {

@@ -5,7 +5,7 @@ import { editNewGame, createNewGame } from "@/store/actionCreators/adminActions"
 import mockServerHelper from "webpack-mock-server/lib/mockServerHelper";
 import { dataItems } from "@/types/types";
 import Modal from "@/components/modal/modal";
-import InputForm from "@/components/formCreateAndEditCard/inputForm";
+import InputForm from "@/components/formsAndModals/formCreateAndEditCard/inputForm";
 
 interface IFormCreateAndEditCard {
   onSubmit: () => void;

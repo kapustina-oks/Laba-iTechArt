@@ -32,7 +32,6 @@ const cartReducer = (state = initialState, action: IActionCart): ICartInitialSta
           itemCart.id === action.payload.id ? { ...itemCart, qty: itemCart.qty + 1 } : itemCart
         )
       : [...state.cart, { ...item, qty: 1 }];
-    console.log(action.type);
 
     switch (action.type) {
       case ADD_TO_CART:

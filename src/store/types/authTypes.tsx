@@ -1,4 +1,4 @@
-export enum ActionTypes {
+export const enum ActionTypes {
   LOG_IN = "LOG_IN",
   LOG_OUT = "LOG_OUT",
   USER_NAME = "USER_NAME",

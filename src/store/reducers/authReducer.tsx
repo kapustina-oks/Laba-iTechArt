@@ -8,7 +8,6 @@ const initialState: IAuthInitialState = {
 };
 
 const authReducer = (state = initialState, action: IAction): IAuthInitialState => {
-  console.log(action.type);
   switch (action.type) {
     case ActionTypes.LOG_IN:
       return { ...state, auth: true };

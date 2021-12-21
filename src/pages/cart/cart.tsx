@@ -9,9 +9,8 @@ import Modal from "../../components/modal/modal";
 
 const Cart = () => {
   const cart = useSelector((state: RootState) => state.cart.cart);
-  const total = useSelector((state: RootState) => state.cart.total);
-
   const dispatch = useDispatch();
+
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [totalItems, setTotalItems] = useState<number>(0);
   const [cartModal, setCartModal] = useState<boolean>(false);
@@ -29,7 +28,7 @@ const Cart = () => {
     setTotalPrice(price);
 
     dispatch(totalItemsCart(totalItems));
-  }, [total, cart, totalPrice, totalItems]);
+  }, [cart, totalItems]);
 
   const openModal = () => {
     setCartModal(true);

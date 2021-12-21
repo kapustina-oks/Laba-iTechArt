@@ -5,7 +5,6 @@ const initialState: IAdminInitialStat = {
 };
 
 const adminReducer = (state = initialState, action: IActionAdmin): IAdminInitialStat => {
-  console.log(action.type);
   switch (action.type) {
     case ActionAdminTypes.LOAD_GAME:
       return { ...state, products: action.payload.products };

@@ -6,7 +6,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import App from "./components/app/app";
 import store from "./store/store";
-// import { Auth, AuthContext } from "./components/context/context";
 
 interface AppProps {
   nothing: boolean;
@@ -30,5 +29,5 @@ class AppContainer extends Component<AppProps, AppState> {
     );
   }
 }
-// AppContainer.contextType = AuthContext;
+
 ReactDom.render(<AppContainer nothing={false} />, document.getElementById("app"));

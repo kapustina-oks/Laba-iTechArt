@@ -36,6 +36,7 @@ const Products: FC = (): JSX.Element => {
   const onRequestFilter = useCallback((response: dataItems[]): void => {
     setProductList(response);
   }, []);
+
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -50,7 +51,7 @@ const Products: FC = (): JSX.Element => {
     dispatch(loadCartProductsAction(productList));
   }, [productList]);
 
-  const onRequest =(category: string) => {
+  const onRequest = (category: string) => {
     if (category) {
       getResource(`/api/games?category=${category}&${filterStr}`).then((data) => setProductList(data));
     } else {
@@ -62,10 +63,9 @@ const Products: FC = (): JSX.Element => {
     getFilter(`/api/games?${transformParam(filter as IObjectKeys)}`).then((data) => setProductList(data));
   }, []);
 
-  const getProduct = () =>
-    useCallback(() => {
-      getResource(`/api/games?${filterStr}&category=${categories}`).then((data) => setProductList(data));
-    }, []);
+  const getProduct = useCallback(() => {
+    getResource(`/api/games?${filterStr}&category=${categories}`).then((data) => setProductList(data));
+  }, []);
 
   useEffect(() => {
     getResource("/api/games?").then((data) => {

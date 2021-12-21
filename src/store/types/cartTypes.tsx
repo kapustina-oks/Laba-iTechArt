@@ -79,3 +79,9 @@ export type IActionCart =
   | addCartFromLS
   | loadCartProductsAction
   | updateCartProductsAction;
+
+export interface ICartInitialState {
+  cart: ICart[];
+  productsCart: dataItems[];
+  total: number;
+}

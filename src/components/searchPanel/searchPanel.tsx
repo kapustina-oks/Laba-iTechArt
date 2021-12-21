@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import "./searchPanel.css";
 import { getResource } from "@/services/dataService";
 import { dataItems } from "@/types/types";
@@ -45,4 +45,4 @@ const SearchPanel: FC<SearchPanelProps> = ({ onRequestFilter, onLoading, reset }
   );
 };
 
-export default SearchPanel;
+export default React.memo(SearchPanel);

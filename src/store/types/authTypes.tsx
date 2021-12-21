@@ -37,3 +37,10 @@ export type IAction =
   | closeModalTypeAction
   | isAdminAction
   | userNameTypeAction;
+
+export interface IAuthInitialState {
+  auth: boolean;
+  modal: boolean;
+  userName: string;
+  isAdmin: boolean;
+};

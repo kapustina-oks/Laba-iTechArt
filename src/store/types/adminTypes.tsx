@@ -36,3 +36,7 @@ interface createGame {
 }
 
 export type IActionAdmin = createGame | editGames | deleteSetSuccess | loadGames;
+
+export interface IAdminInitialStat {
+  products: dataItems[];
+}

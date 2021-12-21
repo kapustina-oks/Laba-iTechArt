@@ -1,4 +1,4 @@
-import { FC, lazy, memo, useEffect, useState } from "react";
+import { FC, lazy, useCallback, useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { getFilter, getResource } from "@/services/dataService";
 import { dataItems, IFilterState } from "@/types/types";
@@ -33,9 +33,9 @@ const Products: FC = (): JSX.Element => {
 
   const filterStr = localStorage.getItem("filter");
 
-  const onRequestFilter = (response: dataItems[]): void => {
+  const onRequestFilter = useCallback((response: dataItems[]): void => {
     setProductList(response);
-  };
+  }, []);
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -50,7 +50,7 @@ const Products: FC = (): JSX.Element => {
     dispatch(loadCartProductsAction(productList));
   }, [productList]);
 
-  const onRequest = (category: string) => {
+  const onRequest =(category: string) => {
     if (category) {
       getResource(`/api/games?category=${category}&${filterStr}`).then((data) => setProductList(data));
     } else {
@@ -58,13 +58,14 @@ const Products: FC = (): JSX.Element => {
     }
   };
 
-  const onFilter = (filter: IFilterState) => {
+  const onFilter = useCallback((filter: IFilterState) => {
     getFilter(`/api/games?${transformParam(filter as IObjectKeys)}`).then((data) => setProductList(data));
-  };
+  }, []);
 
-  const getProduct = () => {
-    getResource(`/api/games?${filterStr}&category=${categories}`).then((data) => setProductList(data));
-  };
+  const getProduct = () =>
+    useCallback(() => {
+      getResource(`/api/games?${filterStr}&category=${categories}`).then((data) => setProductList(data));
+    }, []);
 
   useEffect(() => {
     getResource("/api/games?").then((data) => {
@@ -110,7 +111,7 @@ const Products: FC = (): JSX.Element => {
     <div className="home_container">
       <div className="grid_product">
         <div className="search-grid">
-          <SearchPanel onRequestFilter={onRequestFilter} onLoading={(load) => setLoading(load)} reset={getProduct} />
+          <SearchPanel onRequestFilter={onRequestFilter} onLoading={setLoading} reset={getProduct} />
         </div>
         <div className="sidebar">
           <Filter onFilter={onFilter} />
@@ -127,4 +128,4 @@ const Products: FC = (): JSX.Element => {
   );
 };
 
-export default memo(Products);
+export default Products;

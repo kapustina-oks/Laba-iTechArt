@@ -29,7 +29,7 @@ const Cart = () => {
     setTotalPrice(price);
 
     dispatch(totalItemsCart(totalItems));
-  }, [total, cart, totalPrice, totalItems, setTotalPrice, setTotalItems]);
+  }, [total, cart, totalPrice, totalItems]);
 
   const openModal = () => {
     setCartModal(true);

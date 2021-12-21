@@ -1,7 +1,10 @@
-import initialState from "@/store/initialState";
-import { ActionAdminTypes, IActionAdmin } from "../types/adminTypes";
+import { ActionAdminTypes, IActionAdmin, IAdminInitialStat } from "../types/adminTypes";
 
-const adminReducer = (state = initialState, action: IActionAdmin) => {
+const initialState: IAdminInitialStat = {
+  products: [],
+};
+
+const adminReducer = (state = initialState, action: IActionAdmin): IAdminInitialStat => {
   console.log(action.type);
   switch (action.type) {
     case ActionAdminTypes.LOAD_GAME:

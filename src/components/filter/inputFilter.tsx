@@ -1,21 +1,21 @@
 import { ChangeEvent } from "react";
 
 interface IInputForm {
-  labelTitle: string;
+  title: string;
   value: string | number;
   name: string;
   onChange(e: ChangeEvent<HTMLInputElement>): void;
 }
 
-const InputFilter = ({ name, onChange, data, value, filter, title }: IInputForm) => (
+const InputFilter = ({ name, onChange, data, value, checked, title }: IInputForm) => (
   <label className="filter">
     <input
       className="with-gap"
       onChange={onChange}
       name={name}
-
       type="radio"
-      checked={filter.genre === { value }}
+      data-genre="all"
+      checked={checked}
 
     />
     <span className="label">{title}</span>

@@ -3,6 +3,7 @@ import "./filter.css";
 import { IFilterState } from "@/types/types";
 import transformParam from "@/utils/transformParam";
 import { IObjectKeys } from "@/pages/product/product";
+import InputFilter from "@/components/filter/inputFilter";
 
 const initialState = {
   genre: "all",
@@ -40,17 +41,27 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
   return (
     <div className="filters">
       <div className="filter_title">Filter by genre</div>
-      <label className="filter">
-        <input
-          className="with-gap"
+
+        <InputFilter
           name="genre"
-          type="radio"
-          data-genre="all"
           onChange={handleFilter}
+          data={["data-genre"]}
+          value="all"
           checked={filter.genre === "all"}
-        />
-        <span className="label">All genres</span>
-      </label>
+          title="All genres"/>
+
+      {/*<label className="filter">*/}
+      {/*  <input*/}
+      {/*    className="with-gap"*/}
+      {/*    name="genre"*/}
+      {/*    type="radio"*/}
+      {/*    data-genre="all"*/}
+      {/*    onChange={handleFilter}*/}
+      {/*    checked={filter.genre === "all"}*/}
+      {/*  />*/}
+      {/*  <span className="label">All genres</span>*/}
+      {/*</label>*/}
+
       <label className="filter">
         <input
           className="with-gap"

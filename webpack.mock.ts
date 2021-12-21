@@ -66,8 +66,8 @@ export default webpackMockServer.add((app) => {
       gamesListUpdated = gamesListUpdated.sort((prev: dataItems, next: dataItems) => {
         const sortField = _req.query.sort as keyof dataItems;
 
-        const priceOrRatingFromPrev = prev[sortField] as dataItems;
-        const priceOrRatingFromNext = next[sortField] as dataItems;
+        const priceOrRatingFromPrev = prev[sortField];
+        const priceOrRatingFromNext = next[sortField];
 
         if (direction === "ascending") {
           return priceOrRatingFromPrev > priceOrRatingFromNext ? -1 : 1;

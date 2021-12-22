@@ -1,21 +1,15 @@
 import { Route, Switch, Redirect } from "react-router-dom";
 import { links } from "@/links";
 // eslint-disable-next-line no-use-before-define
-import React, { lazy, ReactNode, Suspense } from "react";
-// import Profile from "@/pages/profile/profile";
-import Spinner from "@/components/spinner/spinner";
+import React, { ReactNode } from "react";
+import Profile from "@/pages/profile/profile";
 import Header from "../header/header";
-// import Products from "../../pages/product/product";
-// import About from "../../pages/about/about";
+import Products from "../../pages/product/product";
+import About from "../../pages/about/about";
 import Home from "../../pages/home/home";
 import Footer from "../footer/footer";
 import ProtectedRouter from "../protectedRouter/protectedRouter";
-// import Cart from "../../pages/cart/cart";
-
-const Products = lazy(() => import("../../pages/product/product"));
-const Cart = lazy(() => import("../../pages/cart/cart"));
-const Profile = lazy(() => import("@/pages/profile/profile"));
-const About = lazy(() => import("../../pages/about/about"));
+import Cart from "../../pages/cart/cart";
 
 const { home, product, about, profile, other } = links;
 
@@ -49,26 +43,24 @@ class App extends React.Component<PropsApp, IState> {
       <div className="app">
         <Header />
         <main>
-          <Suspense fallback={<Spinner />}>
-            <Switch>
-              <ProtectedRouter path={`${product}/:categories?`}>
-                <Products />
-              </ProtectedRouter>
-              <ProtectedRouter path={about}>
-                <About />
-              </ProtectedRouter>
-              <ProtectedRouter path={profile}>
-                <Profile />
-              </ProtectedRouter>
-              <ProtectedRouter path="/cart">
-                <Cart />
-              </ProtectedRouter>
-              <Route exact path="/:login?">
-                <Home />
-              </Route>
-              <Redirect from={other} to={home} />
-            </Switch>
-          </Suspense>
+          <Switch>
+            <ProtectedRouter path={`${product}/:categories?`}>
+              <Products />
+            </ProtectedRouter>
+            <ProtectedRouter path={about}>
+              <About />
+            </ProtectedRouter>
+            <ProtectedRouter path={profile}>
+              <Profile />
+            </ProtectedRouter>
+            <ProtectedRouter path="/cart">
+              <Cart />
+            </ProtectedRouter>
+            <Route exact path="/:login?">
+              <Home />
+            </Route>
+            <Redirect from={other} to={home} />
+          </Switch>
         </main>
         <Footer />
       </div>

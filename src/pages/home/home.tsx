@@ -1,4 +1,4 @@
-import { useEffect, FC, useState, useCallback } from "react";
+import { useEffect, FC, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import Card from "@/components/card/card";
 import { ICategories, dataItems } from "@/types/types";
@@ -35,9 +35,9 @@ const Home: FC = (): JSX.Element => {
     }
   }, []);
 
-  const onRequestSort = useCallback(() => {
+  const onRequestSort = () => {
     getResource("/api/games?sortBy=date&limit=3").then((data) => setGameList(data));
-  }, []);
+  };
 
   const onRequestCategories = () => {
     getResource("/api/categories").then((data) => setCategoriesList(data));
@@ -48,19 +48,17 @@ const Home: FC = (): JSX.Element => {
     onRequestCategories();
   }, []);
 
-  const onRequestFilter = useCallback((response: dataItems[]): void => {
+  const onRequestFilter = (response: dataItems[]): void => {
     setGameList(response);
-  }, []);
+  };
 
   const handleCategory = (category: string): void => {
     router.push(`/products/${category}`);
   };
-
-  const content = gameList.map((game) => <Card url={location.pathname} game={game} key={game.id} />);
   return (
     <>
       <div className="home_container">
-        <SearchPanel onRequestFilter={onRequestFilter} onLoading={setLoading} reset={onRequestSort} />
+        <SearchPanel onRequestFilter={onRequestFilter} onLoading={(load) => setLoading(load)} reset={onRequestSort} />
         <div className="new-games">Categories</div>
         <div className="grid_category">
           {categoriesList.map((category: ICategories) => (
@@ -68,7 +66,9 @@ const Home: FC = (): JSX.Element => {
           ))}
         </div>
         <div className="new-games">New games</div>
-        <div className="grid_games">{loading ? <Spinner /> : content}</div>
+        <div className="grid_games">
+          {loading ? <Spinner /> : gameList.map((game) => <Card url={location.pathname} game={game} key={game.id} />)}
+        </div>
       </div>
     </>
   );

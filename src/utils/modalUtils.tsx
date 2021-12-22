@@ -1,10 +1,10 @@
-import FormSignIn from "@/components/formsAndModals/formSignIn/formSignIn";
-import FormSignUp from "@/components/formsAndModals/formSignUp/formSignUp";
-import FormChangePassword from "@/components/formsAndModals/formChangePassword/formChangePassword";
-import ModalCart from "@/components/formsAndModals/modalCart/modalCart";
+import FormSignIn from "@/components/formSignIn/formSignIn";
+import FormSignUp from "@/components/formSignUp/formSignUp";
+import FormChangePassword from "@/components/formChangePassword/formChangePassword";
+import ModalCart from "@/components/modalCart/modalCart";
 import { dataItems } from "@/types/types";
-import ModalDeleteCard from "@/components/formsAndModals/modalDeleteCard/modalDeleteCard";
-import FormCreateAndEditCard from "../components/formsAndModals/formCreateAndEditCard/formCreateAndEditCard";
+import ModalDeleteCard from "@/components/modalDeleteCard/modalDeleteCard";
+import FormCreateAndEditCard from "../components/formCreateAndEditCard/formCreateAndEditCard";
 
 export const modal = (title: string, onSubmit: () => void, gameID: number, game?: dataItems | undefined) => {
   switch (title) {

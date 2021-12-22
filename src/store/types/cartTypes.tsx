@@ -1,6 +1,6 @@
 import { dataItems, ICart } from "@/types/types";
 
-export const enum ActionCartTypes {
+export enum ActionCartTypes {
   ADD_TO_CART = "ADD_TO_CART",
   ADJUST_ITEM_QTY = "ADJUST_ITEM_QTY",
   REMOVE_FROM_CART = "REMOVE_FROM_CART",
@@ -79,9 +79,3 @@ export type IActionCart =
   | addCartFromLS
   | loadCartProductsAction
   | updateCartProductsAction;
-
-export interface ICartInitialState {
-  cart: ICart[];
-  productsCart: dataItems[];
-  total: number;
-}

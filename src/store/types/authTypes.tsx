@@ -1,4 +1,4 @@
-export const enum ActionTypes {
+export enum ActionTypes {
   LOG_IN = "LOG_IN",
   LOG_OUT = "LOG_OUT",
   USER_NAME = "USER_NAME",
@@ -37,10 +37,3 @@ export type IAction =
   | closeModalTypeAction
   | isAdminAction
   | userNameTypeAction;
-
-export interface IAuthInitialState {
-  auth: boolean;
-  modal: boolean;
-  userName: string;
-  isAdmin: boolean;
-};

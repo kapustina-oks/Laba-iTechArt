@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, memo, useEffect, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import "./filter.css";
 import { IFilterState } from "@/types/types";
 import transformParam from "@/utils/transformParam";
@@ -21,11 +21,13 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
   useEffect(() => {
     onFilter(filter);
     localStorage.setItem("filter", transformParam(filter as IObjectKeys));
+    console.log(filter);
   }, [filter]);
 
   const handleFilter = (e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target.dataset;
     const key = Object.keys(target)[0];
+    console.log(key);
 
     if (key) {
       const value = target[key];
@@ -40,7 +42,7 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
   return (
     <div className="filters">
       <div className="filter_title">Filter by genre</div>
-      <label className="filter">
+      <div className="filter_first">
         <input
           className="with-gap"
           name="genre"
@@ -49,10 +51,10 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
           onChange={handleFilter}
           checked={filter.genre === "all"}
         />
-        <span className="label">All genres</span>
-      </label>
+        <label className="label">All genres</label>
+      </div>
 
-      <label className="filter">
+      <div className="filter_first">
         <input
           className="with-gap"
           name="genre"
@@ -61,10 +63,10 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
           onChange={handleFilter}
           checked={filter.genre === "strategy"}
         />
-        <span className="label">Strategy</span>
-      </label>
+        <label className="label">Strategy</label>
+      </div>
 
-      <label className="filter">
+      <div className="filter_first">
         <input
           className="with-gap"
           name="genre"
@@ -73,9 +75,9 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
           onChange={handleFilter}
           checked={filter.genre === "shooter"}
         />
-        <span className="label">Shooter</span>
-      </label>
-      <label className="filter">
+        <label className="label">Shooter</label>
+      </div>
+      <div className="filter_first">
         <input
           className="with-gap"
           name="genre"
@@ -84,11 +86,11 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
           onChange={handleFilter}
           checked={filter.genre === "fighting"}
         />
-        <span className="label">Fighting</span>
-      </label>
+        <label className="label">Fighting</label>
+      </div>
 
       <div className="filter_title">Filter by age</div>
-      <label className="filter">
+      <div className="filter_second">
         <input
           className="with-gap"
           name="age"
@@ -97,10 +99,10 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
           onChange={handleFilter}
           checked={filter.age === "all"}
         />
-        <span className="label">All ages</span>
-      </label>
+        <label className="label">All ages</label>
+      </div>
 
-      <label className="filter">
+      <div className="filter_second">
         <input
           className="with-gap"
           name="age"
@@ -109,10 +111,10 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
           onChange={handleFilter}
           checked={filter.age === "6+"}
         />
-        <span className="label">6+</span>
-      </label>
+        <label className="label">6+</label>
+      </div>
 
-      <label className="filter">
+      <div className="filter_second">
         <input
           className="with-gap"
           name="age"
@@ -121,9 +123,9 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
           onChange={handleFilter}
           checked={filter.age === "12+"}
         />
-        <span className="label">12+</span>
-      </label>
-      <label className="filter">
+        <label className="label">12+</label>
+      </div>
+      <div className="filter_second">
         <input
           className="with-gap"
           name="age"
@@ -132,11 +134,11 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
           onChange={handleFilter}
           checked={filter.age === "18+"}
         />
-        <span className="label">18+</span>
-      </label>
+        <label className="label">18+</label>
+      </div>
 
       <div className="filter_title">Sort by rating</div>
-      <label className="filter">
+      <div className="filter_third">
         <input
           className="with-gap"
           name="rating"
@@ -145,9 +147,9 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
           onChange={handleFilter}
           checked={filter.rating === "ascending"}
         />
-        <span className="label">Ascending</span>
-      </label>
-      <label className="filter">
+        <label className="label">Ascending</label>
+      </div>
+      <div className="filter_third">
         <input
           className="with-gap"
           name="rating"
@@ -156,11 +158,11 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
           onChange={handleFilter}
           checked={filter.rating === "descending"}
         />
-        <span className="label">Descending</span>
-      </label>
+        <label className="label">Descending</label>
+      </div>
 
       <div className="filter_title">Sort by price</div>
-      <label className="filter">
+      <div className="filter_fourth">
         <input
           className="with-gap"
           name="price"
@@ -169,9 +171,9 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
           onChange={handleFilter}
           checked={filter.price === "ascending"}
         />
-        <span className="label">Ascending</span>
-      </label>
-      <label className="filter">
+        <label className="label">Ascending</label>
+      </div>
+      <div className="filter_fourth">
         <input
           className="with-gap"
           name="price"
@@ -180,10 +182,10 @@ const Filter: FC<FilterProps> = ({ onFilter }: FilterProps): JSX.Element => {
           onChange={handleFilter}
           checked={filter.price === "descending"}
         />
-        <span className="label">Descending</span>
-      </label>
+        <label className="label">Descending</label>
+      </div>
     </div>
   );
 };
 
-export default memo(Filter);
+export default Filter;

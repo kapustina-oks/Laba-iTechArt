@@ -1,6 +1,7 @@
-import { FC, lazy, useCallback, useEffect, useState } from "react";
+import { FC, useEffect, useState, Suspense, lazy } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { getFilter, getResource } from "@/services/dataService";
+import Card from "@/components/card/card";
 import { dataItems, IFilterState } from "@/types/types";
 import "./product.css";
 import Spinner from "@/components/spinner/spinner";
@@ -9,13 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadGames } from "@/store/actionCreators/adminActions";
 import { RootState } from "@/store/reducers/rootReducer";
 import { loadCartProductsAction } from "@/store/actionCreators/cartActions";
+// import SearchPanel from "../../components/searchPanel/searchPanel";
 import { isAdminAction } from "@/store/actionCreators/authActions";
-import SearchPanel from "../../components/searchPanel/searchPanel";
 import Filter from "../../components/filter/filter";
 import transformParam from "../../utils/transformParam";
-import useSuspense from "./useSuspense";
 
-const Card = lazy(() => import("../../components/card/card"));
+const SearchPanel = lazy(() => import("../../components/searchPanel/searchPanel"));
 
 interface IParams {
   categories?: string;
@@ -33,10 +33,9 @@ const Products: FC = (): JSX.Element => {
 
   const filterStr = localStorage.getItem("filter");
 
-  const onRequestFilter = useCallback((response: dataItems[]): void => {
+  const onRequestFilter = (response: dataItems[]): void => {
     setProductList(response);
-  }, []);
-
+  };
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -52,6 +51,7 @@ const Products: FC = (): JSX.Element => {
   }, [productList]);
 
   const onRequest = (category: string) => {
+    console.log(category);
     if (category) {
       getResource(`/api/games?category=${category}&${filterStr}`).then((data) => setProductList(data));
     } else {
@@ -59,13 +59,13 @@ const Products: FC = (): JSX.Element => {
     }
   };
 
-  const onFilter = useCallback((filter: IFilterState) => {
+  const onFilter = (filter: IFilterState) => {
     getFilter(`/api/games?${transformParam(filter as IObjectKeys)}`).then((data) => setProductList(data));
-  }, []);
+  };
 
-  const getProduct = useCallback(() => {
+  const getProduct = () => {
     getResource(`/api/games?${filterStr}&category=${categories}`).then((data) => setProductList(data));
-  }, []);
+  };
 
   useEffect(() => {
     getResource("/api/games?").then((data) => {
@@ -85,6 +85,7 @@ const Products: FC = (): JSX.Element => {
 
   useEffect(() => {
     if (categories) {
+      console.log(categories);
       onRequest(categories);
       localStorage.setItem("category", categories);
     } else {
@@ -94,37 +95,27 @@ const Products: FC = (): JSX.Element => {
   }, [categories, filterStr]);
 
   const contentProduct = productList.map((game) => <Card url={location.pathname} game={game} key={game.id} />);
-  const children = useSuspense(500, loading, setLoading, contentProduct, <Spinner />);
-
-  useEffect(() => {
-    if (loading) {
-      setLoading(false);
-    }
-  }, [productList]);
-
-  const modalHandler =
-    (isOpen: boolean): (() => void) =>
-    () =>
-      setCreateModal(isOpen);
 
   return (
-    <div className="home_container">
-      <div className="grid_product">
-        <div className="search-grid">
-          <SearchPanel onRequestFilter={onRequestFilter} onLoading={setLoading} reset={getProduct} />
+    <Suspense fallback={<Spinner />}>
+      <div className="home_container">
+        <div className="grid_product">
+          <div className="search-grid">
+            <SearchPanel onRequestFilter={onRequestFilter} onLoading={(load) => setLoading(load)} reset={getProduct} />
+          </div>
+          <div className="sidebar">
+            <Filter onFilter={onFilter} />
+            {isAdmin ? (
+              <button className="btn-create-card" onClick={() => setCreateModal(true)}>
+                Create card
+              </button>
+            ) : null}
+          </div>
+          {loading ? <Spinner /> : contentProduct}
+          {createModal && <Modal title="Create Card" onSubmit={() => setCreateModal(false)} />}
         </div>
-        <div className="sidebar">
-          <Filter onFilter={onFilter} />
-          {isAdmin ? (
-            <button className="btn-create-card" onClick={modalHandler(true)}>
-              Create card
-            </button>
-          ) : null}
-        </div>
-        {children}
-        {createModal && <Modal title="Create Card" onSubmit={modalHandler(false)} />}
       </div>
-    </div>
+    </Suspense>
   );
 };
 

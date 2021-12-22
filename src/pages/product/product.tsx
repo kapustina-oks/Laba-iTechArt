@@ -81,7 +81,7 @@ const Products: FC = (): JSX.Element => {
     } else {
       dispatch(isAdminAction(false));
     }
-  }, [isAdmin]);
+  }, []);
 
   useEffect(() => {
     if (categories) {

@@ -2,15 +2,11 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import { links } from "@/links";
 // eslint-disable-next-line no-use-before-define
 import React, { lazy, ReactNode, Suspense } from "react";
-// import Profile from "@/pages/profile/profile";
 import Spinner from "@/components/spinner/spinner";
 import Header from "../header/header";
-// import Products from "../../pages/product/product";
-// import About from "../../pages/about/about";
 import Home from "../../pages/home/home";
 import Footer from "../footer/footer";
 import ProtectedRouter from "../protectedRouter/protectedRouter";
-// import Cart from "../../pages/cart/cart";
 
 const Products = lazy(() => import("../../pages/product/product"));
 const Cart = lazy(() => import("../../pages/cart/cart"));

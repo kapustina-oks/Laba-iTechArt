@@ -1,6 +1,6 @@
 import { dataItems } from "@/types/types";
 
-export enum ActionAdminTypes {
+export const enum ActionAdminTypes {
   CREATE_NEW_GAME = "CREATE_NEW_GAME",
   EDIT_GAME = "EDIT_GAME",
   DELETE_SET_SUCCESS = "DELETE_SET_SUCCESS",
@@ -36,3 +36,7 @@ interface createGame {
 }
 
 export type IActionAdmin = createGame | editGames | deleteSetSuccess | loadGames;
+
+export interface IAdminInitialStat {
+  products: dataItems[];
+}

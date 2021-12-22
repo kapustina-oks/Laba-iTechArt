@@ -1,9 +1,13 @@
-import initialState from "@/store/initialState";
-import { IInitialState } from "@/types/types";
-import { ActionTypes, IAction } from "../types/authTypes";
+import { ActionTypes, IAction, IAuthInitialState } from "../types/authTypes";
 
-const authReducer = (state = initialState, action: IAction): IInitialState => {
-  console.log(action.type);
+const initialState: IAuthInitialState = {
+  auth: false,
+  modal: false,
+  userName: "",
+  isAdmin: false,
+};
+
+const authReducer = (state = initialState, action: IAction): IAuthInitialState => {
   switch (action.type) {
     case ActionTypes.LOG_IN:
       return { ...state, auth: true };

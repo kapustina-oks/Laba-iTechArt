@@ -1,8 +1,8 @@
-import React, { FC } from "react";
+import { FC, memo } from "react";
 import "./searchPanel.css";
 import { getResource } from "@/services/dataService";
 import { dataItems } from "@/types/types";
-import { debounce } from "../debounce/debounce";
+import { debounce } from "@/utils/debounce";
 
 interface SearchPanelProps {
   onRequestFilter(res: dataItems[]): void;
@@ -45,4 +45,4 @@ const SearchPanel: FC<SearchPanelProps> = ({ onRequestFilter, onLoading, reset }
   );
 };
 
-export default SearchPanel;
+export default memo(SearchPanel);

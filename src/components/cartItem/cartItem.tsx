@@ -1,6 +1,6 @@
 import { adjustItemQty, removeFromCart } from "@/store/actionCreators/cartActions";
 import { useDispatch } from "react-redux";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, memo, useState } from "react";
 import { ICart } from "@/types/types";
 
 interface ICartItem {
@@ -25,7 +25,7 @@ const CartItem = ({ game }: ICartItem) => {
     }
   };
 
-  const onRemoveItem = (id: number) => {
+  const onRemoveItem = (id: number) => () => {
     dispatch(removeFromCart(id));
     const savedCart = localStorage.getItem("cart");
     if (savedCart != null) {
@@ -62,7 +62,7 @@ const CartItem = ({ game }: ICartItem) => {
 
       <td className="cart-title">{parseInt(game.price, 10) * +input}$</td>
       <td>
-        <button onClick={() => onRemoveItem(game.id)}>
+        <button onClick={onRemoveItem(game.id)}>
           <i className="fas fa-trash-alt cart-icon" />
         </button>
       </td>
@@ -70,4 +70,4 @@ const CartItem = ({ game }: ICartItem) => {
   );
 };
 
-export default CartItem;
+export default memo(CartItem);

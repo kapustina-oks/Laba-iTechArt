@@ -86,17 +86,6 @@ export interface PropsForm {
   onSubmit: () => void;
 }
 
-export interface IInitialState {
-  auth: boolean;
-  modal: boolean;
-  userName: string;
-  products: dataItems[];
-  cart: ICart[];
-  productsCart: dataItems[];
-  total: number;
-  isAdmin: boolean;
-}
-
 export interface IFilterState {
   genre: string;
   age: string;

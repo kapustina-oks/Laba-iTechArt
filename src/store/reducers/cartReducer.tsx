@@ -1,4 +1,3 @@
-import initialState from "@/store/initialState";
 import {
   ADD_TO_CART,
   ADJUST_ITEM_QTY,
@@ -9,10 +8,19 @@ import {
   LOAD_CART_PRODUCTS,
   UPDATE_CART_PRODUCTS,
 } from "@/store/actions/cartAction";
-import { ICart, IInitialState } from "@/types/types";
-import { IActionCart } from "../types/cartTypes";
+import { ICart } from "@/types/types";
+import dataGames from "@/mock/dataBase";
+import { IActionCart, ICartInitialState } from "../types/cartTypes";
 
-const cartReducer = (state = initialState, action: IActionCart): IInitialState => {
+const gamesList = [...dataGames];
+
+const initialState: ICartInitialState = {
+  productsCart: gamesList,
+  cart: [],
+  total: 0,
+};
+
+const cartReducer = (state = initialState, action: IActionCart): ICartInitialState => {
   let item;
   let inCart;
 
@@ -24,7 +32,6 @@ const cartReducer = (state = initialState, action: IActionCart): IInitialState =
           itemCart.id === action.payload.id ? { ...itemCart, qty: itemCart.qty + 1 } : itemCart
         )
       : [...state.cart, { ...item, qty: 1 }];
-    console.log(action.type);
 
     switch (action.type) {
       case ADD_TO_CART:

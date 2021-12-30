@@ -1,8 +1,8 @@
 import { FC, memo } from "react";
 import "./searchPanel.css";
-import { getResource } from "@/services/dataService";
-import { dataItems } from "@/types/types";
-import { debounce } from "@/utils/debounce";
+import { getResource } from "../../services/dataService";
+import { dataItems } from "../../types/types";
+import { debounce } from "../../utils/debounce";
 
 interface SearchPanelProps {
   onRequestFilter(res: dataItems[]): void;
@@ -39,7 +39,7 @@ const SearchPanel: FC<SearchPanelProps> = ({ onRequestFilter, onLoading, reset }
   return (
     <div className="row">
       <form action="" method="get">
-        <input onChange={onChangeHandler} placeholder="Search game..." type="search" />
+        <input onChange={onChangeHandler} placeholder="Search game..." type="text" />
       </form>
     </div>
   );

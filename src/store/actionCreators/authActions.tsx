@@ -1,4 +1,4 @@
-import { CLOSE_MODAL, IS_ADMIN, LOG_IN, LOG_OUT, OPEN_MODAL, USER_NAME } from "@/store/actions/authAction";
+import { CLOSE_MODAL, IS_ADMIN, LOG_IN, LOG_OUT, OPEN_MODAL, USER_NAME } from "../../store/actions/authAction";
 
 export const authLogInAction = () => ({ type: LOG_IN });
 export const authLogOutAction = () => ({ type: LOG_OUT });

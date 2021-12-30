@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { deleteGame } from "@/store/actionCreators/adminActions";
+import { deleteGame } from "../../../store/actionCreators/adminActions";
 import "./modalDeleteCard.css";
 
 interface IModalDeleteCard {

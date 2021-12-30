@@ -1,6 +1,6 @@
 import { dataItems } from "@/types/types";
 
-export const enum ActionAdminTypes {
+export enum ActionAdminTypes {
   CREATE_NEW_GAME = "CREATE_NEW_GAME",
   EDIT_GAME = "EDIT_GAME",
   DELETE_SET_SUCCESS = "DELETE_SET_SUCCESS",

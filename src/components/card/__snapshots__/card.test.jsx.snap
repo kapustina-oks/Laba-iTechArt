@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Card card snapshot 1`] = `
+<body>
+  <div>
+    <div
+      class="scene"
+    >
+      <div
+        class="card"
+      >
+        <div
+          class="card-front"
+        >
+          <div
+            class="product-img"
+          >
+            <img
+              alt="game_img"
+              class="size_img"
+              src="https://s2.gaming-cdn.com/images/products/5848/orig/game-steam-a-game-of-thrones-genesis-cover.jpg"
+            />
+          </div>
+          <div
+            class="card-padding"
+          >
+            <div
+              class="d_flex"
+            >
+              <span>
+                Game of Thrones
+              </span>
+              <span>
+                50$
+              </span>
+            </div>
+            <div>
+              <i
+                class="material-icons"
+              >
+                 star_border star_border star_border star_border
+              </i>
+            </div>
+          </div>
+        </div>
+        <div
+          class="card-back text"
+        >
+          "A Game of Thrones - Genesis" immerses you into the heart of the battles and intrigues between the Houses that shaped the Kingdom of Westeros. From Nymeria's arrival in the Kingdom of Dorne to the awakening of the "Others" beyond the Wall, you'll live the origins of A Game of Thrones saga through more than 1000 years of history, by taking part in Westeros' founding events and largest battles. 
+          <div
+            class="btn-group-card"
+          >
+            <button
+              class="btn1"
+            >
+              Add to cart
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;

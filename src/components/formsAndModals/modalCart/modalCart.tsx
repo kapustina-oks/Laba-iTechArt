@@ -1,6 +1,6 @@
-import { PropsForm } from "@/types/types";
+import { PropsForm } from "../../../types/types";
 import { useDispatch } from "react-redux";
-import { removeAllItems } from "@/store/actionCreators/cartActions";
+import { removeAllItems } from "../../../store/actionCreators/cartActions";
 import "./modalCart.css";
 
 const ModalCart = ({ onSubmit }: PropsForm): JSX.Element => {

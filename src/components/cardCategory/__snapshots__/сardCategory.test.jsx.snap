@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CardCategory CardCategory snapshot 1`] = `
+<body>
+  <div>
+    <div
+      class="card-category"
+    >
+      <div
+        class="fab-icons"
+      >
+        <i
+          class="fab fa-xbox"
+        />
+      </div>
+      <div
+        class="card-title"
+      >
+        Xbox
+      </div>
+    </div>
+  </div>
+</body>
+`;
+
+exports[`CardCategory renders without crashing 1`] = `
+<body>
+  <div>
+    <div
+      class="card-category"
+    >
+      <div
+        class="fab-icons"
+      >
+        <i
+          class="fab fa-windows"
+        />
+      </div>
+      <div
+        class="card-title"
+      >
+        PC
+      </div>
+    </div>
+  </div>
+</body>
+`;

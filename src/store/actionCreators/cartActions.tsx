@@ -7,7 +7,7 @@ import {
   LOCAL_STORAGE_CART,
   LOAD_CART_PRODUCTS,
   UPDATE_CART_PRODUCTS,
-} from "@/store/actions/cartAction";
+} from "../actions/cartAction";
 import { dataItems, ICart } from "@/types/types";
 
 export const addToCart = (itemID: number) => ({

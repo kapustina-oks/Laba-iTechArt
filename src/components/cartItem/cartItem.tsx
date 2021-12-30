@@ -1,4 +1,4 @@
-import { adjustItemQty, removeFromCart } from "@/store/actionCreators/cartActions";
+import { adjustItemQty, removeFromCart } from "../../store/actionCreators/cartActions";
 import { useDispatch } from "react-redux";
 import { ChangeEvent, memo, useState } from "react";
 import { ICart } from "@/types/types";
@@ -71,3 +71,4 @@ const CartItem = ({ game }: ICartItem) => {
 };
 
 export default memo(CartItem);
+

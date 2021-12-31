@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CardCategory CartItem snapshotg 1`] = `
+<body>
+  <div>
+    <tr>
+      <td
+        class="cart-title"
+      >
+        Game of Thrones
+      </td>
+      <td>
+        <select
+          class="cart-select"
+          name="select"
+        >
+          <option
+            value="value3"
+          >
+            playstation
+          </option>
+          <option
+            value="value3"
+          >
+            pc
+          </option>
+          <option
+            value="value3"
+          >
+            xbox
+          </option>
+        </select>
+      </td>
+      <td
+        class="cart-title"
+      >
+        12/28/2021
+      </td>
+      <td
+        class="cart-title"
+      >
+        <input
+          class="cart-input"
+          id="qty"
+          min="1"
+          name="qty"
+          type="number"
+          value=""
+        />
+      </td>
+      <td
+        class="cart-title"
+      >
+        NaN
+        $
+      </td>
+      <td>
+        <button>
+          <i
+            class="fas fa-trash-alt cart-icon"
+          />
+        </button>
+      </td>
+    </tr>
+  </div>
+</body>
+`;

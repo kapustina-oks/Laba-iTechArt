@@ -1,7 +1,7 @@
-import Portal from "@/components/portal/portal";
+import Portal from "../portal/portal";
 import "./modal.css";
-import { modal } from "@/utils/modalUtils";
-import { dataItems } from "@/types/types";
+import { modal } from "../../utils/modalUtils";
+import { dataItems } from "../../types/types";
 
 interface PropsModal {
   title: string;

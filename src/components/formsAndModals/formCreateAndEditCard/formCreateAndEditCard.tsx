@@ -1,11 +1,11 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import "./formCreateAndEditCard.css";
-import { editNewGame, createNewGame } from "@/store/actionCreators/adminActions";
+import { editNewGame, createNewGame } from "../../../store/actionCreators/adminActions";
 import mockServerHelper from "webpack-mock-server/lib/mockServerHelper";
-import { dataItems } from "@/types/types";
-import Modal from "@/components/modal/modal";
-import InputForm from "@/components/formsAndModals/formCreateAndEditCard/inputForm";
+import { dataItems } from "../../../types/types";
+import Modal from "../../modal/modal";
+import InputForm from "./inputForm";
 
 interface IFormCreateAndEditCard {
   onSubmit: () => void;

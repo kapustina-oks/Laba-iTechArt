@@ -1,12 +1,12 @@
 import { useEffect, FC, useState, useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import Card from "@/components/card/card";
-import { ICategories, dataItems } from "@/types/types";
-import { getResource } from "@/services/dataService";
+import Card from "../../components/card/card";
+import { ICategories, dataItems } from "../../types/types";
+import { getResource } from "../../services/dataService";
 import "./home.css";
 import { useDispatch, useSelector } from "react-redux";
-import { authLogInAction, openModalAction, userNameAction } from "@/store/actionCreators/authActions";
-import { RootState } from "@/store/reducers/rootReducer";
+import { authLogInAction, openModalAction, userNameAction } from "../../store/actionCreators/authActions";
+import { RootState } from "../../store/reducers/rootReducer";
 import CardCategory from "../../components/cardCategory/cardCategory";
 import Spinner from "../../components/spinner/spinner";
 import SearchPanel from "../../components/searchPanel/searchPanel";

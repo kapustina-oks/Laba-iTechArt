@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tests of SearchPanel SearchPanel snapshot 1`] = `
+<body>
+  <div>
+    <div
+      class="row"
+    >
+      <form
+        action=""
+        method="get"
+      >
+        <input
+          placeholder="Search game..."
+          type="search"
+        />
+      </form>
+    </div>
+  </div>
+</body>
+`;

@@ -1,13 +1,13 @@
 import { ChangeEvent, FocusEvent, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { PropsForm } from "@/types/types";
-import { usersRegistration } from "@/services/dataService";
+import { PropsForm } from "../../../types/types";
+import { usersRegistration } from "../../../services/dataService";
 import { useDispatch, useSelector } from "react-redux";
-import { authLogInAction, authLogOutAction, isAdminAction, userNameAction } from "@/store/actionCreators/authActions";
+import { authLogInAction, authLogOutAction, isAdminAction, userNameAction } from "../../../store/actionCreators/authActions";
 import mockServerHelper from "webpack-mock-server/lib/mockServerHelper";
-import { validateLogin, validatePassword, validateRepeatPassword } from "@/utils/validation";
-import { removeAllItems } from "@/store/actionCreators/cartActions";
-import { RootState } from "@/store/reducers/rootReducer";
+import { validateLogin, validatePassword, validateRepeatPassword } from "../../../utils/validation";
+import { removeAllItems } from "../../../store/actionCreators/cartActions";
+import { RootState } from "../../../store/reducers/rootReducer";
 
 const FormSignUp = ({ onSubmit }: PropsForm): JSX.Element => {
   const [login, setLogin] = useState<string>("");

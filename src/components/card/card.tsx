@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react";
-import { dataItems, ICart } from "@/types/types";
+import { dataItems, ICart } from "../../types/types";
 import "./card.css";
-import { addToCart, totalItemsCart, updateCartProductsAction } from "@/store/actionCreators/cartActions";
+import { addToCart, totalItemsCart, updateCartProductsAction } from "../../store/actionCreators/cartActions";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/store/reducers/rootReducer";
-import Modal from "@/components/modal/modal";
+import { RootState } from "../../store/reducers/rootReducer";
+import Modal from "../modal/modal";
 
 interface CardProps {
   game: dataItems;

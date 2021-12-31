@@ -7,9 +7,9 @@ import {
   LOCAL_STORAGE_CART,
   LOAD_CART_PRODUCTS,
   UPDATE_CART_PRODUCTS,
-} from "@/store/actions/cartAction";
-import { ICart } from "@/types/types";
-import dataGames from "@/mock/dataBase";
+} from "../actions/cartAction";
+import { ICart } from "../../types/types";
+import dataGames from "../../mock/dataBase";
 import { IActionCart, ICartInitialState } from "../types/cartTypes";
 
 const gamesList = [...dataGames];

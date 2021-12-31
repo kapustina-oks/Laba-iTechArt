@@ -1,7 +1,7 @@
 import { ChangeEvent, FocusEvent, useEffect, useState } from "react";
-import { usersChangePassword } from "@/services/dataService";
-import { IUsersChangePassword, PropsForm } from "@/types/types";
-import { validatePassword, validateRepeatPassword } from "@/utils/validation";
+import { usersChangePassword } from "../../../services/dataService";
+import { IUsersChangePassword, PropsForm } from "../../../types/types";
+import { validatePassword, validateRepeatPassword } from "../../../utils/validation";
 
 const FormChangePassword = ({ onSubmit }: PropsForm): JSX.Element => {
   const [password, setPassword] = useState<string>("");

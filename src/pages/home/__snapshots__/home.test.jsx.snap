@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`testing of home page fetches games from an API 1`] = `
+<body>
+  <div>
+    <div
+      class="home_container"
+    >
+      <div
+        class="row"
+      >
+        <form
+          action=""
+          method="get"
+        >
+          <input
+            placeholder="Search game..."
+            type="text"
+          />
+        </form>
+      </div>
+      <div
+        class="new-games"
+      >
+        Categories
+      </div>
+      <div
+        class="grid_category"
+      />
+      <div
+        class="new-games"
+      >
+        New games
+      </div>
+      <div
+        class="grid_games"
+      />
+    </div>
+  </div>
+</body>
+`;

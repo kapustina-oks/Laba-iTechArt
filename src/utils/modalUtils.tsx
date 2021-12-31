@@ -1,9 +1,9 @@
-import FormSignIn from "@/components/formsAndModals/formSignIn/formSignIn";
-import FormSignUp from "@/components/formsAndModals/formSignUp/formSignUp";
-import FormChangePassword from "@/components/formsAndModals/formChangePassword/formChangePassword";
-import ModalCart from "@/components/formsAndModals/modalCart/modalCart";
-import { dataItems } from "@/types/types";
-import ModalDeleteCard from "@/components/formsAndModals/modalDeleteCard/modalDeleteCard";
+import FormSignIn from "../components/formsAndModals/formSignIn/formSignIn";
+import FormSignUp from "../components/formsAndModals/formSignUp/formSignUp";
+import FormChangePassword from "../components/formsAndModals/formChangePassword/formChangePassword";
+import ModalCart from "../components/formsAndModals/modalCart/modalCart";
+import { dataItems } from "../types/types";
+import ModalDeleteCard from "../components/formsAndModals/modalDeleteCard/modalDeleteCard";
 import FormCreateAndEditCard from "../components/formsAndModals/formCreateAndEditCard/formCreateAndEditCard";
 
 export const modal = (title: string, onSubmit: () => void, gameID: number, game?: dataItems | undefined) => {

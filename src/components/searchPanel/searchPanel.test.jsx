@@ -3,6 +3,8 @@ import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import SearchPanel from "./searchPanel";
 
+export const { expect } = window;
+
 const onRequestFilter = jest.fn().mockImplementation((filter) => filter);
 const setLoading = jest.fn();
 const onRequestSort = jest.fn().mockImplementation((sort) => sort);
@@ -35,7 +37,8 @@ describe("Tests of SearchPanel", () => {
 
   it("onChangeHandler works", () => {
     render(<SearchPanel onRequestFilter={onRequestFilter} onLoading={setLoading} reset={onRequestSort} />);
-    fireEvent.change(screen.getByRole("textbox"), { target: { value: "test" } });
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: "Cyberpunk" } });
+    //expect(screen.queryByText(/Cyberpunk/)).toBeInTheDocument();
     //expect(onChange).toHaveBeenCalled(4);
   });
 
